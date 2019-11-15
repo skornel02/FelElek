@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Database {
   static final Database _singleton = Database._internal();
@@ -33,9 +34,36 @@ class Database {
     final text = jsonEncode(groups);
     await file.writeAsString(text);
     print('Groups saved!');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("DBLastUpdated", DateTime.now().toIso8601String());
   }
 
-  Future<String> getDBFileIdFromDrive(String accessToken) async {
+  Future<void> syncWithGoogleDrive(String accessToken) async {
+    String fileId = await _getDBFileIdFromDrive(accessToken);
+    if(fileId == null) {
+      print("Groups not found on drive... Uploading now!");
+      fileId = await Database()._uploadGroupsToDrive(accessToken, await getGroups());
+      return;
+    }
+
+    print("Groups found on drive!");
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String lastUpdatedString = prefs.getString("DBLastUpdated");
+    DateTime lastUpdatedLocally = lastUpdatedString == null
+        ? DateTime(1999)
+        : DateTime.parse(lastUpdatedString);
+    DateTime lastUpdatedDrive = await _getLastChangedDateDrive(accessToken, fileId);
+    if(lastUpdatedLocally.isAfter(lastUpdatedDrive)){
+      print("Google drive is behind... updating");
+      await _updateGroupsOnDrive(accessToken, fileId, await getGroups());
+    }else {
+      print("Local is behind... updating");
+      await saveGroups(await _getGroupsFromDrive(accessToken, fileId));
+    }
+  }
+
+  Future<String> _getDBFileIdFromDrive(String accessToken) async {
     final Map<String, String> queryParameters = {
       'spaces': 'appDataFolder',
       'q': 'name = "groups.json"',
@@ -52,14 +80,22 @@ class Database {
     }
   }
 
-  Future<List<PojoGroup>> getDataFromDrive(String accessToken, String fileId) async {
+  Future<DateTime> _getLastChangedDateDrive(String accessToken, String fileId) async {
+    final headers = { 'Authorization': 'Bearer $accessToken' };
+    final url = 'https://www.googleapis.com/drive/v3/files/$fileId?fields=modifiedTime';
+    final response = await get(url, headers: headers);
+    DateTime time = DateTime.parse(jsonDecode(response.body)["modifiedTime"]);
+    return time;
+  }
+
+  Future<List<PojoGroup>> _getGroupsFromDrive(String accessToken, String fileId) async {
     final headers = { 'Authorization': 'Bearer $accessToken' };
     final url = 'https://www.googleapis.com/drive/v3/files/$fileId?alt=media';
     final response = await get(url, headers: headers);
     return _jsonToGroups(response.body);
   }
 
-  Future<String> uploadDataToDrive(String accessToken, List<PojoGroup> groups) async {
+  Future<String> _uploadGroupsToDrive(String accessToken, List<PojoGroup> groups) async {
     final headers = { 'Authorization': 'Bearer $accessToken', 'Content-Type': 'application/json; charset=UTF-8'};
     final initialQueryParameters = { 'uploadType': 'resumable' };
     final Map<String, dynamic> metaData = {
@@ -74,6 +110,12 @@ class Database {
     final uploadUri = Uri.parse(location);
     final uploadResponse = await put(uploadUri, headers: headers2, body: json.encode(groups));
     return jsonDecode(uploadResponse.body)["id"];
+  }
+
+  Future<void> _updateGroupsOnDrive(String accessToken, String fileId, List<PojoGroup> groups) async {
+    final headers = { 'Authorization': 'Bearer $accessToken', 'Content-Type': 'application/json; charset=UTF-8'};
+    final initiateUri = Uri.https('www.googleapis.com', '/upload/drive/v3/files/$fileId');
+    final initiateResponse = await patch(initiateUri, headers: headers, body: json.encode(groups));
   }
 
   List<PojoGroup> _jsonToGroups(String json) {

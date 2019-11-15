@@ -1,5 +1,6 @@
 import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:uuid/uuid.dart';
 
 
 
@@ -18,6 +19,12 @@ class PojoGroup{
 
 
   PojoGroup(this.uuId, this.name, this.students);
+
+  PojoGroup.fromName(String name) {
+    this.name = name;
+    uuId = Uuid().v1();
+    students = new List();
+  }
 
   @override
   factory PojoGroup.fromJson(Map<String, dynamic> json) =>

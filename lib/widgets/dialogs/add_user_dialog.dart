@@ -7,17 +7,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dialogs.dart';
 
-class AddGradeDialog extends StatefulWidget {
+class AddStudentDialog extends StatefulWidget {
 
 
-  AddGradeDialog({Key key}) : super(key: key);
+  AddStudentDialog({Key key}) : super(key: key);
 
 
   @override
-  _AddGradeDialog createState() => new _AddGradeDialog();
+  _AddStudentDialog createState() => new _AddStudentDialog();
 }
 
-class _AddGradeDialog extends State<AddGradeDialog> {
+class _AddStudentDialog extends State<AddStudentDialog> {
 
   final double width = 300;
   final double height = 190;
@@ -33,7 +33,7 @@ class _AddGradeDialog extends State<AddGradeDialog> {
           child: Padding(
             padding: const EdgeInsets.all(5),
             child:
-            AutoSizeText( "Add grade",
+            AutoSizeText( "Add student",
               style: TextStyle(
                 fontSize: 30.0,
                 fontWeight: FontWeight.w700,
@@ -55,7 +55,7 @@ class _AddGradeDialog extends State<AddGradeDialog> {
                       TextField(
                         style: TextStyle(fontSize: 22),
                         inputFormatters:[
-                          LengthLimitingTextInputFormatter(1),
+                          LengthLimitingTextInputFormatter(40),
                         ],
                         autofocus: true,
 
@@ -81,7 +81,6 @@ class _AddGradeDialog extends State<AddGradeDialog> {
                 color: Colors.transparent
             ),
             FlatButton(
-
                 child: Center(
                   child: Text(locText(context, key: "add"),
                     style: TextStyle(
@@ -89,13 +88,9 @@ class _AddGradeDialog extends State<AddGradeDialog> {
                     ),
                   ),
                 ),
-
-
                 onPressed: () async {
                   GroupsBloc bloc = BlocProvider.of<GroupsBloc>(context);
-                  GroupEvent event = AddGradeEvent(int.parse(_gradeTextEditingController.text),
-                      bloc.selectedStudent,
-                      bloc.selectedGroup);
+                  GroupEvent event = AddStudentEvent(_gradeTextEditingController.text, bloc.selectedGroup);
                   bloc.dispatch(event);
                   Navigator.of(context).pop();
                 }

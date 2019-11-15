@@ -1,3 +1,5 @@
+import 'package:dusza2019/widgets/dialogs/add_group_dialog.dart';
+import 'package:dusza2019/widgets/dialogs/add_user_dialog.dart';
 import 'package:flutter/material.dart';
 
 import '../../other/hazizz_localizations.dart';
@@ -78,8 +80,23 @@ class HazizzDialog extends Dialog{
   }
 }
 
+Future showAddGroupDialog(BuildContext context,) async{
+  var d = AddGroupDialog();
+  var result = showDialog(context: context, builder: (context2){
+    return d;
+  });
+  return result;
+}
+
+Future showAddStudentDialog(BuildContext context,) async{
+  var d = AddStudentDialog();
+  var result = showDialog(context: context, builder: (context2){
+    return d;
+  });
+  return result;
+}
+
 Future showAddGradeDialog(BuildContext context,) async{
-  // List<PojoGroup> data;
   var d = AddGradeDialog();
   var result = showDialog(context: context, builder: (context2){
     return d;

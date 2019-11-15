@@ -1,36 +1,36 @@
 import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/other/hazizz_localizations.dart';
+import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:dusza2019/widgets/dialogs/dialogs.dart';
 import 'package:dusza2019/widgets/items/grade_item_widget.dart';
 import 'package:dusza2019/widgets/items/student_item_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
-class GradePage extends StatefulWidget {
+class StudentEditPage extends StatefulWidget {
 
   PojoStudent student;
+  PojoGroup group;
 
-  GradePage({Key key, this.student}) : super(key: key);
+  StudentEditPage({Key key, dynamic args}) : super(key: key){
+    student = args[0];
+    group = args[1];
+  }
 
   @override
-  _GradePage createState() => _GradePage();
+  _StudentEditPage createState() => _StudentEditPage();
 }
 
-class _GradePage extends State<GradePage> with AutomaticKeepAliveClientMixin {
+class _StudentEditPage extends State<StudentEditPage> with AutomaticKeepAliveClientMixin {
 
-  GroupsBloc groupsBloc = new GroupsBloc();
-
-
-
-  _GradePage();
+  _StudentEditPage();
 
   @override
   void initState() {
-    groupsBloc.dispatch(FetchGroupEvent());
-
-
     super.initState();
   }
 
@@ -53,21 +53,21 @@ class _GradePage extends State<GradePage> with AutomaticKeepAliveClientMixin {
             child: new RefreshIndicator(
                 child: Column(
                   children: <Widget>[
-
-                    Text(locText(context, key: "grades"), style: TextStyle(fontSize: 26),),
+                    Text("Diák: ${widget.student.name}", style: TextStyle(fontSize: 26)),
+                    Text("Jegyek", style: TextStyle(fontSize: 20)),
                     Expanded(
                       child: ListView.builder(
                         // physics: BouncingScrollPhysics(),
                           itemCount: widget.student.grades.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return GradeItemWidget(grade: widget.student.grades[index]);
+                            return GradeItemWidget(index: index, student: widget.student, group: widget.group);
                           }
                       )
                     ),
 
                   ],
                 ),
-                onRefresh: () async => groupsBloc.dispatch(FetchGroupEvent()) //await getData()
+                onRefresh: () async => BlocProvider.of<GroupsBloc>(context).dispatch(ReloadGroupEvent()) //await getData()
             ),
           )
       ),

@@ -1,11 +1,11 @@
 import 'package:dusza2019/widgets/GroupInheritedWidget.dart';
-import 'package:dusza2019/widgets/pages/absent_page.dart';
+import 'package:dusza2019/widgets/pages/choose_absent_page.dart';
 import 'package:dusza2019/widgets/pages/edit_student_page.dart';
-import 'package:dusza2019/widgets/pages/group_page.dart';
+import 'package:dusza2019/widgets/pages/choose_group_page.dart';
 import 'package:dusza2019/widgets/pages/login_page.dart';
 import 'package:dusza2019/widgets/pages/login_page.dart';
 import 'package:dusza2019/widgets/pages/spinner_page.dart';
-import 'package:dusza2019/widgets/pages/students_page.dart';
+import 'package:dusza2019/widgets/pages/edit_group_page.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/pages/intro_page.dart';
@@ -44,10 +44,10 @@ class RouteGenerator{
         return MaterialPageRoute(builder: (_) => GroupsPage());//MaterialPageRoute(builder: (_) => MainTabHosterPage());
       case '/student':
         assert(args != null);
-        return MaterialPageRoute(builder: (_) => StudentsPage(group: args,));
+        return MaterialPageRoute(builder: (_) => GroupEditPage(group: args,));
       case '/student/edit':
         assert(args != null);
-        return MaterialPageRoute(builder: (_) => GradePage(student: args,));
+        return MaterialPageRoute(builder: (_) => StudentEditPage(args: args,));
       case '/absent':
         assert(args != null);
         return MaterialPageRoute(builder: (_) => AbsentPage(group: args,));

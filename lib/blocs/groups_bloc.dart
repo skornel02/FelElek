@@ -14,66 +14,236 @@ abstract class GroupState extends Equatable {
   GroupState([List props = const []]) : super(props);
 }
 
-class FetchGroupEvent extends GroupEvent {
+class ReloadGroupEvent extends GroupEvent {
   @override String toString() => 'FetchGroupEvent';
   @override
   List<Object> get props => null;
 }
+
+
+class AddGroupEvent extends GroupEvent {
+  final String name;
+
+  AddGroupEvent(this.name);
+
+  @override String toString() => 'AddGroupEvent';
+  @override
+  List<Object> get props => null;
+}
+
+class SetSelectedGroup extends GroupEvent {
+  final PojoGroup group;
+
+  SetSelectedGroup(this.group);
+
+  @override String toString() => 'SetSelectedGroupEvent';
+  @override
+  List<Object> get props => null;
+}
+
+class RemoveGroupEvent extends GroupEvent {
+  final PojoGroup group;
+
+  RemoveGroupEvent(this.group);
+
+  @override String toString() => 'RemoveGroupEvent';
+  @override
+  List<Object> get props => null;
+}
+
+class AddStudentEvent extends GroupEvent {
+  final String name;
+  final PojoGroup group;
+
+  AddStudentEvent(this.name, this.group);
+
+  @override String toString() => 'AddUserEvent';
+  @override
+  List<Object> get props => null;
+}
+
+class SetSelectedStudentEvent extends GroupEvent {
+  final PojoStudent student;
+  final PojoGroup group;
+
+  SetSelectedStudentEvent(this.student, this.group);
+
+  @override String toString() => 'SetStudentEvent';
+  @override
+  List<Object> get props => null;
+}
+
+class RemoveStudentEvent extends GroupEvent {
+  final PojoStudent student;
+  final PojoGroup group;
+
+  RemoveStudentEvent(this.student, this.group);
+
+  @override String toString() => 'RemoveStudentEvent';
+  @override
+  List<Object> get props => null;
+}
+
+class AddGradeEvent extends GroupEvent {
+  final int grade;
+  final PojoStudent student;
+  final PojoGroup group;
+
+  AddGradeEvent(this.grade, this.student, this.group);
+
+  @override String toString() => 'AddGradeEvent';
+  @override
+  List<Object> get props => null;
+}
+
+class RemoveGradeEvent extends GroupEvent {
+  final int index;
+  final PojoStudent student;
+  final PojoGroup group;
+
+  RemoveGradeEvent(this.index, this.student, this.group);
+
+  @override String toString() => 'AddGradeEvent';
+  @override
+  List<Object> get props => null;
+}
+
 class InitialGroupState extends GroupEvent {
   @override String toString() => 'InitialGroupState';
   @override
   List<Object> get props => null;
 }
+
 class WaitingGroupState extends GroupState {
   @override String toString() => 'WaitingGroupState';
   @override
   List<Object> get props => null;
 }
 class LoadedGroupState extends GroupState {
-  final List<PojoGroup> _groups;
+  final List<PojoGroup> groups;
+  final PojoGroup selectedGroup;
+  final PojoStudent selectedStudent;
 
-  LoadedGroupState(this._groups);
+  LoadedGroupState(this.groups, this.selectedGroup, this.selectedStudent);
 
   @override String toString() => 'LoadedGroupState';
   @override
-  List<Object> get props => _groups;
+  List<Object> get props => null;
 }
 
 
 class GroupsBloc extends Bloc<GroupEvent, GroupState> {
 
   List<PojoGroup> groups = List();
+  PojoGroup selectedGroup;
+  PojoStudent selectedStudent;
 
   @override
   GroupState get initialState => WaitingGroupState();
 
   @override
   Stream<GroupState> mapEventToState(GroupEvent event) async* {
-    if (event is FetchGroupEvent) {
-      try {
-        yield WaitingGroupState();
 
-        print("asd1");
-        PojoGroup group = new PojoGroup("GG", "GG", [PojoStudent(id: 0, name: "Péter", isAbsent: false, grades: [1,1,1])]);
-        print("asd2");
-        PojoGroup group2 = new PojoGroup("AA", "BB", [PojoStudent(id: 0, name: "Péter", isAbsent: false, grades: [1,1,1])]);
-        print("asd3");
-        groups.add(group);
-        groups.add(group2);
-        print("asd4");
+    switch(event.runtimeType) {
+      case ReloadGroupEvent:
+        try {
+          yield WaitingGroupState();
 
-        await Database().saveGroups(groups);
+          await _updateGroupState();
+          yield LoadedGroupState(groups, selectedGroup, selectedStudent);
+        } on Exception catch(e){
+          print("log: Exception: ${e.toString()}");
+        }
 
-        print("asd5");
-        groups = await Database().getGroups();
+        break;
+      case AddGroupEvent:
+        AddGroupEvent e = event;
+        groups.add(PojoGroup.fromName(e.name));
 
-        print("asd6");
-        print(groups);
+        Database().saveGroups(groups);
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
 
-        yield LoadedGroupState(groups);
-      } on Exception catch(e){
-        print("log: Exception: ${e.toString()}");
-      }
+        break;
+      case SetSelectedGroup:
+        SetSelectedGroup e = event;
+        selectedGroup = e.group;
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
+
+        break;
+      case RemoveGroupEvent:
+        RemoveGroupEvent e = event;
+        groups.removeWhere((group) => group.uuId == e.group.uuId);
+
+        Database().saveGroups(groups);
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
+
+        break;
+      case AddStudentEvent:
+        AddStudentEvent e = event;
+        int biggestId = 0;
+        for(PojoStudent student in e.group.students) {
+          if (biggestId < student.id)
+            biggestId = student.id;
+        }
+        groups.firstWhere((group) => group.uuId == e.group.uuId)
+            .students.add(PojoStudent.fromName(e.name, biggestId + 1));
+
+        Database().saveGroups(groups);
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
+
+        break;
+      case SetSelectedStudentEvent:
+        SetSelectedStudentEvent e = event;
+        selectedStudent = e.student;
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
+
+        break;
+      case RemoveStudentEvent:
+        RemoveStudentEvent e = event;
+        for(PojoGroup group in groups) {
+          if(group.uuId == e.group.uuId){
+            group.students.removeWhere((student) => student.id == e.student.id);
+          }
+        }
+
+        Database().saveGroups(groups);
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
+        
+        break;
+      case AddGradeEvent:
+        AddGradeEvent e = event;
+        groups.firstWhere((group) => group.uuId == e.group.uuId)
+            .students.firstWhere((student) => student.id == e.student.id)
+              .grades.add(e.grade);
+
+        Database().saveGroups(groups);
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
+
+        break;
+      case RemoveGradeEvent:
+        RemoveGradeEvent e = event;
+        PojoStudent student = groups.firstWhere((group) => group.uuId == e.group.uuId)
+            .students.firstWhere((student) => student.id == e.student.id);
+        student.grades.removeAt(e.index);
+
+        Database().saveGroups(groups);
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
+        break;
+      default:
+        break;
     }
   }
+
+  Future<void> _updateGroupState() async{
+    groups = await Database().getGroups();
+  }
+
+  void _placeholder() async {
+    print("Adding placeholders");
+    PojoGroup group = new PojoGroup("GG", "GG", [PojoStudent(id: 0, name: "Péter", isAbsent: false, grades: [1,1,1])]);
+    PojoGroup group2 = new PojoGroup("AA", "BB", [PojoStudent(id: 0, name: "Péter", isAbsent: false, grades: [1,1,1])]);
+    groups.add(group);
+    groups.add(group2);
+  }
+
 }

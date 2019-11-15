@@ -160,32 +160,18 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
         );
         print("google login: 5");
 
-        // final AuthResult authResult = (await _auth.signInWithCredential(credential));
-        // FirebaseUser user = authResult.user;
         final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
         print("signed in " + user.displayName);
 
         final accessToken = googleAuth.accessToken;
-        var groups = await Database().getGroups();
 
-        String fileId = await Database().getDBFileIdFromDrive(accessToken);
-
-        if(fileId == null) {
-          print("Groups not found on drive... Uploading now!");
-          fileId = await Database().uploadDataToDrive(accessToken, groups);
-        }else {
-          print("Groups found on drive!");
-        }
-
-        groups = await Database().getDataFromDrive(accessToken, fileId);
-        print(groups);
+        await Database().syncWithGoogleDrive(accessToken);
 
         if(_socialToken == null && _socialToken == "canceled"){
           Crashlytics().recordError(Exception("Social Token is null"), StackTrace.current, context: "Social Token is null");
           yield GoogleLoginFineState();
         }else{
           yield GoogleLoginSuccessfulState();
-
         }
       }catch(exception, stacktrace){
         Crashlytics().recordError(exception, stacktrace);

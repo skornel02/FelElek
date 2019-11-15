@@ -1,6 +1,8 @@
+import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/blocs/path_bloc.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class GroupItemWidget extends StatefulWidget{
@@ -27,7 +29,6 @@ class _GroupItemWidget extends State<GroupItemWidget> {
       onTap: (){
         setState(() {
           isSelected = !isSelected;
-
         });
         if(isSelected){
           PathsBloc().dispatch(SetPathGroupEvent(group: widget.group));
@@ -49,6 +50,14 @@ class _GroupItemWidget extends State<GroupItemWidget> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
+                          IconButton(
+                            icon: Icon(FontAwesomeIcons.times),
+                            color: Colors.red,
+                            onPressed: (){
+                              BlocProvider.of<GroupsBloc>(context)
+                                  .dispatch(RemoveGroupEvent(widget.group));
+                            },
+                          ),
                           Text(widget.group.name,
                             style: TextStyle(
                                 fontSize: 22, fontWeight: FontWeight.w700
@@ -57,6 +66,8 @@ class _GroupItemWidget extends State<GroupItemWidget> {
                           IconButton(
                             icon: Icon(FontAwesomeIcons.edit),
                             onPressed: (){
+                              BlocProvider.of<GroupsBloc>(context)
+                                  .dispatch(SetSelectedGroup(widget.group));
                               PathsBloc().dispatch(SetPathGroupEvent(group: widget.group));
                               Navigator.pushNamed(context, "/student", arguments: widget.group);
                             },

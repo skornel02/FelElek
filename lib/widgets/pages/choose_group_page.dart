@@ -2,8 +2,10 @@ import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/blocs/path_bloc.dart';
 import 'package:dusza2019/other/hazizz_localizations.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
+import 'package:dusza2019/widgets/dialogs/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../items/group_item_widget.dart';
 
@@ -18,26 +20,21 @@ class GroupsPage extends StatefulWidget {
 
 class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
 
-  GroupsBloc groupsBloc = new GroupsBloc();
-
   PojoGroup selectedGroup;
 
-
   _GroupsPage();
-
-  @override
-  void initState() {
-    groupsBloc.dispatch(FetchGroupEvent());
-
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Container(//LogConsoleOnShake(
       // tag: "group",
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(FontAwesomeIcons.plus),
+          onPressed: (){
+            showAddGroupDialog(context);
+          },
+        ),
         body: SafeArea(
           child: new RefreshIndicator(
             child: Column(
@@ -46,13 +43,13 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                 Text(locText(context, key: "groups"), style: TextStyle(fontSize: 26),),
                 Expanded(
                   child: BlocBuilder(
-                      bloc: groupsBloc,
+                      bloc: BlocProvider.of<GroupsBloc>(context),
                       builder: (BuildContext context, GroupState state) {
                         print("STATE: ${state.toString()}");
                         if (state is LoadedGroupState) {
-                          List<PojoGroup> groups = groupsBloc.groups;
+                          List<PojoGroup> groups = state.groups;
                           return new ListView.builder(
-                            // physics: BouncingScrollPhysics(),
+                              // physics: BouncingScrollPhysics(),
                               itemCount: groups.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return GroupItemWidget(group: groups[index]);
@@ -77,7 +74,7 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
 
               ],
             ),
-            onRefresh: () async => groupsBloc.dispatch(FetchGroupEvent()) //await getData()
+            onRefresh: () async => BlocProvider.of<GroupsBloc>(context).dispatch(ReloadGroupEvent()) //await getData()
           ),
         )
       ),

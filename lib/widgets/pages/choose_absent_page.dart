@@ -24,7 +24,7 @@ class _AbsentPage extends State<AbsentPage> with AutomaticKeepAliveClientMixin {
   _AbsentPage();
   @override
   void initState() {
-    groupsBloc.dispatch(FetchGroupEvent());
+    groupsBloc.dispatch(ReloadGroupEvent());
 
     choseStudents = widget.group.students;
 
@@ -60,12 +60,11 @@ class _AbsentPage extends State<AbsentPage> with AutomaticKeepAliveClientMixin {
                       child: Text(locText(context, key: "next")),
                       onPressed: (){
                         Navigator.pushNamed(context, "/absent/spinner", arguments: choseStudents);
-
                       },
                     )
                   ],
                 ),
-                onRefresh: () async => groupsBloc.dispatch(FetchGroupEvent()) //await getData()
+                onRefresh: () async => groupsBloc.dispatch(ReloadGroupEvent()) //await getData()
             ),
           )
       ),

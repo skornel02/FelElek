@@ -1,12 +1,20 @@
+import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
+import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class GradeItemWidget extends StatelessWidget{
 
+  int index;
   int grade;
+  PojoStudent student;
+  PojoGroup group;
 
-  GradeItemWidget({this.grade});
+  GradeItemWidget({this.index, this.student, this.group}){
+    grade = student.grades[index];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +41,7 @@ class GradeItemWidget extends StatelessWidget{
                           icon: Icon(FontAwesomeIcons.times),
                           color: Colors.red,
                           onPressed: (){
-                            // delete item
+                            BlocProvider.of<GroupsBloc>(context).dispatch(RemoveGradeEvent(index, student, group));
                           },
                         ),
                       ],

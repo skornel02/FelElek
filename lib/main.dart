@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/easy_localization_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
@@ -35,42 +37,42 @@ Future<bool> fromNotification() async {
   await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
   // var notificationAppLaunchDetails = await HazizzNotification.flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-  print("from notif1: ${notificationAppLaunchDetails.didNotificationLaunchApp}");
+  print(
+      "from notif1: ${notificationAppLaunchDetails.didNotificationLaunchApp}");
   print("from notif2: ${notificationAppLaunchDetails.payload}");
-  if(notificationAppLaunchDetails.didNotificationLaunchApp) {
+  if (notificationAppLaunchDetails.didNotificationLaunchApp) {
     isFromNotification = true;
     String payload = notificationAppLaunchDetails.payload;
-    if(payload != null) {
+    if (payload != null) {
       tasksTomorrowSerialzed = payload;
     }
-  }else{
+  } else {
     //isFromNotification = true;
   }
   return isFromNotification;
 }
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
- // preferredLocale = await getPreferredLocale();
+  // preferredLocale = await getPreferredLocale();
 
 //  await HazizzMessageHandler().configure();
 
- // fromNotification();
+  // fromNotification();
 
   await AppState.appStartProcedure();
 
   themeData = await HazizzTheme.getCurrentTheme();
 
 
-
-  if(!(await AppState.isNewComer())) {
-    if(!(await AppState.isLoggedIn())) { // !(await AppState.isLoggedIn())
+  if (!(await AppState.isNewComer())) {
+    if (!(await AppState.isLoggedIn())) { // !(await AppState.isLoggedIn())
       isLoggedIn = false;
-    }else {
+    } else {
       AppState.mainAppPartStartProcedure();
     }
-  }else{
+  } else {
     isLoggedIn = false;
     newComer = true;
   }
@@ -78,22 +80,23 @@ void main() async{
   runApp(EasyLocalization(child: HazizzApp()));
 }
 
-class HazizzApp extends StatefulWidget{
+class HazizzApp extends StatefulWidget {
   @override
   _HazizzApp createState() => _HazizzApp();
 }
 
-class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver{
+class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver {
   // Locale preferredLocale;
-
   DateTime currentBackPressTime;
-
   DateTime lastActive;
+
+  GroupsBloc groupsBloc = new GroupsBloc();
 
   @override
   initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    groupsBloc.dispatch(ReloadGroupEvent());
   }
 
   @override
@@ -106,34 +109,33 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver{
   Future didChangeAppLifecycleState(AppLifecycleState state) async {
     print('App lifecycle state is $state');
 
-    if(state == AppLifecycleState.paused){
+    if (state == AppLifecycleState.paused) {
       lastActive = DateTime.now();
     }
 
-    if(state == AppLifecycleState.resumed){
-
-      if(lastActive != null){
+    if (state == AppLifecycleState.resumed) {
+      if (lastActive != null) {
 
       }
     }
 
-    if(state == AppLifecycleState.suspending){
+    if (state == AppLifecycleState.suspending) {
 
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if(isLoggedIn){
-      if(!isFromNotification){
+    if (isLoggedIn) {
+      if (!isFromNotification) {
         startPage = "login";
-      }else {
+      } else {
         startPage = "/tasksTomorrow";
       }
-    }else if(newComer){
+    } else if (newComer) {
       startPage = "intro";
     }
-    else{
+    else {
       startPage = "login";
     }
 
@@ -142,42 +144,49 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver{
     return new DynamicTheme(
         data: (brightness) => themeData,
         themedWidgetBuilder: (context, theme) {
-          return MaterialApp(
-            navigatorKey: BusinessNavigator().navigatorKey,
-            title: 'Hazizz Mobile',
-            showPerformanceOverlay: false,
-            theme: theme,
-            initialRoute: /*"/tasksTomorrow",*/  startPage,
-            onGenerateRoute: RouteGenerator.generateRoute,
+          return MultiBlocProvider(
+              providers: [
+                BlocProvider<GroupsBloc>(
+                  builder: (_) => groupsBloc,
+                )
+              ],
+              child: MaterialApp(
+                navigatorKey: BusinessNavigator().navigatorKey,
+                title: 'Hazizz Mobile',
+                showPerformanceOverlay: false,
+                theme: theme,
+                initialRoute: /*"/tasksTomorrow",*/ startPage,
+                onGenerateRoute: RouteGenerator.generateRoute,
 
-            localizationsDelegates: [
-              HazizzLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            supportedLocales: getSupportedLocales(),
+                localizationsDelegates: [
+                  HazizzLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                supportedLocales: getSupportedLocales(),
 
 
+                localeResolutionCallback: (locale, supportedLocales) {
+                  // Check if the current device locale is supported
+                  print("prCode1: ${preferredLocale.toString()}");
+                  if (preferredLocale != null) {
+                    print("prCode: ${preferredLocale
+                        .languageCode}, ${preferredLocale.countryCode}");
+                    return preferredLocale;
+                  }
+                  for (var supportedLocale in supportedLocales) {
+                    if (supportedLocale.languageCode == locale?.languageCode &&
+                        supportedLocale.countryCode == locale.countryCode) {
+                      setPreferredLocale(supportedLocale);
+                      return supportedLocale;
+                    }
+                  }
+                  // If the locale of the device is not supported, use the first one
+                  // from the list (English, in this case).
+                  return supportedLocales.first;
+                },
 
-            localeResolutionCallback: (locale, supportedLocales) {
-              // Check if the current device locale is supported
-              print("prCode1: ${preferredLocale.toString()}");
-              if(preferredLocale != null){
-                print("prCode: ${preferredLocale.languageCode}, ${preferredLocale.countryCode}");
-                return preferredLocale;
-              }
-              for(var supportedLocale in supportedLocales) {
-                if(supportedLocale.languageCode == locale?.languageCode &&
-                    supportedLocale.countryCode == locale.countryCode) {
-                  setPreferredLocale(supportedLocale);
-                  return supportedLocale;
-                }
-              }
-              // If the locale of the device is not supported, use the first one
-              // from the list (English, in this case).
-              return supportedLocales.first;
-            },
-
+              )
           );
         }
     );

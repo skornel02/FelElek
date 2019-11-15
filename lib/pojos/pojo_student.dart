@@ -17,6 +17,10 @@ class PojoStudent{
 
   PojoStudent({@required this.name, @required this.id, @required this.grades, @required this.isAbsent});
 
+  PojoStudent.fromName(this.name, this.id) {
+    grades = new List();
+    isAbsent = false;
+  }
 
   @override
   factory PojoStudent.fromJson(Map<String, dynamic> json) =>
