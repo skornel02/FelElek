@@ -2,11 +2,11 @@ import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class GroupItemWidget extends StatelessWidget{
+class GradeItemWidget extends StatelessWidget{
 
-  PojoGroup group;
+  int grade;
 
-  GroupItemWidget({this.group});
+  GradeItemWidget({this.grade});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +14,7 @@ class GroupItemWidget extends StatelessWidget{
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5,
         child: InkWell(
-            onTap: () {
-              Navigator.popAndPushNamed(context, "/group/groupId", arguments: group);
-            },
+
             child:
             Align(
                 alignment: Alignment.centerLeft,
@@ -26,15 +24,16 @@ class GroupItemWidget extends StatelessWidget{
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(group.name,
+                        Text(grade.toString(),
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.w700
                           ),
                         ),
                         IconButton(
-                          icon: Icon(FontAwesomeIcons.edit),
+                          icon: Icon(FontAwesomeIcons.times),
+                          color: Colors.red,
                           onPressed: (){
-
+                            // delete item
                           },
                         ),
                       ],

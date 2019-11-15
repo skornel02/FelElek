@@ -1,29 +1,31 @@
 import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/other/hazizz_localizations.dart';
-import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:dusza2019/pojos/pojo_student.dart';
+import 'package:dusza2019/widgets/dialogs/dialogs.dart';
+import 'package:dusza2019/widgets/items/grade_item_widget.dart';
 import 'package:dusza2019/widgets/items/student_item_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class StudentsPage extends StatefulWidget {
 
-  PojoGroup group;
+class GradePage extends StatefulWidget {
 
-  StudentsPage({Key key, this.group}) : super(key: key);
+  PojoStudent student;
+
+  GradePage({Key key, this.student}) : super(key: key);
 
   @override
-  _StudentsPage createState() => _StudentsPage();
+  _GradePage createState() => _GradePage();
 }
 
-class _StudentsPage extends State<StudentsPage> with AutomaticKeepAliveClientMixin {
+class _GradePage extends State<GradePage> with AutomaticKeepAliveClientMixin {
 
   GroupsBloc groupsBloc = new GroupsBloc();
 
 
 
-  _StudentsPage();
+  _GradePage();
+
   @override
   void initState() {
     groupsBloc.dispatch(FetchGroupEvent());
@@ -34,11 +36,6 @@ class _StudentsPage extends State<StudentsPage> with AutomaticKeepAliveClientMix
 
   @override
   Widget build(BuildContext context) {
-
-    List<PojoStudent> students = widget.group.students;
-
-    print("");
-
     return Container(//LogConsoleOnShake(
       // tag: "group",
       child: Scaffold(
@@ -46,29 +43,28 @@ class _StudentsPage extends State<StudentsPage> with AutomaticKeepAliveClientMix
           title: Text(locText(context, key: "groups")),
         ),
         */
-        floatingActionButton: FloatingActionButton(
-          child: Icon(FontAwesomeIcons.plus),
-          onPressed: (){
-
-          },
-        ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(FontAwesomeIcons.plus),
+            onPressed: (){
+              showAddGradeDialog(context);
+            },
+          ),
           body: SafeArea(
             child: new RefreshIndicator(
                 child: Column(
                   children: <Widget>[
-                    Text("${locText(context, key: "group")}: ${widget.group.name}", style: TextStyle(fontSize: 26),),
 
-                    Text(locText(context, key: "students"), style: TextStyle(fontSize: 22),),
+                    Text(locText(context, key: "grades"), style: TextStyle(fontSize: 26),),
                     Expanded(
-                      child:
-                        ListView.builder(
+                      child: ListView.builder(
                         // physics: BouncingScrollPhysics(),
-                        itemCount: students.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return StudentItemWidget(student: students[index],);
-                        }
+                          itemCount: widget.student.grades.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GradeItemWidget(grade: widget.student.grades[index]);
+                          }
                       )
                     ),
+
                   ],
                 ),
                 onRefresh: () async => groupsBloc.dispatch(FetchGroupEvent()) //await getData()

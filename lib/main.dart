@@ -74,8 +74,6 @@ void main() async{
     isLoggedIn = false;
     newComer = true;
   }
-  isLoggedIn  = true;
-  newComer = false;
 
   runApp(EasyLocalization(child: HazizzApp()));
 }

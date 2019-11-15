@@ -130,156 +130,71 @@ class _IntroPage extends State<IntroPage> with AutomaticKeepAliveClientMixin, Si
   @override
   Widget build(BuildContext context) {
 
-    void nextPage(){
-      _tabController.animateTo(_tabController.index+1,  duration: Duration(milliseconds:  2000));
-    }
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left:20, right:20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+
+              Container(
+                child: Text("Elek orcája"),
+                height: 80,
+              ),
+              Text("Üdv! Én vagyok Elek, a saját felelés-asszisztensed. Kezdjük is el!", textAlign: TextAlign.center),
+
+              Text("A szinkronizációhoz nyomd meg a gombot:", textAlign: TextAlign.center,),
 
 
-    EdgeInsets padding = MediaQuery.of(context).padding;
-    double height = MediaQuery.of(context).size.height;
+              Builder(
+                builder: (context){
+                  Widget googleSignInButtonWidget = GoogleSignInButton(
+                    onPressed: (){
+                      googleLoginBloc.dispatch(GoogleLoginButtonPressedEvent());
+                    },
+                  );
 
-    double height1 = height - padding.top - padding.bottom;
+                  return BlocListener(
+                    listener: (context, state){
+                      print("log: ggoogle: $state");
 
-    // 5 db
-    List<Color> gradientColor = [HazizzTheme.blue, Colors.green, Colors.yellow,  Colors.red, HazizzTheme.blue];
+                      if(state is GoogleLoginSuccessfulState){
+                        AppState.proceedToApp(context);
+                      }
+                      else if(state is GoogleLoginWaitingState){
 
-    slides = [
-      Builder(
-        builder: (context){
-          Widget googleSignInButtonWidget = GoogleSignInButton(
-            onPressed: (){
-              googleLoginBloc.dispatch(GoogleLoginButtonPressedEvent());
-            },
-          );
+                      }else{
+                      }
+                    },
+                      bloc: googleLoginBloc,
+                      child: LoadingDialog(
+                        show: false,
+                          child: Padding(
+                              padding: const EdgeInsets.only(top: 16.0),
+                              child: Column(
+                                children: <Widget>[
+                                  googleSignInButtonWidget
+                                ],
+                              )))
+                  );
+                },
+              ),
 
-          return BlocBuilder(
-              bloc: googleLoginBloc,
-              builder: (context, state){
+              Text("Az importáláshoz pedig nyomd meg ezt a gombot", textAlign: TextAlign.center),
 
-                bool _isLoading;
+              RaisedButton(
+                child: Text("IMPORTÁLÁS"),
+                onPressed: (){
 
-                print("log: ggoogle: $state");
+                },
+              )
 
-                if(state is GoogleLoginSuccessfulState){
-                  _isLoading = false;
-
-
-                  AppState.mainAppPartStartProcedure();
-                  nextPage();
-                }
-                else if(state is GoogleLoginWaitingState){
-                  _isLoading = true;
-
-                }else{
-                  _isLoading = false;
-                }
-
-                return LoadingDialog(
-                  child: introPageBuilder(Transform.translate(
-                    offset: const Offset(0.0, -30.0),
-                    child: Container(
-                      // padding: const EdgeInsets.all(8.0),
-                      //  color: const Color(0xFF7F7F7F),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 0.0),
-                        child: Image.asset(
-                          'assets/images/Logo.png',
-                        ),
-                      ),
-                    ),
-                  ), Column(children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 8),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0, right: 8),
-                        child: Center(
-                            child: Text(locText(context, key: "hazizz_intro"), style: TextStyle(fontSize: 19), textAlign: TextAlign.center)
-                        ),
-                      ),
-
-                    ),
-
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 16.0),
-                        child: Column(
-                          children: <Widget>[
-                            googleSignInButtonWidget
-                          ],
-                        ),
-                      ),
-                    )
-                  ],),
-                    backgroundIndex: 1,
-                  ),
-                  show: _isLoading,
-                );
-              }
-
-          );
-        },
-      ),
-
-      introPageBuilder(Padding(
-        padding: const EdgeInsets.only(top: 44.0),
-        child: Text(locText(context, key: "about_group_title"), style: TextStyle(fontSize: 40, fontWeight: FontWeight.w800), textAlign: TextAlign.center,),
-      ),
-          Padding(
-            padding: const EdgeInsets.only(top: 60.0, left: 8, right:8),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-
-                // Text(locText(context, key: "login"), style: TextStyle(fontSize: 40, fontWeight: FontWeight.w800, color: HazizzTheme.blue, ),),
-
-                Text(locText(context, key: "about_group_description1"), style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
-
-
-                Text(locText(context, key: "about_group_description2"), style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
-
-                Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0, right: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-
-
-                      FloatingActionButton(child: Icon(FontAwesomeIcons.chevronRight),
-                        onPressed: (){
-                          nextPage();
-                        },
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            ],
           ),
-
-          backgroundIndex: 2
-      ),
-
-    ];
-
-    return WillPopScope(
-      onWillPop: _onWillPop,
-
-      child: Scaffold(
-        //   resizeToAvoidBottomPadding: false,
-        body: SafeArea(
-          child: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
-            controller: _tabController,
-            children: slides,
-          ),
-        ),
+        )
       ),
     );
-  }
-
-  Future<bool> _onWillPop() async {
-    return await false;
   }
 
   @override

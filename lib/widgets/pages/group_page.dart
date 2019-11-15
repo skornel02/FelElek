@@ -1,10 +1,11 @@
 import 'package:dusza2019/blocs/groups_bloc.dart';
+import 'package:dusza2019/blocs/path_bloc.dart';
 import 'package:dusza2019/other/hazizz_localizations.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../group_item_widget.dart';
+import '../items/group_item_widget.dart';
 
 
 class GroupsPage extends StatefulWidget {
@@ -18,6 +19,8 @@ class GroupsPage extends StatefulWidget {
 class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
 
   GroupsBloc groupsBloc = new GroupsBloc();
+
+  PojoGroup selectedGroup;
 
 
   _GroupsPage();
@@ -35,10 +38,6 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
     return Container(//LogConsoleOnShake(
       // tag: "group",
       child: Scaffold(
-       /* appBar: AppBar(
-          title: Text(locText(context, key: "groups")),
-        ),
-        */
         body: SafeArea(
           child: new RefreshIndicator(
             child: Column(
@@ -49,6 +48,7 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                   child: BlocBuilder(
                       bloc: groupsBloc,
                       builder: (BuildContext context, GroupState state) {
+                        print("STATE: ${state.toString()}");
                         if (state is LoadedGroupState) {
                           List<PojoGroup> groups = groupsBloc.groups;
                           return new ListView.builder(
@@ -69,7 +69,9 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                 RaisedButton(
                   child: Text("Új felelés"),
                   onPressed: (){
-
+                    if(PathsBloc().group != null){
+                    }
+                    Navigator.pushNamed(context, "/absent", arguments: PathsBloc().group);
                   },
                 ),
 

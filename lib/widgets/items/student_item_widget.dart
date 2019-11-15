@@ -1,12 +1,19 @@
-import 'package:dusza2019/pojos/pojo_group.dart';
+import 'package:dusza2019/blocs/path_bloc.dart';
+import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class GroupItemWidget extends StatelessWidget{
+class StudentItemWidget extends StatelessWidget{
 
-  PojoGroup group;
+  PojoStudent student;
 
-  GroupItemWidget({this.group});
+  bool absentMode = false;
+
+  StudentItemWidget({this.student});
+
+  StudentItemWidget.absentMode({this.student}){
+    absentMode = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +21,7 @@ class GroupItemWidget extends StatelessWidget{
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5,
         child: InkWell(
-            onTap: () {
-              Navigator.popAndPushNamed(context, "/group/groupId", arguments: group);
-            },
+
             child:
             Align(
                 alignment: Alignment.centerLeft,
@@ -26,7 +31,7 @@ class GroupItemWidget extends StatelessWidget{
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(group.name,
+                        Text(student.name,
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.w700
                           ),
@@ -34,7 +39,14 @@ class GroupItemWidget extends StatelessWidget{
                         IconButton(
                           icon: Icon(FontAwesomeIcons.edit),
                           onPressed: (){
+                            if(absentMode){
+                              // kiveni a listából
 
+                            }else{
+                              PathsBloc().dispatch(SetPathStudentEvent(student: student));
+                              Navigator.pushNamed(context, "/student/edit", arguments: student);
+
+                            }
                           },
                         ),
                       ],

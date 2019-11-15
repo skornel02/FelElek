@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dusza2019/other/database.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
+import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:equatable/equatable.dart';
 
 
@@ -41,7 +42,7 @@ class LoadedGroupState extends GroupState {
 
 class GroupsBloc extends Bloc<GroupEvent, GroupState> {
 
-  List<PojoGroup> groups;
+  List<PojoGroup> groups = List();
 
   @override
   GroupState get initialState => WaitingGroupState();
@@ -52,15 +53,22 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
       try {
         yield WaitingGroupState();
 
-        PojoGroup group = new PojoGroup("GG", "GG", new List(0));
-        PojoGroup group2 = new PojoGroup("AA", "BB", new List(0));
-        List<PojoGroup> groupz = new List();
-        groupz.add(group);
-        groupz.add(group2);
+        print("asd1");
+        PojoGroup group = new PojoGroup("GG", "GG", [PojoStudent(id: 0, name: "Péter", isAbsent: false, grades: [1,1,1])]);
+        print("asd2");
+        PojoGroup group2 = new PojoGroup("AA", "BB", [PojoStudent(id: 0, name: "Péter", isAbsent: false, grades: [1,1,1])]);
+        print("asd3");
+        groups.add(group);
+        groups.add(group2);
+        print("asd4");
 
-        await Database().saveGroups(groupz);
+        await Database().saveGroups(groups);
 
+        print("asd5");
         groups = await Database().getGroups();
+
+        print("asd6");
+        print(groups);
 
         yield LoadedGroupState(groups);
       } on Exception catch(e){
