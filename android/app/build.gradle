@@ -35,11 +35,14 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.hazizz.dusza2019"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+
     }
 
     buildTypes {
@@ -47,6 +50,9 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+
+            minifyEnabled false
+            useProguard true
         }
     }
 }
@@ -63,6 +69,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.2.1'
 
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+    implementation 'com.android.support:multidex:1.0.3'
+
+    // Check for v11.4.2 or higher
+    implementation 'com.google.firebase:firebase-core:17.0.1'
+    // Add dependency
 }
 
 apply plugin: 'com.google.gms.google-services'

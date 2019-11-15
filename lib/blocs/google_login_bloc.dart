@@ -4,12 +4,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:bloc/bloc.dart';
 
-/*
-abstract class HEvent extends Equatable {
-  HEvent([List props = const []]);
-}
-*/
-
 abstract class GoogleLoginEvent extends Equatable {
   GoogleLoginEvent([List props = const []]) : super(props);
 }
@@ -108,7 +102,6 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
   FirebaseAuth _auth;
 
 
-
   GoogleLoginBloc(){
     _googleSignIn = GoogleSignIn(scopes: [
       "https://www.googleapis.com/auth/userinfo.email",
@@ -116,10 +109,7 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
       "openid"
     ]);
     _auth = FirebaseAuth.instance;
-
-
   }
-
 
   GoogleLoginState get initialState => GoogleLoginFineState();
 
@@ -148,7 +138,6 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
       _socialToken = null;
 
       try{
-
         print("google login: 1");
         final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
 
@@ -194,22 +183,3 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
   }
 }
 
-/*
-class LoginBlocs{
-  final GoogleLoginBloc googleLoginBloc = GoogleLoginBloc();
-  final FacebookLoginBloc facebookLoginBloc = FacebookLoginBloc();
-
-  static final LoginBlocs _singleton = new LoginBlocs._internal();
-  factory LoginBlocs() {
-    return _singleton;
-  }
-  LoginBlocs._internal();
-
-  void reset(){
-    googleLoginBloc.reset();
-    facebookLoginBloc.reset();
-  }
-
-
-}
-*/

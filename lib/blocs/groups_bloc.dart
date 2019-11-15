@@ -1,0 +1,57 @@
+import 'package:bloc/bloc.dart';
+import 'package:dusza2019/pojos/pojo_group.dart';
+import 'package:equatable/equatable.dart';
+
+
+
+abstract class GroupEvent extends Equatable {
+  GroupEvent([List props = const []]) : super(props);
+}
+
+abstract class GroupState extends Equatable {
+  GroupState([List props = const []]) : super(props);
+}
+
+class FetchGroupEvent extends GroupEvent {
+  @override String toString() => 'FetchGroupEvent';
+  @override
+  List<Object> get props => null;
+}
+class InitialGroupState extends GroupEvent {
+  @override String toString() => 'InitialGroupState';
+  @override
+  List<Object> get props => null;
+}
+class WaitingGroupState extends GroupState {
+  @override String toString() => 'WaitingGroupState';
+  @override
+  List<Object> get props => null;
+}
+class LoadedGroupState extends GroupEvent {
+  @override String toString() => 'LoadedGroupState';
+  @override
+  List<Object> get props => null;
+}
+
+
+class GroupsBloc extends Bloc<GroupEvent, GroupState> {
+
+  List<PojoGroup> groups;
+
+  @override
+  GroupState get initialState => WaitingGroupState();
+
+  @override
+  Stream<GroupState> mapEventToState(GroupEvent event) async* {
+    if (event is FetchGroupEvent) {
+      try {
+        yield WaitingGroupState();
+
+
+
+      } on Exception catch(e){
+        print("log: Exception: ${e.toString()}");
+      }
+    }
+  }
+}

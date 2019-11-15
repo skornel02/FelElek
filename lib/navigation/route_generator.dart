@@ -1,3 +1,4 @@
+import 'package:dusza2019/widgets/pages/group_page.dart';
 import 'package:dusza2019/widgets/pages/login_page.dart';
 import 'package:dusza2019/widgets/pages/login_page.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,9 @@ class RouteGenerator{
       case 'intro':
         return MaterialPageRoute(builder: (_) => IntroPage());
       case '/':
-        return MaterialPageRoute(builder: (_) => MainTabHosterPage());
+        return MaterialPageRoute(builder: (_) => GroupsPage());//MaterialPageRoute(builder: (_) => MainTabHosterPage());
+      case '/group':
+        return MaterialPageRoute(builder: (_) => GroupsPage());
       default:
         String errorLog = "log: route: ${settings.name}, args: ${settings.arguments}";
         return _errorRoute(errorLog);
