@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "498095072809",
+    "firebase_url": "https://hazizz-velunk.firebaseio.com",
+    "project_id": "hazizz-velunk",
+    "storage_bucket": "hazizz-velunk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498095072809:android:e6256a4c7eb9f81a529e38",
+        "android_client_info": {
+          "package_name": "com.hazizz.dusza2019"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498095072809-p1uqi1nahrkctvvn6hvsuiaighk93jkg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hazizz.dusza2019",
+            "certificate_hash": "cea92dc5137e9be8407c9c8e32b45545c6c14635"
+          }
+        },
+        {
+          "client_id": "498095072809-l392028o64io83v4ktr0a6mq6m28qttq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6jwGYzA6eAo7SqZbyFK28d_mTF-Jhn9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498095072809-l392028o64io83v4ktr0a6mq6m28qttq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
