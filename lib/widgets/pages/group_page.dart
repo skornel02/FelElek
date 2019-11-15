@@ -70,7 +70,6 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                   child: Text("Új felelés"),
                   onPressed: (){
 
-
                   },
                 ),
 

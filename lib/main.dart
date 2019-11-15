@@ -128,7 +128,7 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver{
   Widget build(BuildContext context) {
     if(isLoggedIn){
       if(!isFromNotification){
-        startPage = "/";
+        startPage = "login";
       }else {
         startPage = "/tasksTomorrow";
       }

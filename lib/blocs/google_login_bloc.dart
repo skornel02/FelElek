@@ -1,3 +1,4 @@
+import 'package:dusza2019/other/database.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -106,7 +107,8 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
     _googleSignIn = GoogleSignIn(scopes: [
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/userinfo.profile",
-      "openid"
+      "openid",
+      "https://www.googleapis.com/auth/drive.appdata"
     ]);
     _auth = FirebaseAuth.instance;
   }
@@ -143,10 +145,13 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
 
         print("google login: 2");
 
+        if(googleUser == null) {
+          print("Auth failed!!!");
+        }
+
         print("google login: 3");
 
         final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
         print("google login: 4");
 
         final AuthCredential credential = GoogleAuthProvider.getCredential(
@@ -155,20 +160,25 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
         );
         print("google login: 5");
 
-
         // final AuthResult authResult = (await _auth.signInWithCredential(credential));
         // FirebaseUser user = authResult.user;
         final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
         print("signed in " + user.displayName);
 
-        _socialToken = googleAuth.idToken;
+        final accessToken = googleAuth.accessToken;
+        var groups = await Database().getGroups();
 
-        print("google login: success: openIdToken is not null: ${_socialToken != null}");
+        String fileId = await Database().getDBFileIdFromDrive(accessToken);
 
-        if(_socialToken == null && _socialToken == "canceled"){
-          Crashlytics().recordError(Exception("Social Token is null"), StackTrace.current, context: "Social Token is null");
-          yield GoogleLoginFineState();
+        if(fileId == null) {
+          print("Groups not found on drive... Uploading now!");
+          fileId = await Database().uploadDataToDrive(accessToken, groups);
+        }else {
+          print("Groups found on drive!");
         }
+
+        groups = await Database().getDataFromDrive(accessToken, fileId);
+        print(groups);
       }catch(exception, stacktrace){
         Crashlytics().recordError(exception, stacktrace);
         yield GoogleLoginFineState();

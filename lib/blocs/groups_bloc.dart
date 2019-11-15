@@ -54,14 +54,13 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
 
         PojoGroup group = new PojoGroup("GG", "GG", new List(0));
         PojoGroup group2 = new PojoGroup("AA", "BB", new List(0));
-        List<PojoGroup> groups = new List();
-        groups.add(group);
-        groups.add(group2);
+        List<PojoGroup> groupz = new List();
+        groupz.add(group);
+        groupz.add(group2);
 
-        await Database().saveGroups(groups);
+        await Database().saveGroups(groupz);
 
         groups = await Database().getGroups();
-        print(groups);
 
         yield LoadedGroupState(groups);
       } on Exception catch(e){
