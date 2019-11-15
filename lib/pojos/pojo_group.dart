@@ -9,6 +9,7 @@ part 'pojo_group.g.dart';
 @JsonSerializable()
 class PojoGroup{
 
+
   String uuId;
 
   String name;
@@ -24,5 +25,6 @@ class PojoGroup{
 
   @override
   Map<String, dynamic> toJson() => _$PojoGroupToJson(this);
+
 
 }

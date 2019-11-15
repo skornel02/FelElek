@@ -1,5 +1,4 @@
 import 'package:dusza2019/blocs/path_bloc.dart';
-import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

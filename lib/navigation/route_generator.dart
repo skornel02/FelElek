@@ -9,7 +9,6 @@ import 'package:dusza2019/widgets/pages/students_page.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/pages/intro_page.dart';
-import '../widgets/pages/main_tab_hoster.dart';
 
 
 class RouteGenerator{

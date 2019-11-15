@@ -1,4 +1,5 @@
 import 'package:dusza2019/blocs/groups_bloc.dart';
+import 'package:dusza2019/blocs/path_bloc.dart';
 import 'package:dusza2019/other/hazizz_localizations.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +69,10 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                 RaisedButton(
                   child: Text("Új felelés"),
                   onPressed: (){
-                    Navigator.pushNamed(context, "/absent", arguments: selectedGroup);
+                    if(PathsBloc().group != null){
+
+                    }
+                    Navigator.pushNamed(context, "/absent", arguments: PathsBloc().group);
                   },
                 ),
 
