@@ -19,6 +19,8 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
 
   GroupsBloc groupsBloc = new GroupsBloc();
 
+  PojoGroup selectedGroup;
+
 
   _GroupsPage();
 
@@ -35,10 +37,6 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
     return Container(//LogConsoleOnShake(
       // tag: "group",
       child: Scaffold(
-       /* appBar: AppBar(
-          title: Text(locText(context, key: "groups")),
-        ),
-        */
         body: SafeArea(
           child: new RefreshIndicator(
             child: Column(
@@ -49,6 +47,7 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                   child: BlocBuilder(
                       bloc: groupsBloc,
                       builder: (BuildContext context, GroupState state) {
+                        print("STATE: ${state.toString()}");
                         if (state is LoadedGroupState) {
                           List<PojoGroup> groups = groupsBloc.groups;
                           return new ListView.builder(
@@ -69,8 +68,7 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                 RaisedButton(
                   child: Text("Új felelés"),
                   onPressed: (){
-
-
+                    Navigator.pushNamed(context, "/absent", arguments: selectedGroup);
                   },
                 ),
 

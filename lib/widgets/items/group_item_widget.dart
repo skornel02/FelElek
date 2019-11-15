@@ -1,4 +1,6 @@
+import 'package:dusza2019/blocs/path_bloc.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
+import 'package:dusza2019/widgets/GroupInheritedWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -10,13 +12,13 @@ class GroupItemWidget extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+
+
     return Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5,
         child: InkWell(
-            onTap: () {
-              Navigator.popAndPushNamed(context, "/group/groupId", arguments: group);
-            },
+
             child:
             Align(
                 alignment: Alignment.centerLeft,
@@ -34,7 +36,8 @@ class GroupItemWidget extends StatelessWidget{
                         IconButton(
                           icon: Icon(FontAwesomeIcons.edit),
                           onPressed: (){
-
+                            PathsBloc().dispatch(SetPathGroupEvent(group: group));
+                            Navigator.pushNamed(context, "/student", arguments: group);
                           },
                         ),
                       ],

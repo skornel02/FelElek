@@ -4,30 +4,29 @@ import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:dusza2019/widgets/items/student_item_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class StudentsPage extends StatefulWidget {
+class AbsentPage extends StatefulWidget {
 
   PojoGroup group;
 
-  StudentsPage({Key key, this.group}) : super(key: key);
+  AbsentPage({Key key, this.group}) : super(key: key);
 
   @override
-  _StudentsPage createState() => _StudentsPage();
+  _AbsentPage createState() => _AbsentPage();
 }
 
-class _StudentsPage extends State<StudentsPage> with AutomaticKeepAliveClientMixin {
+class _AbsentPage extends State<AbsentPage> with AutomaticKeepAliveClientMixin {
 
   GroupsBloc groupsBloc = new GroupsBloc();
 
+  List<PojoStudent> choseStudents;
 
-
-  _StudentsPage();
+  _AbsentPage();
   @override
   void initState() {
     groupsBloc.dispatch(FetchGroupEvent());
 
+    choseStudents = widget.group.students;
 
     super.initState();
   }
@@ -35,23 +34,11 @@ class _StudentsPage extends State<StudentsPage> with AutomaticKeepAliveClientMix
   @override
   Widget build(BuildContext context) {
 
-    List<PojoStudent> students = widget.group.students;
 
-    print("");
 
-    return Container(//LogConsoleOnShake(
-      // tag: "group",
+    return Container(
       child: Scaffold(
-        /* appBar: AppBar(
-          title: Text(locText(context, key: "groups")),
-        ),
-        */
-        floatingActionButton: FloatingActionButton(
-          child: Icon(FontAwesomeIcons.plus),
-          onPressed: (){
 
-          },
-        ),
           body: SafeArea(
             child: new RefreshIndicator(
                 child: Column(
@@ -60,15 +47,22 @@ class _StudentsPage extends State<StudentsPage> with AutomaticKeepAliveClientMix
 
                     Text(locText(context, key: "students"), style: TextStyle(fontSize: 22),),
                     Expanded(
-                      child:
+                        child:
                         ListView.builder(
-                        // physics: BouncingScrollPhysics(),
-                        itemCount: students.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return StudentItemWidget(student: students[index],);
-                        }
-                      )
+                          // physics: BouncingScrollPhysics(),
+                            itemCount: choseStudents.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return StudentItemWidget(student: choseStudents[index],);
+                            }
+                        )
                     ),
+                    RaisedButton(
+                      child: Text(locText(context, key: "next")),
+                      onPressed: (){
+                        Navigator.pushNamed(context, "/absent/spinner", arguments: choseStudents);
+
+                      },
+                    )
                   ],
                 ),
                 onRefresh: () async => groupsBloc.dispatch(FetchGroupEvent()) //await getData()

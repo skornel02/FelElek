@@ -2,11 +2,11 @@ import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class GroupItemWidget extends StatelessWidget{
+class GradeItemWidget extends StatelessWidget{
 
   int grade;
 
-  GroupItemWidget({this.grade});
+  GradeItemWidget({this.grade});
 
   @override
   Widget build(BuildContext context) {

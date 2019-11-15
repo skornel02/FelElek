@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../other/hazizz_localizations.dart';
 import '../../other/hazizz_theme.dart';
+import 'add_grade_dialog.dart';
 
 
 // 280 min width
@@ -77,10 +78,9 @@ class HazizzDialog extends Dialog{
   }
 }
 
-Future showJoinGroupDialog(BuildContext context,) async{
+Future showAddGradeDialog(BuildContext context,) async{
   // List<PojoGroup> data;
- // var d = JoinGroupDialog();
-  var d;
+  var d = AddGradeDialog();
   var result = showDialog(context: context, builder: (context2){
     return d;
   });
