@@ -27,6 +27,12 @@ class AppState{
 
   */
 
+  static Future proceedToApp(BuildContext context) async {
+    // MainTabBlocs().initialize();
+    await mainAppPartStartProcedure();
+    Navigator.popAndPushNamed(context, "/");
+  }
+
   static Future logInProcedure() async {
     // set islogged in to true
     logInProcedureDone = false;

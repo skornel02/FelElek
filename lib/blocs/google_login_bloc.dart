@@ -168,7 +168,12 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
         if(_socialToken == null && _socialToken == "canceled"){
           Crashlytics().recordError(Exception("Social Token is null"), StackTrace.current, context: "Social Token is null");
           yield GoogleLoginFineState();
+        }else{
+          yield GoogleLoginSuccessfulState();
+
         }
+
+
       }catch(exception, stacktrace){
         Crashlytics().recordError(exception, stacktrace);
         yield GoogleLoginFineState();

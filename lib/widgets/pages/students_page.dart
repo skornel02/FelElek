@@ -3,8 +3,9 @@ import 'package:dusza2019/other/hazizz_localizations.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../group_item_widget.dart';
+import '../items/group_item_widget.dart';
 
 
 class StudentsPage extends StatefulWidget {
@@ -39,6 +40,12 @@ class _StudentsPage extends State<StudentsPage> with AutomaticKeepAliveClientMix
           title: Text(locText(context, key: "groups")),
         ),
         */
+        floatingActionButton: FloatingActionButton(
+          child: Icon(FontAwesomeIcons.plus),
+          onPressed: (){
+
+          },
+        ),
           body: SafeArea(
             child: new RefreshIndicator(
                 child: Column(

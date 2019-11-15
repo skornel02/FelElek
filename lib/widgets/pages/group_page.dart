@@ -4,7 +4,7 @@ import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../group_item_widget.dart';
+import '../items/group_item_widget.dart';
 
 
 class GroupsPage extends StatefulWidget {
