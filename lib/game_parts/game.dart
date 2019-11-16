@@ -27,7 +27,7 @@ class MyGame extends Game with TapDetector {
   SpinnerData spinnerData;
 
   static double acc_x = 0.0;
-  static double vel_x = 2;
+  static double vel_x = 4;
 
 
   Size screenSize;
@@ -45,7 +45,7 @@ class MyGame extends Game with TapDetector {
   MyGame({this.screenSize, @required this.spinnerData}){
 
     acc_x = 0.0;
-    vel_x = 2;
+    vel_x = 4;
 
     students = [
       StudentSprite(x: 10, y: 100),
@@ -98,7 +98,7 @@ class MyGame extends Game with TapDetector {
 
     if(winnerStudentSpawned){
       if(winnerStudent.x >= screenSize.width/2 * 0.5){
-        acc_x = (screenSize.width/2 - winnerStudent.x)/ 100000 / deltaTime;
+        acc_x = (screenSize.width/2 - winnerStudent.x)/ vel_x / deltaTime;
       }
     }
 

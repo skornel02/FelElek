@@ -43,8 +43,21 @@ class IntroPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Container(
-                  child: Text("Elek orcája"),
-                  height: 80,
+                  width: 200, height: 200,
+                  child: CircleAvatar(
+                      child: Transform.translate(
+                        offset: Offset(0, 0),
+                        child: Container(
+                            decoration: new BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: new DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: AssetImage("assets/images/elek.png"),
+                                )
+                            )
+                        ),
+                      ),
+                  ),
                 ),
                 Text(
                     "Üdv! Én vagyok Elek, a saját felelés-asszisztensed. Kezdjük is el!",
