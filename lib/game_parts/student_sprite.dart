@@ -12,10 +12,9 @@ class StudentSprite extends SpriteComponent {
   double vel_x;
   Color color;
   // creates a component that renders the crate.png sprite, with size 16 x 16
-  StudentSprite({@required double x, @required double y, @required this.vel_x = 0.05, this.color}) : super.fromSprite(20.0, 20.0, new Sprite('student.png')){
+  StudentSprite({@required double x, @required double y, this.vel_x = 0.05, this.color}) : super.fromSprite(20.0, 20.0, new Sprite('student.png')){
     this.x = x;
     this.y = y;
-
   }
 
   @override
@@ -24,8 +23,6 @@ class StudentSprite extends SpriteComponent {
     this.x = (size.width - this.width)/ 2;
     this.y = (size.height - this.height) / 2;
   }
-
-
 
   @override
   void update(double t) {
