@@ -48,10 +48,10 @@ class RouteGenerator{
         return MaterialPageRoute(builder: (_) => StudentEditPage());
       case '/absent':
         assert(args != null);
-        return MaterialPageRoute(builder: (_) => AbsentPage(group: args,));
+        return MaterialPageRoute(builder: (_) => AbsentPage());
       case '/absent/spinner':
         assert(args != null);
-        return MaterialPageRoute(builder: (_) => SpinnerPage(choseStudents: args,));
+        return MaterialPageRoute(builder: (_) => SpinnerPage(spinnerData: args,));
       case '/absent/spinner/chosen_student':
         assert(args != null);
         return MaterialPageRoute(builder: (_) => ChosenStudentPage(student: args,));
