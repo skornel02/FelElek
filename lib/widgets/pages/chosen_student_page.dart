@@ -79,6 +79,8 @@ class ChosenStudentPage extends StatefulWidget {
 
 class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderStateMixin{
 
+  int grade;
+
   int animTime = 1500;
 
   AnimationController mechController;
@@ -87,6 +89,10 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
 
   AnimationController studentController;
   Animation studentAnimation;
+
+
+  AnimationController buttonController;
+  Animation<double> buttonAnimation;
 
   @override
   void initState() {
@@ -98,7 +104,18 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
 
     studentController = AnimationController(vsync: this, duration: Duration(milliseconds: animTime), );
 
-    Timer(Duration(milliseconds: (animTime/2 + 750).round()), () {
+
+
+
+    buttonController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
+
+    buttonAnimation = Tween(begin: 0.0, end: 1.0).animate(buttonController);
+    Timer(Duration(milliseconds: animTime*2), () {
+      buttonController.forward();
+
+    });
+
+    Timer(Duration(milliseconds: animTime), () {
       studentController.forward();
 
     });
@@ -178,11 +195,60 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
                     );
                   },
                 ),
-
-
               ]
             ),
 
+            Positioned(
+              bottom: 0,
+              child: FadeTransition(
+                  opacity: buttonAnimation,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 80,
+                    child: Card(
+
+                      margin: EdgeInsets.all(6),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      elevation: 10,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8, right: 8),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            RaisedButton(
+                              child: Text(locText(context, key: "back")),
+                              onPressed: (){
+
+                              },
+                            ),
+
+
+                            Builder(
+                              builder: (context){
+                                if(grade == null){
+                                  return RaisedButton(
+                                    child: Text("jegy hozzáadás"),
+                                    onPressed: () async {
+                                      showAddGradeDialog(context).then((int g){
+                                        setState(() {
+                                          grade = g;
+                                        });
+                                      });
+                                    },
+                                  );
+                                }
+                                return Text("Jegy:${grade}", style: TextStyle(fontSize: 22),);
+                              },
+                            )
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+              ),
+            )
 
           ],
         ),

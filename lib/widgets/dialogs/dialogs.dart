@@ -96,10 +96,9 @@ Future showAddStudentDialog(BuildContext context,) async{
   return result;
 }
 
-Future showAddGradeDialog(BuildContext context,) async{
-  var d = AddGradeDialog();
-  var result = showDialog(context: context, builder: (context2){
-    return d;
+Future<int> showAddGradeDialog(BuildContext context,) async{
+  var result = await showDialog(context: context, builder: (context2){
+    return AddGradeDialog();
   });
   return result;
 }

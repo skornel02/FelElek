@@ -19,6 +19,8 @@ class _AddGradeDialog extends State<AddGradeDialog> {
   final double width = 300;
   final double height = 130;
 
+  int currentGrade = 5;
+
   TextEditingController _gradeTextEditingController = TextEditingController();
 
   @override
@@ -48,6 +50,24 @@ class _AddGradeDialog extends State<AddGradeDialog> {
         content: Container(
           child: Stack(
             children: <Widget>[
+
+
+              DropdownButton(
+                value: currentGrade,
+                onChanged: (value){
+                  setState(() {
+                    currentGrade = value;
+                  });
+                },
+                items: [
+                  DropdownMenuItem(child: Text("1"), value: 1 ),
+                  DropdownMenuItem(child: Text("2"), value: 2 ),
+                  DropdownMenuItem(child: Text("3"), value: 3 ),
+                  DropdownMenuItem(child: Text("4"), value: 4 ),
+                  DropdownMenuItem(child: Text("5"), value: 5 ),
+                ],
+              ),
+              /*
               Padding(
                   padding: EdgeInsets.all(10),
                   child: Column(
@@ -62,7 +82,7 @@ class _AddGradeDialog extends State<AddGradeDialog> {
                         textInputAction: TextInputAction.send,
                       ),
                     ],
-                  )),
+                  )),*/
             ],
           ),
         ),
@@ -93,11 +113,11 @@ class _AddGradeDialog extends State<AddGradeDialog> {
                       onPressed: () async {
                         GroupsBloc bloc = BlocProvider.of<GroupsBloc>(context);
                         GroupEvent event = AddGradeEvent(
-                            int.parse(_gradeTextEditingController.text),
+                            currentGrade,
                             state.student,
                             state.group);
                         bloc.dispatch(event);
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pop(currentGrade);
                       });
                 }
                 return Center(
