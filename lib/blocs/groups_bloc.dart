@@ -152,8 +152,7 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
 
   @override
   Stream<GroupState> mapEventToState(GroupEvent event) async* {
-  //  yield WaitingGroupState();
-
+    yield WaitingGroupState();
     switch(event.runtimeType) {
       case ReloadGroupEvent:
         groups = await Database().getGroups();

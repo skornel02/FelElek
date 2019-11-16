@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:dusza2019/pojos/pojo_student.dart';
@@ -12,9 +14,18 @@ class StudentSprite extends SpriteComponent {
   double vel_x;
   Color color;
   // creates a component that renders the crate.png sprite, with size 16 x 16
-  StudentSprite({@required double x, @required double y, this.vel_x = 0.05, this.color}) : super.fromSprite(20.0, 20.0, new Sprite('student.png')){
+  StudentSprite({@required double x, @required double y, this.vel_x = 0.05, this.color}){
     this.x = x;
     this.y = y;
+
+    Random r = Random();
+
+    sprite = Sprite("emberek${r.nextInt(40)}.png", height: 100, width: 100);
+
+  }
+  
+  void reuse(){
+    
   }
 
   @override
