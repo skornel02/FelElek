@@ -2,14 +2,16 @@ import 'package:dusza2019/pojos/pojo_student.dart';
 import 'dart:math';
 
 PojoStudent pickWinner(List<PojoStudent> students) {
+  if(students.length == 1)
+    return students[0];
+
   int gradeAmountMin = students.map((PojoStudent student) {
     return student.grades.length;
   }).reduce(min);
-  print("min " + gradeAmountMin.toString());
   List<double> diffToMin = students.map((PojoStudent student) {
     return gradeAmountMin / student.grades.length;
   }).toList();
-  double sumOfDifferences = diffToMin.reduce((a, b) => a + b);
+  double sumOfDifferences = 1 / diffToMin.reduce((a, b) => a + b);
   List<double> chance = diffToMin.map((double diffToMin) {
     return diffToMin * sumOfDifferences;
   }).toList();
