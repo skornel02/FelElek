@@ -14,7 +14,7 @@ class MyGame extends Game with TapDetector {
 
   MyGame(this.screenSize){
 
-    students = [StudentSprite(x: 50, y: screenSize.height/2 - 20, vel_x: 0.09), StudentSprite(x: 10, y: screenSize.height/2 + 20, vel_x: 0.2)];//x: - screenSize.width - 10, y: screenSize.height/2, vel_x: 0.1)];
+    students = [StudentSprite(x: 10, y: screenSize.height/2 + 20, vel_x: 0.2), StudentSprite(x: 50, y: screenSize.height/2 - 20, vel_x: 0.09), ];//x: - screenSize.width - 10, y: screenSize.height/2, vel_x: 0.1)];
 
     init();
 
@@ -78,10 +78,6 @@ class MyGame extends Game with TapDetector {
 
 
   */
-
-
-
-
     students.forEach((StudentSprite s) => s.render(canvas));
   }
 

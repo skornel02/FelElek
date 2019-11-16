@@ -11,29 +11,13 @@ ThemeData theme(BuildContext context){
 class HazizzTheme{
 
   static const Color
-  red = Color.fromRGBO(242, 59, 80, 1),
-      yellow = Color.fromRGBO(255, 202, 4, 1),
-      white = Color.fromRGBO(232, 240, 223, 1),
-      lightblue = Color.fromRGBO(73, 216, 216, 1),
-      blue = Color.fromRGBO(54, 177, 191, 1),
-      purple = Color.fromRGBO(126, 1, 255, 1),
+      red = Color.fromRGBO(242, 5, 48, 1),
+      grey = Color.fromRGBO(64, 100, 115, 1),
+      yellow = Color.fromRGBO(242, 226, 5, 1),
 
+      orange = Color.fromRGBO(242, 116, 5, 1),
 
-
-
-      grade5Color = Colors.green,
-      grade4Color = Colors.lightGreenAccent,
-      grade3Color = Colors.yellowAccent,
-      grade2Color = Colors.orange,
-      grade1Color = Colors.red,
-      gradeNeutralColor = Colors.grey,
-
-
-      headerColor = Colors.red,
-      homeworkColor = Colors.green,
-      testColor = red,
-      oralTestColor = purple,
-      assignmentColor = yellow
+      dark_red = Color.fromRGBO(140, 3, 3, 1)
   ;
 
   static final Color formColor = Colors.grey.withAlpha(120);
@@ -44,21 +28,6 @@ class HazizzTheme{
 
 
   static final ThemeData lightThemeData = new ThemeData(
-
-    /*
-    hoverColor: lightblue,
-    indicatorColor: lightblue,
-  //  pageTransitionsTheme: lightblue,
-    primarySwatch: lightblue,
-    splashColor: lightblue,
-  */
-
-    // sliderTheme: lightblue,
-
-    //  buttonTheme: ButtonThemeData(te),
-    // splashColor: HazizzTheme.blue,
-
-
     textTheme: TextTheme(
       body1: TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w600),
       body2: TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w600),
@@ -76,35 +45,14 @@ class HazizzTheme{
       button: TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w800),
 
     ),
-
-    //  textTheme: TextTheme(body1: TextStyle(backgroundColor: Colors.red))
-
-
     brightness: Brightness.light,
     accentColor: red,
-    // primaryColorLight: lightblue,
-    primaryColorDark: blue,
-    primaryColor: lightblue,
+    primaryColorDark: dark_red,
+    primaryColor: orange,
     errorColor: red,
-    //   textTheme: Colors.black,
-    /*
-    appBarTheme: AppBarTheme(
-      color: lightblue
-    ),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: red
-    )
-      */
   );
 
   static final ThemeData darkThemeData = new ThemeData(
-    /*
-    hoverColor: lightblue,
-    indicatorColor: lightblue,
-    //  pageTransitionsTheme: lightblue,
-   // primarySwatch: lightblue,
-    splashColor: lightblue,
-*/
     textTheme: TextTheme(
       body1: TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w600),
       body2: TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w600),
@@ -121,33 +69,13 @@ class HazizzTheme{
       subtitle: TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w600),
       button: TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w800),
     ),
-    brightness: Brightness.dark,
+
+    brightness: Brightness.light,
     accentColor: red,
-    // primaryColorLight: lightblue,
-
-
-    primaryColorDark: Color.fromRGBO(70, 105, 140, 1),
-    primaryColor: Color.fromRGBO(14, 105, 138, 1),
-
-    /*
-    primaryColorDark: blue,
-    primaryColor: lightblue,
-    */
-
+    primaryColorDark: dark_red,
+    primaryColor: orange,
     errorColor: red,
-    //   textSelectionHandleColor: Colors.black,
-    //   textTheme: Colors.black,
-    /*
-    appBarTheme: AppBarTheme(
-      color: lightblue
-    ),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: red
-    )
-      */
   );
-
-
 
 
 
