@@ -1,32 +1,24 @@
-
 import 'package:flame/components/component.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 
 import 'game.dart';
 
-String a(int n){
-  if(n <= 9){
-    return "0$n";
-  }
-  return n.toString();
-}
+class ClawSprite extends SpriteComponent {
 
-class StudentSprite extends SpriteComponent {
+  bool timeToPick = false;
 
-  bool slowingDown = false;
+  double movePosX = 0;
 
+  double oldY;
 
-  Color color;
   // creates a component that renders the crate.png sprite, with size 16 x 16
-  StudentSprite({@required double x, @required double y, this.color, int rand = 1}) : super.fromSprite(100.0, 100.0, new Sprite("ember-${a(rand)}.png")){
+  ClawSprite({@required double x, @required double y}) : super.fromSprite(84, 750, new Sprite("claw3.png")){
     this.x = x;
     this.y = y;
+    oldY = y;
   }
 
-  void reuse(){
-
-  }
 
   @override
   void resize(Size size) {
@@ -38,10 +30,13 @@ class StudentSprite extends SpriteComponent {
   @override
   void update(double t) {
 
-    if(MyGame.vel_x > 0){
-      x += MyGame.vel_x;
+    if(timeToPick){
+      x -= movePosX;
     }
 
+    if(timeToPick && movePosX == x - movePosX){
+
+    }
 
   }
 

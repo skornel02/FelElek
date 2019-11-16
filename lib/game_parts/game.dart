@@ -11,6 +11,7 @@ import 'package:flame/time.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import 'claw_sprite.dart';
 import 'conveyor_sprite.dart';
 
 class MyGame extends Game with TapDetector {
@@ -42,14 +43,13 @@ class MyGame extends Game with TapDetector {
 
   ConveyorSprite conveyor;
 
+  ClawSprite claw;
+
+
   MyGame({this.screenSize, @required this.spinnerData}){
     acc_x = 0.0;
-<<<<<<< HEAD
     vel_x = 4;
-=======
     vel_x = screenSize.width / 100;
-    defalt_vel_x = vel_x;
->>>>>>> 2ccfefb4d05ef1535aa43fc20ea4ba71914f8855
 
     students = [
       StudentSprite(x: 10, y: 100),
@@ -57,6 +57,8 @@ class MyGame extends Game with TapDetector {
     ];
 
     conveyor = ConveyorSprite(x: 0, y: screenSize.height/2 + 20, width: screenSize.width);
+
+    claw = ClawSprite(x: screenSize.width/2 - 42, y: -screenSize.height + 200 );
 
     init();
   }
@@ -99,13 +101,10 @@ class MyGame extends Game with TapDetector {
       double distance = screenSize.width/2 - (winnerStudent.x + 20);
       print(screenSize.width/2 - winnerStudent.x);
       if(winnerStudent.x >= screenSize.width/2 * 0.5){
-<<<<<<< HEAD
         acc_x = (screenSize.width/2 - winnerStudent.x)/ vel_x / deltaTime;
-=======
         acc_x = (distance) / 100000 / deltaTime;
         if (acc_x < 0)
           acc_x = -1;
->>>>>>> 2ccfefb4d05ef1535aa43fc20ea4ba71914f8855
       }
     }
 
@@ -148,6 +147,10 @@ class MyGame extends Game with TapDetector {
 
   @override
   void render(Canvas canvas) {
+
+    claw.render(canvas);
+    canvas.restore();
+    canvas.save();
 
     conveyor.render(canvas);
     canvas.restore();
