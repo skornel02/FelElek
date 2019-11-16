@@ -4,6 +4,7 @@ import 'package:animator/animator.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:dusza2019/other/hazizz_localizations.dart';
+import 'package:dusza2019/other/winner_data.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:dusza2019/widgets/dialogs/dialogs.dart';
@@ -14,9 +15,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChosenStudentPage extends StatefulWidget {
 
-  final PojoStudent student;
+  final WinnerData winner;
 
-  ChosenStudentPage({Key key, @required this.student}) : super(key: key);
+  ChosenStudentPage({Key key, @required this.winner}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -165,12 +166,12 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
                       child: Column(
                         children: <Widget>[
                           Image.asset(
-                            'assets/images/ember-20.png',
+                            widget.winner.imgPath,
                             width: 200,
                             height: 200,
                             fit: BoxFit.scaleDown,
                           ),
-                          Text("Kovács Janó", style: TextStyle(fontSize: 30),)
+                          Text(widget.winner.student.name, style: TextStyle(fontSize: 30),)
                         ],
                       )
 

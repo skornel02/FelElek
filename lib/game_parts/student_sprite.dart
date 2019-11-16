@@ -16,12 +16,13 @@ class StudentSprite extends SpriteComponent {
 
   bool slowingDown = false;
 
+  String imgPath;
 
-  Color color;
   // creates a component that renders the crate.png sprite, with size 16 x 16
-  StudentSprite({@required double x, @required double y, this.color, int rand = 1}) : super.fromSprite(100.0, 100.0, new Sprite("ember-${a(rand)}.png")){
+  StudentSprite({@required double x, @required double y, int rand = 1}) : super.fromSprite(100.0, 100.0, new Sprite("ember-${a(rand)}.png")){
     this.x = x;
     this.y = y;
+    imgPath = "assets/images/ember-${a(rand)}.png";
   }
 
   void reuse(){

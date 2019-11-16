@@ -2,7 +2,9 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:dusza2019/game_parts/student_sprite.dart';
+import 'package:dusza2019/navigation/business_navigator.dart';
 import 'package:dusza2019/other/spinner_data.dart';
+import 'package:dusza2019/other/winner_data.dart';
 import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
@@ -16,7 +18,7 @@ import 'conveyor_sprite.dart';
 
 class MyGame extends Game with TapDetector {
 
-
+  bool poped = false;
 
   double lastTime = 0;
 
@@ -30,6 +32,7 @@ class MyGame extends Game with TapDetector {
   static double acc_x = 0.0;
   static double vel_x = 4;
 
+  int counter = 1;
 
   Size screenSize;
 
@@ -51,12 +54,11 @@ class MyGame extends Game with TapDetector {
     vel_x = 4;
     vel_x = screenSize.width / 100;
 
-    students = [
-      StudentSprite(x: 10, y: 100),
-      StudentSprite(x: 10, y: 300),
-    ];
+    pojoStudents = spinnerData.students;
 
-    conveyor = ConveyorSprite(x: 0, y: screenSize.height/2 + 20, width: screenSize.width);
+    students = [];
+
+    conveyor = ConveyorSprite(x: 0, y: screenSize.height/2 + 50, width: screenSize.width);
 
     claw = ClawSprite(x: screenSize.width/2 - 42, y: -screenSize.height + 200 );
 
@@ -69,15 +71,17 @@ class MyGame extends Game with TapDetector {
   }
 
   void spawnWinner(){
-    Random r = Random();
-    winnerStudent = StudentSprite(x: - 70, y: screenSize.height/2, rand: r.nextInt(99)+1);
+
+
+    winnerStudent = StudentSprite(x: - 70, y: screenSize.height/2, rand: pojoStudents[counter % pojoStudents.length].id % 100);
     students.add(winnerStudent);//x: - screenSize.width - 10, y: screenSize.height/2, vel_x: 0.1)];
     winnerStudentSpawned = true;
+    counter++;
   }
 
   void addStudent(){
-    Random r = Random();
-    students.add(StudentSprite(x: - 70, y: screenSize.height/2, rand: r.nextInt(99)+1),);//x: - screenSize.width - 10, y: screenSize.height/2, vel_x: 0.1)];
+    students.add(StudentSprite(x: - 70, y: screenSize.height/2, rand: pojoStudents[ counter % pojoStudents.length].id % 100),);//x: - screenSize.width - 10, y: screenSize.height/2, vel_x: 0.1)];
+    counter++;
   }
 
   @override
@@ -114,12 +118,20 @@ class MyGame extends Game with TapDetector {
       vel_x = 0;
       //Megállt
       double distance = screenSize.width/2 - (winnerStudent.x + 20);
+
+      if(!poped){
+
+        WinnerData winner = WinnerData(student: spinnerData.winner, imgPath: winnerStudent.imgPath);
+        BusinessNavigator().currentState().popAndPushNamed("/absent/spinner/chosen_student", arguments: winner);
+        
+        poped = true;
+      }
     }
 
     countdown.update(t);
 
 
-    if(students[students.length-1].x >= 10 && students[students.length-1].x < screenSize.width + 50){
+    if(students.isEmpty || students[students.length-1].x >= 10 && students[students.length-1].x < screenSize.width + 50){
 
 
       if(countdown.isFinished() && !winnerStudentSpawned){
