@@ -1,4 +1,3 @@
-import 'package:dusza2019/widgets/GroupInheritedWidget.dart';
 import 'package:dusza2019/widgets/pages/choose_absent_page.dart';
 import 'package:dusza2019/widgets/pages/chosen_student_page.dart';
 import 'package:dusza2019/widgets/pages/edit_student_page.dart';

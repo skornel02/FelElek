@@ -24,7 +24,7 @@ class SpinnerPage extends StatelessWidget {
         child: Builder(
           builder: (context) {
             Game game = MyGame(
-                screenSize: MediaQuery.of(context).size, pojoStudents: List());
+                screenSize: MediaQuery.of(context).size, spinnerData: spinnerData);
             return game.widget;
           },
         ),

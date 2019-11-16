@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:dusza2019/game_parts/student_sprite.dart';
-import 'package:dusza2019/navigation/business_navigator.dart';
+import 'package:dusza2019/other/spinner_data.dart';
 import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
@@ -15,27 +15,36 @@ import 'conveyor_sprite.dart';
 
 class MyGame extends Game with TapDetector {
 
+
+
+  double lastTime = 0;
+
+  double deltaTime = 0;
+
+
   List<PojoStudent> pojoStudents;
 
+  SpinnerData spinnerData;
 
-  static double acc_x = 0.01;
+  static double acc_x = 0.0;
   static double vel_x = 2;
 
 
   Size screenSize;
 
-  final countdown = Timer(20);
+  final countdown = Timer(5);
 
 
   List<StudentSprite> students;
-  StudentSprite student;
-  StudentSprite student2;
+
+  StudentSprite winnerStudent;
+  bool winnerStudentSpawned = false;
 
   ConveyorSprite conveyor;
 
-  MyGame({this.screenSize, this.pojoStudents}){
+  MyGame({this.screenSize, @required this.spinnerData}){
 
-    acc_x = 0.01;
+    acc_x = 0.0;
     vel_x = 2;
 
     students = [
@@ -54,10 +63,16 @@ class MyGame extends Game with TapDetector {
     resize(await Flame.util.initialDimensions());
   }
 
+  void spawnWinner(){
+    Random r = Random();
+    winnerStudent = StudentSprite(x: - 70, y: screenSize.height/2, rand: r.nextInt(99)+1);
+    students.add(winnerStudent);//x: - screenSize.width - 10, y: screenSize.height/2, vel_x: 0.1)];
+    winnerStudentSpawned = true;
+  }
+
   void addStudent(){
     Random r = Random();
     students.add(StudentSprite(x: - 70, y: screenSize.height/2, rand: r.nextInt(99)+1),);//x: - screenSize.width - 10, y: screenSize.height/2, vel_x: 0.1)];
-
   }
 
   @override
@@ -75,21 +90,38 @@ class MyGame extends Game with TapDetector {
 
   @override
   void update(double t) {
+    deltaTime = t;
 
-    if(vel_x <= 0){
-     // BusinessNavigator().currentState().pop();
+    if(winnerStudent != null){
+      print("winnerStudent x : ${winnerStudent.x}");
     }
+
+    if(winnerStudentSpawned){
+      if(winnerStudent.x >= screenSize.width/2 * 0.5){
+        acc_x = (screenSize.width/2 - winnerStudent.x)/ 100000 / deltaTime;
+      }
+    }
+
+    vel_x -= acc_x;
 
     countdown.update(t);
 
-    if(countdown.isFinished()){
-      // slowing down
-      vel_x -= acc_x;
-    }
-
 
     if(students[students.length-1].x >= 10 && students[students.length-1].x < screenSize.width + 50){
-      addStudent();
+
+
+      if(countdown.isFinished() && !winnerStudentSpawned){
+
+        spawnWinner();
+
+      }
+        // slowing down
+      //  vel_x -= acc_x;
+      else{
+        addStudent();
+      }
+
+
       print("boi: ${students}");
     }
 
@@ -99,6 +131,8 @@ class MyGame extends Game with TapDetector {
       }
     }
     students.forEach((StudentSprite s) => s.update(t));
+
+    lastTime = t;
   }
 
   @override

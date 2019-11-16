@@ -48,6 +48,7 @@ class IntroPage extends StatelessWidget {
                 ),
                 Text(
                     "Üdv! Én vagyok Elek, a saját felelés-asszisztensed. Kezdjük is el!",
+                    style: TextStyle(fontSize: 17),
                     textAlign: TextAlign.center),
                 BlocBuilder(
                   bloc: BlocProvider.of<GoogleLoginBloc>(context),
@@ -76,9 +77,13 @@ class IntroPage extends StatelessWidget {
                     } else {
                       return Column(
                         children: <Widget>[
-                          Text(
-                            "A szinkronizációhoz jelentkezzen be:",
-                            textAlign: TextAlign.center,
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              "A szinkronizációhoz jelentkezzen be:",
+                              style: TextStyle(fontSize: 17),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                           LoginWidget()
                         ],
@@ -87,6 +92,7 @@ class IntroPage extends StatelessWidget {
                   },
                 ),
                 Text("Az importáláshoz pedig nyomd meg ezt a gombot",
+                    style: TextStyle(fontSize: 17),
                     textAlign: TextAlign.center),
                 RaisedButton(
                   child: Text("IMPORTÁLÁS"),
