@@ -43,7 +43,6 @@ class RouteGenerator{
       case '/student':
         return MaterialPageRoute(builder: (_) => GroupEditPage());
       case '/student/edit':
-        assert(args != null);
         return MaterialPageRoute(builder: (_) => StudentEditPage());
       case '/absent':
         assert(args != null);

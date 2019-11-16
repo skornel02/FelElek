@@ -1,5 +1,5 @@
 import 'package:dusza2019/blocs/groups_bloc.dart';
-import 'package:dusza2019/blocs/path_bloc.dart';
+import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +11,7 @@ class StudentItemWidget extends StatelessWidget{
   PojoStudent student;
   PojoGroup group;
 
-  bool absentMode = false;
-
   StudentItemWidget({this.student, this.group});
-
-  StudentItemWidget.absentMode({this.student, this.group}){
-    absentMode = true;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,15 +45,9 @@ class StudentItemWidget extends StatelessWidget{
                         IconButton(
                           icon: Icon(FontAwesomeIcons.edit),
                           onPressed: (){
-                            if(absentMode){
-                              // kiveni a listából
-
-                            }else{
-                              BlocProvider.of<GroupsBloc>(context)
-                                  .dispatch(SetSelectedStudentEvent(student, group));
-                              PathsBloc().dispatch(SetPathStudentEvent(student: student));
-                              Navigator.pushNamed(context, "/student/edit", arguments: [student, group]);
-                            }
+                              BlocProvider.of<SelectedBloc>(context)
+                                  .dispatch(SetSelectedStudent(student));
+                              Navigator.pushNamed(context, "/student/edit");
                           },
                         ),
                       ],

@@ -40,16 +40,6 @@ class AddGroupEvent extends GroupEvent {
   List<Object> get props => null;
 }
 
-class SetSelectedGroup extends GroupEvent {
-  final PojoGroup group;
-
-  SetSelectedGroup(this.group);
-
-  @override String toString() => 'SetSelectedGroupEvent';
-  @override
-  List<Object> get props => null;
-}
-
 class RemoveGroupEvent extends GroupEvent {
   final PojoGroup group;
 
@@ -67,17 +57,6 @@ class AddStudentEvent extends GroupEvent {
   AddStudentEvent(this.name, this.group);
 
   @override String toString() => 'AddUserEvent';
-  @override
-  List<Object> get props => null;
-}
-
-class SetSelectedStudentEvent extends GroupEvent {
-  final PojoStudent student;
-  final PojoGroup group;
-
-  SetSelectedStudentEvent(this.student, this.group);
-
-  @override String toString() => 'SetStudentEvent';
   @override
   List<Object> get props => null;
 }
@@ -130,22 +109,20 @@ class WaitingGroupState extends GroupState {
 }
 class LoadedGroupState extends GroupState {
   final List<PojoGroup> groups;
-  final PojoGroup selectedGroup;
-  final PojoStudent selectedStudent;
 
-  LoadedGroupState(this.groups, this.selectedGroup, this.selectedStudent);
+  LoadedGroupState(this.groups);
 
   @override String toString() => 'LoadedGroupState';
   @override
   List<Object> get props => null;
+
+
 }
 
 
 class GroupsBloc extends Bloc<GroupEvent, GroupState> {
 
-  List<PojoGroup> groups = List();
-  PojoGroup selectedGroup;
-  PojoStudent selectedStudent;
+  List<PojoGroup> _groups = List();
 
   @override
   GroupState get initialState => WaitingGroupState();
@@ -153,31 +130,39 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
   @override
   Stream<GroupState> mapEventToState(GroupEvent event) async* {
     yield WaitingGroupState();
+
     switch(event.runtimeType) {
       case ReloadGroupEvent:
-        groups = await Database().getGroups();
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
+
+        _groups = await Database().getGroups();
+        yield LoadedGroupState(_groups);
+        break;
+
       case SyncWithGoogleDriveEvent:
         SyncWithGoogleDriveEvent e = event;
         await Database().syncWithGoogleDrive(e.accessToken);
-        groups = await Database().getGroups();
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
+
+        _groups = await Database().getGroups();
+        yield LoadedGroupState(_groups);
+        break;
+
       case AddGroupEvent:
         AddGroupEvent e = event;
-        groups.add(PojoGroup.fromName(e.name));
+        _groups.add(PojoGroup.fromName(e.name));
 
-        Database().saveGroups(groups);
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
-      case SetSelectedGroup:
-        SetSelectedGroup e = event;
-        selectedGroup = e.group;
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
+        _groups = List.from(_groups);
+        Database().saveGroups(_groups);
+        yield LoadedGroupState(_groups);
+        break;
+
       case RemoveGroupEvent:
         RemoveGroupEvent e = event;
-        groups.removeWhere((group) => group.uuId == e.group.uuId);
+        _groups.removeWhere((group) => group.uuId == e.group.uuId);
 
-        Database().saveGroups(groups);
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
+        Database().saveGroups(_groups);
+        yield LoadedGroupState(_groups);
+        break;
+
       case AddStudentEvent:
         AddStudentEvent e = event;
         int biggestId = 0;
@@ -185,41 +170,42 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
           if (biggestId < student.id)
             biggestId = student.id;
         }
-        groups.firstWhere((group) => group.uuId == e.group.uuId)
+        _groups.firstWhere((group) => group.uuId == e.group.uuId)
             .students.add(PojoStudent.fromName(e.name, biggestId + 1));
 
-        Database().saveGroups(groups);
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
-      case SetSelectedStudentEvent:
-        SetSelectedStudentEvent e = event;
-        selectedStudent = e.student;
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
+        Database().saveGroups(_groups);
+        yield LoadedGroupState(_groups);
+        break;
+
       case RemoveStudentEvent:
         RemoveStudentEvent e = event;
-        for(PojoGroup group in groups) {
-          if(group.uuId == e.group.uuId){
-            group.students.removeWhere((student) => student.id == e.student.id);
-          }
-        }
+        _groups.firstWhere((group) => group.uuId == e.group.uuId)
+            .students.removeWhere((student) => student.id == e.student.id);
 
-        Database().saveGroups(groups);
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
+        yield LoadedGroupState(_groups);
+        Database().saveGroups(_groups);
+        break;
+
       case AddGradeEvent:
         AddGradeEvent e = event;
-        groups.firstWhere((group) => group.uuId == e.group.uuId)
-            .students.firstWhere((student) => student.id == e.student.id)
-              .grades.add(e.grade);
+        PojoStudent student = _groups.firstWhere((group) => group.uuId == e.group.uuId)
+            .students.firstWhere((student) => student.id == e.student.id);
+        student.grades.add(e.grade);
 
-        Database().saveGroups(groups);
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
+        Database().saveGroups(_groups);
+        yield LoadedGroupState(_groups);
+        break;
+
       case RemoveGradeEvent:
         RemoveGradeEvent e = event;
-        PojoStudent student = groups.firstWhere((group) => group.uuId == e.group.uuId)
+        PojoStudent student = _groups.firstWhere((group) => group.uuId == e.group.uuId)
             .students.firstWhere((student) => student.id == e.student.id);
         student.grades.removeAt(e.index);
 
-        Database().saveGroups(groups);
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
+        Database().saveGroups(_groups);
+        yield LoadedGroupState(_groups);
+        break;
+
       default:
         break;
     }

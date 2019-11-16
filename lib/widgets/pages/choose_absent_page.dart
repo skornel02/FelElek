@@ -2,7 +2,7 @@ import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/other/hazizz_localizations.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:dusza2019/pojos/pojo_student.dart';
-import 'package:dusza2019/widgets/items/student_item_widget.dart';
+import 'package:dusza2019/widgets/items/student_edit_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class AbsentPage extends StatefulWidget {

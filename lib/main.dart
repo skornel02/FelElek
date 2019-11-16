@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dusza2019/blocs/google_login_bloc.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
+import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/easy_localization_provider.dart';
 import 'package:flutter/material.dart';
@@ -93,6 +94,7 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver {
 
   GroupsBloc groupsBloc = new GroupsBloc();
   GoogleLoginBloc loginBloc = new GoogleLoginBloc();
+  SelectedBloc selectedBloc = new SelectedBloc();
 
   @override
   initState() {
@@ -153,6 +155,9 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver {
                 ),
                 BlocProvider<GoogleLoginBloc>(
                   builder: (_) => loginBloc,
+                ),
+                BlocProvider<SelectedBloc>(
+                  builder: (_) => selectedBloc,
                 )
               ],
               child: MaterialApp(

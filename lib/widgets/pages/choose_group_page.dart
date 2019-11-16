@@ -1,5 +1,5 @@
 import 'package:dusza2019/blocs/groups_bloc.dart';
-import 'package:dusza2019/blocs/path_bloc.dart';
+import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:dusza2019/other/hazizz_localizations.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:dusza2019/widgets/dialogs/dialogs.dart';
@@ -51,8 +51,8 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                             style: TextStyle(fontSize: 26),
                           ),
                           IconButton(
-                            icon: Icon(FontAwesomeIcons.asterisk),
-                            color: Colors.transparent,
+                            icon: Icon(FontAwesomeIcons.fileImport),
+                            color: Colors.black,
                             onPressed: () {},
                           ),
                         ]),
@@ -60,7 +60,6 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                       child: BlocBuilder(
                           bloc: BlocProvider.of<GroupsBloc>(context),
                           builder: (BuildContext context, GroupState state) {
-                            print("STATE: ${state.toString()}");
                             if (state is LoadedGroupState) {
                               List<PojoGroup> groups = state.groups;
                               return new ListView.builder(
@@ -84,9 +83,9 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                     RaisedButton(
                       child: Text("Új felelés"),
                       onPressed: () {
-                        if (PathsBloc().group != null) {}
+                        if (SelectedBloc().group != null) {}
                         Navigator.pushNamed(context, "/absent",
-                            arguments: PathsBloc().group);
+                            arguments: SelectedBloc().group);
                       },
                     ),
                   ],

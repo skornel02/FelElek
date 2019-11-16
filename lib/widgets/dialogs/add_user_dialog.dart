@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
+import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:dusza2019/other/hazizz_localizations.dart';
-import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,21 +80,31 @@ class _AddStudentDialog extends State<AddStudentDialog> {
                 },
                 color: Colors.transparent
             ),
-            FlatButton(
-                child: Center(
-                  child: Text(locText(context, key: "add"),
-                    style: TextStyle(
-                      //  fontFamily: 'Montserrat',
-                    ),
-                  ),
-                ),
-                onPressed: () async {
-                  GroupsBloc bloc = BlocProvider.of<GroupsBloc>(context);
-                  GroupEvent event = AddStudentEvent(_gradeTextEditingController.text, bloc.selectedGroup);
-                  bloc.dispatch(event);
-                  Navigator.of(context).pop();
+            BlocBuilder(
+              bloc: BlocProvider.of<SelectedBloc>(context),
+              builder: (BuildContext context, SelectedState state) {
+                if(state is SelectionReadyState) {
+                  return FlatButton(
+                      child: Center(
+                        child: Text(locText(context, key: "add"),
+                          style: TextStyle(
+                            //  fontFamily: 'Montserrat',
+                          ),
+                        ),
+                      ),
+                      onPressed: () async {
+                        GroupsBloc bloc = BlocProvider.of<GroupsBloc>(context);
+                        GroupEvent event = AddStudentEvent(_gradeTextEditingController.text, state.group);
+                        bloc.dispatch(event);
+                        Navigator.of(context).pop();
+                      }
+                  );
                 }
-            ),
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            )
           ],
         )
     );

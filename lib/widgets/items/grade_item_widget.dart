@@ -41,7 +41,8 @@ class GradeItemWidget extends StatelessWidget{
                           icon: Icon(FontAwesomeIcons.times),
                           color: Colors.red,
                           onPressed: (){
-                            BlocProvider.of<GroupsBloc>(context).dispatch(RemoveGradeEvent(index, student, group));
+                            BlocProvider.of<GroupsBloc>(context)
+                                .dispatch(RemoveGradeEvent(index, student, group));
                           },
                         ),
                       ],

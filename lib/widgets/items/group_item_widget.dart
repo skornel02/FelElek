@@ -1,49 +1,38 @@
 import 'package:dusza2019/blocs/groups_bloc.dart';
-import 'package:dusza2019/blocs/path_bloc.dart';
+import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class GroupItemWidget extends StatefulWidget{
+class GroupItemWidget extends StatelessWidget{
 
   PojoGroup group;
 
   GroupItemWidget({this.group});
 
-
-  @override
-  State<StatefulWidget> createState()  => _GroupItemWidget();
-}
-
-
-class _GroupItemWidget extends State<GroupItemWidget> {
-
-  bool isSelected = false;
-
-
   @override
   Widget build(BuildContext context) {
 
-
-    return GestureDetector(
-      onTap: (){
-        setState(() {
-          isSelected = !isSelected;
-        });
-        if(isSelected){
-          PathsBloc().dispatch(SetPathGroupEvent(group: widget.group));
-        }else{
-          if(isSelected){
-            PathsBloc().dispatch(SetPathGroupEvent(group: null));
-          }
-        }
-      },
-      child: Card(
-        color: isSelected ? Colors.grey : Theme.of(context).scaffoldBackgroundColor,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          elevation: 5,
-          child: Align(
+    return BlocBuilder(
+      bloc: BlocProvider.of<SelectedBloc>(context),
+      builder: (BuildContext context, SelectedState state){
+        bool isSelected = state is SelectionReadyState && state.group == group;
+        return GestureDetector(
+          onTap: (){
+            SelectedBloc bloc = BlocProvider.of<SelectedBloc>(context);
+            print(isSelected);
+            if(isSelected){
+              bloc.dispatch(SetSelectedGroup(null));
+            }else{
+              bloc.dispatch(SetSelectedGroup(group));
+            }
+          },
+          child: Card(
+              color: isSelected ? Colors.grey : Theme.of(context).scaffoldBackgroundColor,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              elevation: 5,
+              child: Align(
                   alignment: Alignment.centerLeft,
                   child:
                   Padding(
@@ -55,11 +44,15 @@ class _GroupItemWidget extends State<GroupItemWidget> {
                             icon: Icon(FontAwesomeIcons.times),
                             color: Colors.red,
                             onPressed: (){
+                              if(isSelected) {
+                                SelectedBloc bloc = BlocProvider.of<SelectedBloc>(context);
+                                bloc.dispatch(SetSelectedGroup(null));
+                              }
                               BlocProvider.of<GroupsBloc>(context)
-                                  .dispatch(RemoveGroupEvent(widget.group));
+                                  .dispatch(RemoveGroupEvent(group));
                             },
                           ),
-                          Text(widget.group.name,
+                          Text(group.name,
                             style: TextStyle(
                                 fontSize: 22, fontWeight: FontWeight.w700
                             ),
@@ -67,16 +60,18 @@ class _GroupItemWidget extends State<GroupItemWidget> {
                           IconButton(
                             icon: Icon(FontAwesomeIcons.edit),
                             onPressed: () {
-                              BlocProvider.of<GroupsBloc>(context)
-                                  .dispatch(SetSelectedGroup(widget.group));
-                              Navigator.pushNamed(context, "/student", arguments: widget.group);
+                              BlocProvider.of<SelectedBloc>(context)
+                                  .dispatch(SetSelectedGroup(group));
+                              Navigator.pushNamed(context, "/student", arguments: group);
                             },
                           ),
                         ],
                       )
                   )
               )
-      ),
+          ),
+        );
+      },
     );
   }
 
