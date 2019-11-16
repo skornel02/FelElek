@@ -1,10 +1,11 @@
 import 'package:animator/animator.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
+import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:dusza2019/other/hazizz_localizations.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:dusza2019/widgets/dialogs/dialogs.dart';
-import 'package:dusza2019/widgets/items/student_item_widget.dart';
+import 'package:dusza2019/widgets/items/student_edit_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,19 +19,15 @@ class ChosenStudentPage extends StatefulWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-        bloc: BlocProvider.of<GroupsBloc>(context),
-        builder: (BuildContext context, GroupState state) {
+        bloc: BlocProvider.of<SelectedBloc>(context),
+        builder: (BuildContext context, SelectedState state) {
           print(state);
-          if (state is LoadedGroupState) {
-            PojoGroup group = state.selectedGroup;
+          if (state is SelectionReadyState) {
+            PojoGroup group = state.group;
             return Container(
               //LogConsoleOnShake(
               child: Scaffold(
                   key: Key(group.students.length.toString() + "-" + group.uuId),
-                  /* appBar: AppBar(
-          title: Text(locText(context, key: "groups")),
-        ),
-        */
                   floatingActionButton: FloatingActionButton(
                     child: Icon(FontAwesomeIcons.plus),
                     onPressed: () {
