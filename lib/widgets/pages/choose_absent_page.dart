@@ -53,12 +53,27 @@ class AbsentPage extends StatelessWidget {
                                         })),
                                 Builder(builder: (BuildContext context) {
                                   if(nonAbsent.length > 0) {
-                                    return RaisedButton(
-                                      child: Text("Kezdés"),
-                                      onPressed: () {
-                                        SpinnerData data = new SpinnerData(nonAbsent, pickWinner(nonAbsent));
-                                        Navigator.pushNamed(context, "/absent/spinner", arguments: data);
-                                      },
+
+
+                                    return Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: SizedBox(
+                                          height: 50,
+                                          width: double.maxFinite,
+                                          child: RaisedButton(
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+
+                                            child: Text("Kezdés", style: TextStyle(fontSize: 24)),
+                                            onPressed: (){
+                                              SpinnerData data = new SpinnerData(nonAbsent, pickWinner(nonAbsent));
+                                              Navigator.pushNamed(context, "/absent/spinner", arguments: data);
+
+
+                                              // Navigator.pushNamed(context, "/absent/spinner/chosen_student", arguments: choseStudents[0]);
+
+                                            },
+                                          )
+                                      ),
                                     );
                                   }
                                   return Container();

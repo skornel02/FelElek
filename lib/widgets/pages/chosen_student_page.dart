@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animator/animator.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
@@ -76,15 +78,14 @@ class ChosenStudentPage extends StatefulWidget {
 
 class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderStateMixin{
 
-  int animTime = 1300;
+  int animTime = 1500;
 
   AnimationController mechController;
   Animation<double> mechAnimation;
 
 
-
-
   AnimationController studentController;
+  Animation studentAnimation;
 
   @override
   void initState() {
@@ -94,7 +95,12 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
     mechAnimation = Tween(begin: 0.0, end: 500.0).animate(mechController);
     mechController.forward();
 
-    studentController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
+    studentController = AnimationController(vsync: this, duration: Duration(milliseconds: animTime), );
+
+    Timer(Duration(milliseconds: (animTime/2 + 750).round()), () {
+      studentController.forward();
+
+    });
 
 
     mechController.addStatusListener((status) {
@@ -109,49 +115,73 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
   }
 
   @override
+  void dispose() {
+    mechController.dispose();
+    studentController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    studentAnimation =
+        Tween<Offset>(begin: Offset(90, MediaQuery.of(context).size.height), end: Offset(90, 130)).animate(CurvedAnimation(parent: studentController, curve: Curves.easeInOut));
+
+
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: <Widget>[
 
             Animator(
-              tween: Tween<Offset>(begin: Offset(MediaQuery.of(context).size.width/2, 0), end: Offset(MediaQuery.of(context).size.width/2, MediaQuery.of(context).size.height)),
+              tween: Tween<Offset>(begin: Offset(0, 200), end: Offset(0, MediaQuery.of(context).size.height + 70)),
               duration: Duration(milliseconds: animTime),
               curve: Curves.easeInOut,
               cycles: 2,
               builder: (anim){
                 return Transform.translate(
                   offset: anim.value,
-                  child: Container(
-                    color: Colors.red,
-
-                    width: 300,
-                    height: 50,
+                  child: Transform.translate(
+                    offset: Offset(0, -MediaQuery.of(context).size.height),
+                    child: new Image.asset(
+                      'assets/images/claw3.png',
+                      width: 650,
+                      height: 12000,
+                      fit: BoxFit.scaleDown,
+                    ),
                   ),
                 );
               },
             ),
 
+            Column(
+              children: [
 
-            Animator(
+                AnimatedBuilder(
+                  animation: studentController,
+                  builder: (context, child) {
+                    return Transform.translate(
+                      offset: studentAnimation.value,
+                      child: Column(
+                        children: <Widget>[
+                          Image.asset(
+                            'assets/images/ember-20.png',
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.scaleDown,
+                          ),
+                          Text("Kovács Janó", style: TextStyle(fontSize: 30),)
+                        ],
+                      )
 
-              tween: Tween<Offset>(begin: Offset(MediaQuery.of(context).size.width/2, 0), end: Offset(MediaQuery.of(context).size.width/2, MediaQuery.of(context).size.height)),
-              duration: Duration(milliseconds: 1300),
-              curve: Curves.easeInOut,
-              cycles: 2,
-              builder: (anim){
-                return Transform.translate(
-                  offset: anim.value,
-                  child: Container(
-                    color: Colors.red,
+                    );
+                  },
+                ),
 
-                    width: 300,
-                    height: 50,
-                  ),
-                );
-              },
-            )
+
+              ]
+            ),
+
 
           ],
         ),

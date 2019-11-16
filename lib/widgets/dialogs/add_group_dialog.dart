@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/other/hazizz_localizations.dart';
-import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +19,7 @@ class AddGroupDialog extends StatefulWidget {
 class _AddGroupDialog extends State<AddGroupDialog> {
 
   final double width = 300;
-  final double height = 190;
+  final double height = 130;
 
   TextEditingController _gradeTextEditingController = TextEditingController();
 
@@ -33,15 +32,17 @@ class _AddGroupDialog extends State<AddGroupDialog> {
           child: Padding(
             padding: const EdgeInsets.all(5),
             child:
-            AutoSizeText( "Add group",
-              style: TextStyle(
-                fontSize: 30.0,
-                fontWeight: FontWeight.w700,
-              ),
-              maxLines: 1,
-              minFontSize: 20,
-              maxFontSize: 30,
+            Center(
+              child: AutoSizeText( "Add group",
+                style: TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.w700,
+                ),
+                maxLines: 1,
+                minFontSize: 20,
+                maxFontSize: 30,
 
+              ),
             ),
           ),
         ),

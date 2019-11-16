@@ -56,7 +56,7 @@ class AddStudentEvent extends GroupEvent {
 
   AddStudentEvent(this.name, this.group);
 
-  @override String toString() => 'AddUserEvent';
+  @override String toString() => 'AddStudentEvent';
   @override
   List<Object> get props => null;
 }
@@ -91,7 +91,7 @@ class RemoveGradeEvent extends GroupEvent {
 
   RemoveGradeEvent(this.index, this.student, this.group);
 
-  @override String toString() => 'AddGradeEvent';
+  @override String toString() => 'RemoveGradeEvent: ${index}, ${student.name}, ${group.name}';
   @override
   List<Object> get props => null;
 }
@@ -115,8 +115,6 @@ class LoadedGroupState extends GroupState {
   @override String toString() => 'LoadedGroupState';
   @override
   List<Object> get props => null;
-
-
 }
 
 
@@ -129,6 +127,9 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
 
   @override
   Stream<GroupState> mapEventToState(GroupEvent event) async* {
+
+    print("Group Bloc event: ${event.toString()}");
+
     yield WaitingGroupState();
 
     switch(event.runtimeType) {
@@ -209,6 +210,10 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
       default:
         break;
     }
+
+
+    print("Group Bloc currentstate: ${currentState.toString()}");
+
   }
 
 }
