@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class StudentItemWidget extends StatelessWidget{
+class StudentEditorWidget extends StatelessWidget{
 
   PojoStudent student;
   PojoGroup group;
 
-  StudentItemWidget({this.student, this.group});
+  StudentEditorWidget({this.student, this.group});
 
   @override
   Widget build(BuildContext context) {

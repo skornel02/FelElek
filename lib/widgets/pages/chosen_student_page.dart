@@ -12,7 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChosenStudentPage extends StatefulWidget {
 
-  PojoStudent student;
+  final PojoStudent student;
 
   ChosenStudentPage({Key key, @required this.student}) : super(key: key);
 
@@ -52,7 +52,7 @@ class ChosenStudentPage extends StatefulWidget {
                                     itemCount: group.students.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      return StudentItemWidget(
+                                      return StudentEditorWidget(
                                           student: group.students[index],
                                           group: group);
                                     })),
