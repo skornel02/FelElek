@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:bloc/bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class GoogleLoginEvent extends Equatable {
   GoogleLoginEvent([List props = const []]) : super(props);
@@ -11,6 +12,12 @@ abstract class GoogleLoginEvent extends Equatable {
 
 abstract class GoogleLoginState extends Equatable {
   GoogleLoginState([List props = const []]) : super(props);
+}
+
+class GoogleCheckAlreadyLoggedIn extends GoogleLoginEvent {
+  @override String toString() => 'GoogleCheckAlreadyLoggedIn';
+  @override
+  List<Object> get props => null;
 }
 
 class GoogleLoginButtonPressedEvent extends GoogleLoginEvent {
@@ -124,16 +131,26 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
 
           final accessToken = googleAuth.accessToken;
           yield GoogleLoginSuccessfulState(googleUser.email, accessToken);
+
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setBool("GoogleEnabled", true);
         }
       }catch(exception, stacktrace){
         Crashlytics().recordError(exception, stacktrace);
         yield GoogleReadyToLoginState();
       }
-    }
-
-    else if(event is GoogleLoginResetEvent){
+    } else if(event is GoogleLoginResetEvent){
       logout();
       yield GoogleReadyToLoginState();
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool("GoogleEnabled", false);
+    } else if(event is GoogleCheckAlreadyLoggedIn) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool flag = prefs.getBool("GoogleEnabled");
+      if(flag){
+        this.dispatch(GoogleUpdateAccessToken());
+      }
     }
   }
 }

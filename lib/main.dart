@@ -71,7 +71,7 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver {
   DateTime lastActive;
 
   GroupsBloc groupsBloc = new GroupsBloc();
-  GoogleLoginBloc loginBloc = new GoogleLoginBloc();
+  GoogleLoginBloc googleBloc = new GoogleLoginBloc();
   SelectedBloc selectedBloc = new SelectedBloc();
 
   @override
@@ -79,6 +79,7 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     groupsBloc.dispatch(ReloadGroupEvent());
+    googleBloc.dispatch(GoogleCheckAlreadyLoggedIn());
   }
 
   @override
@@ -132,7 +133,7 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver {
                   builder: (_) => groupsBloc,
                 ),
                 BlocProvider<GoogleLoginBloc>(
-                  builder: (_) => loginBloc,
+                  builder: (_) => googleBloc,
                 ),
                 BlocProvider<SelectedBloc>(
                   builder: (_) => selectedBloc,

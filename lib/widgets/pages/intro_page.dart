@@ -28,9 +28,7 @@ class IntroPage extends StatelessWidget {
   var slides;
 
   void exitIntro() {
-    BusinessNavigator().currentState().pushReplacementNamed(
-          '/',
-        );
+    BusinessNavigator().currentState().pushReplacementNamed('/');
   }
 
   @override
@@ -102,12 +100,6 @@ class IntroPage extends StatelessWidget {
                   );
                 }
               },
-            ),
-            Text("Az importáláshoz pedig nyomd meg ezt a gombot",
-                style: TextStyle(fontSize: 17), textAlign: TextAlign.center),
-            RaisedButton(
-              child: Text("IMPORTÁLÁS"),
-              onPressed: () {},
             ),
             RaisedButton(
               child: Text("Tovább"),

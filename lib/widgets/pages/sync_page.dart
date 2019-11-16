@@ -72,9 +72,9 @@ class SyncPage extends StatelessWidget {
                                       return Center(child: CircularProgressIndicator());
                                     default:
                                       String datetimeString = snapshot.data.getString("DBLastUpdated");
-                                      DateTime datetime =
-                                      DateTime.parse(datetimeString);
                                       if (datetimeString != null) {
+                                        DateTime datetime =
+                                        DateTime.parse(datetimeString);
                                         return new Text(
                                             DateFormat('yyyy-MM-dd – kk:mm')
                                                 .format(datetime),
@@ -101,9 +101,9 @@ class SyncPage extends StatelessWidget {
                                       return Center(child: CircularProgressIndicator());
                                     default:
                                       String datetimeString = snapshot.data.getString("GDriveLastSync");
-                                      DateTime datetime =
-                                      DateTime.parse(datetimeString);
                                       if (datetimeString != null) {
+                                        DateTime datetime =
+                                        DateTime.parse(datetimeString);
                                         return new Text(
                                             DateFormat('yyyy-MM-dd – kk:mm')
                                                 .format(datetime),

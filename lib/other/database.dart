@@ -98,7 +98,7 @@ class Database {
     final headers = { 'Authorization': 'Bearer $accessToken' };
     final url = 'https://www.googleapis.com/drive/v3/files/$fileId?alt=media';
     final response = await get(url, headers: headers);
-    return _jsonToGroups(response.body);
+    return _jsonToGroups(utf8.decode(response.bodyBytes));
   }
 
   Future<String> _uploadGroupsToDrive(String accessToken, List<PojoGroup> groups) async {
