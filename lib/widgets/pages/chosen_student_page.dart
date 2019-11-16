@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChosenStudentPage extends StatefulWidget {
-
   final WinnerData winner;
 
   ChosenStudentPage({Key key, @required this.winner}) : super(key: key);
@@ -23,10 +22,8 @@ class ChosenStudentPage extends StatefulWidget {
   State<StatefulWidget> createState() => _ChosenStudentPage();
 }
 
-
-
-class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderStateMixin{
-
+class _ChosenStudentPage extends State<ChosenStudentPage>
+    with TickerProviderStateMixin {
   int grade;
 
   int animTime = 1500;
@@ -34,10 +31,8 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
   AnimationController mechController;
   Animation<double> mechAnimation;
 
-
   AnimationController studentController;
   Animation studentAnimation;
-
 
   AnimationController buttonController;
   Animation<double> buttonAnimation;
@@ -45,39 +40,36 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
   @override
   void initState() {
     super.initState();
-    mechController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
+    mechController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1000));
 
     mechAnimation = Tween(begin: 0.0, end: 500.0).animate(mechController);
     mechController.forward();
 
-    studentController = AnimationController(vsync: this, duration: Duration(milliseconds: animTime), );
+    studentController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: animTime),
+    );
 
-
-
-
-    buttonController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
+    buttonController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1000));
 
     buttonAnimation = Tween(begin: 0.0, end: 1.0).animate(buttonController);
-    Timer(Duration(milliseconds: animTime*2), () {
+    Timer(Duration(milliseconds: animTime * 2), () {
       buttonController.forward();
-
     });
 
     Timer(Duration(milliseconds: animTime), () {
       studentController.forward();
-
     });
-
 
     mechController.addStatusListener((status) {
-    if (status == AnimationStatus.completed) {
-      mechController.reverse();
-    }
-    else if (status == AnimationStatus.dismissed) {
-      mechController.forward();
-    }
+      if (status == AnimationStatus.completed) {
+        mechController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        mechController.forward();
+      }
     });
-
   }
 
   @override
@@ -90,44 +82,42 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
 
   @override
   Widget build(BuildContext context) {
-
-    studentAnimation =
-        Tween<Offset>(begin: Offset(90, MediaQuery.of(context).size.height), end: Offset(90, 130)).animate(CurvedAnimation(parent: studentController, curve: Curves.easeInOut));
-
+    studentAnimation = Tween<Offset>(
+            begin: Offset(MediaQuery.of(context).size.width / 2 - 100, MediaQuery.of(context).size.height),
+            end: Offset(MediaQuery.of(context).size.width / 2 - 100, 130))
+        .animate(CurvedAnimation(
+            parent: studentController, curve: Curves.easeInOut));
 
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-
             Animator(
-              tween: Tween<Offset>(begin: Offset(MediaQuery.of(context).size.width/2 - 0, 200), end: Offset(MediaQuery.of(context).size.width/2 - 0, MediaQuery.of(context).size.height + 70)),
+              tween: Tween<Offset>(
+                  begin: Offset(0, 200),
+                  end: Offset(0, MediaQuery.of(context).size.height + 70)),
               duration: Duration(milliseconds: animTime),
               curve: Curves.easeInOut,
               cycles: 2,
-              builder: (anim){
+              builder: (anim) {
                 return Transform.translate(
                   offset: anim.value,
                   child: Transform.translate(
                     offset: Offset(0, -MediaQuery.of(context).size.height),
                     child: new Image.asset(
                       'assets/images/claw3.png',
-                      width: 600,
-                     // height: 12000,
+                      width: MediaQuery.of(context).size.width,
                       fit: BoxFit.scaleDown,
                     ),
                   ),
                 );
               },
             ),
-
-            Column(
-              children: [
-
-                AnimatedBuilder(
-                  animation: studentController,
-                  builder: (context, child) {
-                    return Transform.translate(
+            Column(children: [
+              AnimatedBuilder(
+                animation: studentController,
+                builder: (context, child) {
+                  return Transform.translate(
                       offset: studentAnimation.value,
                       child: Column(
                         children: <Widget>[
@@ -137,16 +127,15 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
                             height: 200,
                             fit: BoxFit.scaleDown,
                           ),
-                          Text(widget.winner.student.name, style: TextStyle(fontSize: 30),)
+                          Text(
+                            widget.winner.student.name,
+                            style: TextStyle(fontSize: 30),
+                          )
                         ],
-                      )
-
-                    );
-                  },
-                ),
-              ]
-            ),
-
+                      ));
+                },
+              ),
+            ]),
             Positioned(
               bottom: 0,
               child: FadeTransition(
@@ -155,7 +144,6 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
                     width: MediaQuery.of(context).size.width,
                     height: 80,
                     child: Card(
-
                       margin: EdgeInsets.all(6),
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       elevation: 10,
@@ -167,19 +155,22 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
                           children: <Widget>[
                             RaisedButton(
                               child: Text(locText(context, key: "back")),
-                              onPressed: (){
-                                BusinessNavigator().currentState().pushReplacementNamed('/');
+                              onPressed: () {
+                                BusinessNavigator()
+                                    .currentState()
+                                    .pushReplacementNamed('/');
                               },
                             ),
                             Builder(
-                              builder: (context){
-                                if(grade == null){
+                              builder: (context) {
+                                if (grade == null) {
                                   return RaisedButton(
                                     child: Text("jegy hozzáadás"),
                                     onPressed: () async {
                                       BlocProvider.of<SelectedBloc>(context)
-                                          .dispatch(SetSelectedStudent(widget.winner.student));
-                                      showAddGradeDialog(context).then((int g){
+                                          .dispatch(SetSelectedStudent(
+                                              widget.winner.student));
+                                      showAddGradeDialog(context).then((int g) {
                                         setState(() {
                                           grade = g;
                                         });
@@ -187,22 +178,21 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
                                     },
                                   );
                                 }
-                                return Text("Jegy: ${grade}", style: TextStyle(fontSize: 22),);
+                                return Text(
+                                  "Jegy: ${grade}",
+                                  style: TextStyle(fontSize: 22),
+                                );
                               },
                             )
-
                           ],
                         ),
                       ),
                     ),
-                  )
-              ),
+                  )),
             )
-
           ],
         ),
       ),
     );
   }
-
 }

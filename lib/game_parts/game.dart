@@ -21,9 +21,7 @@ class MyGame extends Game with TapDetector {
   bool poped = false;
 
   double lastTime = 0;
-
   double deltaTime = 0;
-
 
   List<PojoStudent> pojoStudents;
 
@@ -46,9 +44,10 @@ class MyGame extends Game with TapDetector {
 
   List<ConveyorSprite> conveyors;
 
-
   ClawSprite claw;
 
+  Rect bgRect;
+  Paint bgColor;
 
   MyGame({this.screenSize, @required this.spinnerData}){
     acc_x = 0.0;
@@ -65,6 +64,9 @@ class MyGame extends Game with TapDetector {
 
 
     claw = ClawSprite(x: screenSize.width/2 - 42, y: -screenSize.height + 200 );
+
+    bgRect = Rect.fromLTWH(0, 0, screenSize.width, screenSize.height);
+    bgColor = new Paint()..color = Colors.white;
 
     init();
   }
@@ -170,6 +172,9 @@ class MyGame extends Game with TapDetector {
 
   @override
   void render(Canvas canvas) {
+    canvas.drawRect(bgRect, bgColor);
+    canvas.restore();
+    canvas.save();
 
     claw.render(canvas);
     canvas.restore();
