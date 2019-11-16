@@ -13,15 +13,11 @@ class SpinnerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
 
-  //  List<StudentWidget> students = [];
-=======
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     //  List<StudentWidget> students = [];
->>>>>>> a169c4de9a5c6ed2f83ba2e416151265e1d1c0e1
 
     return Container(
       child: Scaffold(body: SafeArea(child: Container(

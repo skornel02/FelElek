@@ -19,8 +19,6 @@ class ChosenStudentPage extends StatefulWidget {
   ChosenStudentPage({Key key, @required this.student}) : super(key: key);
 
   @override
-<<<<<<< HEAD
-=======
   Widget build(BuildContext context) {
     return BlocBuilder(
         bloc: BlocProvider.of<SelectedBloc>(context),
@@ -73,7 +71,6 @@ class ChosenStudentPage extends StatefulWidget {
   }
 
   @override
->>>>>>> a169c4de9a5c6ed2f83ba2e416151265e1d1c0e1
   State<StatefulWidget> createState() => _ChosenStudentPage();
 }
 

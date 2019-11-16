@@ -18,35 +18,6 @@ class StudentEditPage extends StatelessWidget {
           if (state is SelectionReadyState) {
             PojoStudent student = state.student;
             PojoGroup group = state.group;
-<<<<<<< HEAD
-            return Container(
-              child: Scaffold(
-                  floatingActionButton: FloatingActionButton(
-                    child: Icon(FontAwesomeIcons.plus),
-                    onPressed: () {
-                      showAddGradeDialog(context);
-                    },
-                  ),
-                  body: SafeArea(
-                      child: Column(
-                    children: <Widget>[
-                      Text("Diák: ${student.name}",
-                          style: TextStyle(fontSize: 26)),
-                      Text("Jegyek", style: TextStyle(fontSize: 20)),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: student.grades.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GradeItemWidget(
-                              index: index,
-                              student: student,
-                              group: group);
-                          }
-                        )
-                      ),
-                    ],
-                  ))),
-=======
             return BlocBuilder(
               bloc: BlocProvider.of<GroupsBloc>(context),
               builder: (BuildContext context, GroupState state) {
@@ -81,7 +52,6 @@ class StudentEditPage extends StatelessWidget {
                 }
                 return Center(child: CircularProgressIndicator());
               },
->>>>>>> a169c4de9a5c6ed2f83ba2e416151265e1d1c0e1
             );
           }
           return Center(child: CircularProgressIndicator());

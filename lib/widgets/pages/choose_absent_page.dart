@@ -14,59 +14,6 @@ class AbsentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-
-
-
-    return Container(
-      child: Scaffold(
-
-          body: SafeArea(
-            child: new RefreshIndicator(
-                child: Column(
-                  children: <Widget>[
-                    Text("${locText(context, key: "group")}: ${widget.group.name}", style: TextStyle(fontSize: 26),),
-
-                    Text(locText(context, key: "students"), style: TextStyle(fontSize: 22),),
-                    Expanded(
-                        child:
-                        ListView.builder(
-                          // physics: BouncingScrollPhysics(),
-                            itemCount: choseStudents.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return StudentItemWidget(student: choseStudents[index],);
-                            }
-                        )
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: SizedBox(
-                          height: 50,
-                          width: double.maxFinite,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-
-                            child: Text(locText(context, key: "next"), style: TextStyle(fontSize: 24)),
-                            onPressed: (){
-                                Navigator.pushNamed(context, "/absent/spinner", arguments: choseStudents);
-
-
-                             // Navigator.pushNamed(context, "/absent/spinner/chosen_student", arguments: choseStudents[0]);
-
-                            },
-                          )
-                      ),
-                    )
-
-
-                  ],
-                ),
-                onRefresh: () async => groupsBloc.dispatch(ReloadGroupEvent()) //await getData()
-            ),
-          )
-      ),
-    );
-=======
     return BlocBuilder(
         bloc: BlocProvider.of<SelectedBloc>(context),
         builder: (BuildContext context, SelectedState selectedState) {
@@ -106,12 +53,27 @@ class AbsentPage extends StatelessWidget {
                                         })),
                                 Builder(builder: (BuildContext context) {
                                   if(nonAbsent.length > 0) {
-                                    return RaisedButton(
-                                      child: Text("Kezdés"),
-                                      onPressed: () {
-                                        SpinnerData data = new SpinnerData(nonAbsent, pickWinner(nonAbsent));
-                                        Navigator.pushNamed(context, "/absent/spinner", arguments: data);
-                                      },
+
+
+                                    return Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: SizedBox(
+                                          height: 50,
+                                          width: double.maxFinite,
+                                          child: RaisedButton(
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+
+                                            child: Text("Kezdés", style: TextStyle(fontSize: 24)),
+                                            onPressed: (){
+                                              SpinnerData data = new SpinnerData(nonAbsent, pickWinner(nonAbsent));
+                                              Navigator.pushNamed(context, "/absent/spinner", arguments: data);
+
+
+                                              // Navigator.pushNamed(context, "/absent/spinner/chosen_student", arguments: choseStudents[0]);
+
+                                            },
+                                          )
+                                      ),
                                     );
                                   }
                                   return Container();
@@ -126,6 +88,5 @@ class AbsentPage extends StatelessWidget {
           }
           return Center(child: CircularProgressIndicator());
         });
->>>>>>> a169c4de9a5c6ed2f83ba2e416151265e1d1c0e1
   }
 }
