@@ -17,58 +17,6 @@ class ChosenStudentPage extends StatefulWidget {
   ChosenStudentPage({Key key, @required this.student}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder(
-        bloc: BlocProvider.of<SelectedBloc>(context),
-        builder: (BuildContext context, SelectedState state) {
-          print(state);
-          if (state is SelectionReadyState) {
-            PojoGroup group = state.group;
-            return Container(
-              //LogConsoleOnShake(
-              child: Scaffold(
-                  key: Key(group.students.length.toString() + "-" + group.uuId),
-                  floatingActionButton: FloatingActionButton(
-                    child: Icon(FontAwesomeIcons.plus),
-                    onPressed: () {
-                      showAddStudentDialog(context);
-                    },
-                  ),
-                  body: SafeArea(
-                    child: new RefreshIndicator(
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              "${locText(context, key: "group")}: ${group.name}",
-                              style: TextStyle(fontSize: 26),
-                            ),
-                            Text(
-                              "${group.students.length} felhasználó",
-                              style: TextStyle(fontSize: 22),
-                            ),
-                            Expanded(
-                                child: ListView.builder(
-                                  // physics: BouncingScrollPhysics(),
-                                    itemCount: group.students.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return StudentItemWidget(
-                                          student: group.students[index],
-                                          group: group);
-                                    })),
-                          ],
-                        ),
-                        onRefresh: () async =>
-                            BlocProvider.of<GroupsBloc>(context)
-                                .dispatch(ReloadGroupEvent())),
-                  )),
-            );
-          }
-          return Center(child: CircularProgressIndicator());
-        });
-  }
-
-  @override
   State<StatefulWidget> createState() => _ChosenStudentPage();
 }
 
@@ -123,11 +71,11 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
               builder: (anim){
                 return Transform.translate(
                   offset: anim.value,
-                  child: Container(
-                    color: Colors.red,
-
-                    width: 300,
-                    height: 50,
+                  child: new Image.asset(
+                    'images/claw3.png',
+                    width: 650,
+                    height: 12000,
+                    fit: BoxFit.cover,
                   ),
                 );
               },

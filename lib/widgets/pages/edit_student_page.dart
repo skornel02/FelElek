@@ -32,15 +32,16 @@ class StudentEditPage extends StatelessWidget {
                           style: TextStyle(fontSize: 26)),
                       Text("Jegyek", style: TextStyle(fontSize: 20)),
                       Expanded(
-                          child: ListView.builder(
-                              // physics: BouncingScrollPhysics(),
-                              itemCount: student.grades.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return GradeItemWidget(
-                                    index: index,
-                                    student: student,
-                                    group: group);
-                              })),
+                        child: ListView.builder(
+                          itemCount: student.grades.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GradeItemWidget(
+                              index: index,
+                              student: student,
+                              group: group);
+                          }
+                        )
+                      ),
                     ],
                   ))),
             );
