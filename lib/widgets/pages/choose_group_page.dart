@@ -44,7 +44,8 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                             icon: Icon(FontAwesomeIcons.sync),
                             color: Colors.black,
                             onPressed: () {
-                              Navigator.pushNamed(context, "/login");},
+                              Navigator.pushNamed(context, "/login");
+                            },
                           ),
                           Text(
                             locText(context, key: "groups"),
@@ -80,12 +81,24 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                                     key: "info_something_went_wrong")));
                           }),
                     ),
-                    RaisedButton(
-                      child: Text("Új felelés"),
-                      onPressed: () {
-                        if (SelectedBloc().group != null) {}
-                        Navigator.pushNamed(context, "/absent",
-                            arguments: SelectedBloc().group);
+                    BlocBuilder(
+                      bloc: BlocProvider.of<SelectedBloc>(context),
+                      builder: (BuildContext context, SelectedState state) {
+                        if (state is SelectionReadyState) {
+                          if(state.group == null){
+                            return Center();
+                          }else{
+                            return RaisedButton(
+                              child: Text("Új felelés"),
+                              onPressed: () {
+                                if (SelectedBloc().group != null) {}
+                                Navigator.pushNamed(context, "/absent",
+                                    arguments: state.group);
+                              },
+                            );
+                          }
+                        }
+                        return Center();
                       },
                     ),
                   ],
