@@ -42,7 +42,7 @@ class _SpinnerPage extends State<SpinnerPage> with AutomaticKeepAliveClientMixin
               child: Builder(
                 builder: (context){
 
-                  Game game = MyGame(MediaQuery.of(context).size);
+                  Game game = MyGame(screenSize: MediaQuery.of(context).size, pojoStudents: List());
 
                   return game.widget;
 
