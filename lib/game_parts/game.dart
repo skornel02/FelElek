@@ -44,7 +44,8 @@ class MyGame extends Game with TapDetector {
   StudentSprite winnerStudent;
   bool winnerStudentSpawned = false;
 
-  ConveyorSprite conveyor;
+  List<ConveyorSprite> conveyors;
+
 
   ClawSprite claw;
 
@@ -58,7 +59,10 @@ class MyGame extends Game with TapDetector {
 
     students = [];
 
-    conveyor = ConveyorSprite(x: 0, y: screenSize.height/2 + 50, width: screenSize.width);
+    conveyors = [ConveyorSprite(x: 0, y: screenSize.height/2 + 40, width: screenSize.width),
+                 ConveyorSprite(x: -screenSize.width, y: screenSize.height/2 + 40, width: screenSize.width),
+    ];
+
 
     claw = ClawSprite(x: screenSize.width/2 - 42, y: -screenSize.height + 200 );
 
@@ -100,6 +104,13 @@ class MyGame extends Game with TapDetector {
   @override
   void update(double t) {
     deltaTime = t;
+
+    for(ConveyorSprite c in conveyors){
+      c.update(t);
+      if(c.x > screenSize.width){
+        c.x = -screenSize.width;
+      }
+    }
 
     if(winnerStudentSpawned){
       double distance = screenSize.width/2 - (winnerStudent.x + 20);
@@ -164,9 +175,11 @@ class MyGame extends Game with TapDetector {
     canvas.restore();
     canvas.save();
 
-    conveyor.render(canvas);
-    canvas.restore();
-    canvas.save();
+    conveyors.forEach((ConveyorSprite c) {
+      c.render(canvas);
+      canvas.restore();
+      canvas.save();
+    });
 
     students.forEach((StudentSprite s) {
       s.render(canvas);

@@ -136,6 +136,7 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
   void dispose() {
     mechController.dispose();
     studentController.dispose();
+    buttonController.dispose();
     super.dispose();
   }
 
@@ -219,6 +220,7 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
                             RaisedButton(
                               child: Text(locText(context, key: "back")),
                               onPressed: (){
+                                Navigator.of(context).popAndPushNamed("/");
 
                               },
                             ),
@@ -238,7 +240,7 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
                                     },
                                   );
                                 }
-                                return Text("Jegy:${grade}", style: TextStyle(fontSize: 22),);
+                                return Text("Jegy: ${grade}", style: TextStyle(fontSize: 22),);
                               },
                             )
 
