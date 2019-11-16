@@ -1,18 +1,13 @@
 import 'dart:async';
 
 import 'package:animator/animator.dart';
-import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:dusza2019/navigation/business_navigator.dart';
-import 'package:dusza2019/other/hazizz_localizations.dart';
+import 'package:dusza2019/other/felelek_localizations.dart';
 import 'package:dusza2019/other/winner_data.dart';
-import 'package:dusza2019/pojos/pojo_group.dart';
-import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:dusza2019/widgets/dialogs/dialogs.dart';
-import 'package:dusza2019/widgets/items/student_edit_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChosenStudentPage extends StatefulWidget {
   final WinnerData winner;
@@ -84,7 +79,8 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
   @override
   Widget build(BuildContext context) {
     studentAnimation = Tween<Offset>(
-            begin: Offset(MediaQuery.of(context).size.width / 2 - 100, MediaQuery.of(context).size.height),
+            begin: Offset(MediaQuery.of(context).size.width / 2 - 100,
+                MediaQuery.of(context).size.height),
             end: Offset(MediaQuery.of(context).size.width / 2 - 100, 130))
         .animate(CurvedAnimation(
             parent: studentController, curve: Curves.easeInOut));
@@ -180,7 +176,7 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
                                   );
                                 }
                                 return Text(
-                                  "Jegy: ${grade}",
+                                  "Jegy: $grade",
                                   style: TextStyle(fontSize: 22),
                                 );
                               },

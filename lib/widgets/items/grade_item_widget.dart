@@ -5,16 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class GradeItemWidget extends StatelessWidget{
+class GradeItemWidget extends StatelessWidget {
+  final int index;
+  final int grade;
+  final PojoStudent student;
+  final PojoGroup group;
 
-  int index;
-  int grade;
-  PojoStudent student;
-  PojoGroup group;
-
-  GradeItemWidget({this.index, this.student, this.group}){
-    grade = student.grades[index];
-  }
+  GradeItemWidget({this.index, this.student, this.group})
+      : grade = student.grades[index];
 
   @override
   Widget build(BuildContext context) {
@@ -22,34 +20,23 @@ class GradeItemWidget extends StatelessWidget{
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5,
         child: InkWell(
-
-            child:
-            Align(
+            child: Align(
                 alignment: Alignment.centerLeft,
-                child:
-                Padding(
-                    padding: const EdgeInsets.only(left: 8, /*top: 4, bottom: 4*/),
+                child: Padding(
+                    padding: const EdgeInsets.only(left: 8),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(grade.toString(),
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.w700
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(FontAwesomeIcons.times),
-                          color: Colors.red,
-                          onPressed: (){
-                            BlocProvider.of<GroupsBloc>(context)
-                                .dispatch(RemoveGradeEvent(index, student, group));
-                          },
-                        ),
-                      ],
-                    )
-                )
-            )
-        )
-    );
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(grade.toString(),
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.w700)),
+                          IconButton(
+                              icon: Icon(FontAwesomeIcons.times),
+                              color: Colors.red,
+                              onPressed: () {
+                                BlocProvider.of<GroupsBloc>(context).dispatch(
+                                    RemoveGradeEvent(index, student, group));
+                              }),
+                        ])))));
   }
 }

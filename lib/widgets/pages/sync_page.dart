@@ -54,7 +54,7 @@ class SyncPage extends StatelessWidget {
                     ],
                   ),
                   BlocBuilder(bloc: BlocProvider.of<GroupsBloc>(context),
-                    builder: (BuildContext context, GroupState) {
+                    builder: (BuildContext context, GroupState _) {
                       return Column(
                         children: <Widget>[
                           Row(

@@ -11,8 +11,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/pages/intro_page.dart';
 
-
-class RouteGenerator{
+class RouteGenerator {
   static Route<dynamic> _errorRoute(String errorLog) {
     print("navigation error: $errorLog");
     return MaterialPageRoute(builder: (_) {
@@ -31,19 +30,18 @@ class RouteGenerator{
     // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
 
-
-    print("navigating to ${settings.name} with arguments: ${settings.arguments}");
-
+    print(
+        "navigating to ${settings.name} with arguments: ${settings.arguments}");
 
     switch (settings.name) {
+      case '/':
+        return MaterialPageRoute(builder: (_) => GroupsPage());
       case '/login':
         return MaterialPageRoute(builder: (_) => SyncPage());
       case '/import':
         return MaterialPageRoute(builder: (_) => ImportPage());
-      case 'intro':
+      case '/intro':
         return MaterialPageRoute(builder: (_) => IntroPage());
-      case '/':
-        return MaterialPageRoute(builder: (_) => GroupsPage());//MaterialPageRoute(builder: (_) => MainTabHosterPage());
       case '/student':
         return MaterialPageRoute(builder: (_) => GroupEditPage());
       case '/student/edit':
@@ -53,14 +51,20 @@ class RouteGenerator{
         return MaterialPageRoute(builder: (_) => AbsentPage());
       case '/absent/spinner':
         assert(args != null);
-        return MaterialPageRoute(builder: (_) => SpinnerPage(spinnerData: args,));
+        return MaterialPageRoute(
+            builder: (_) => SpinnerPage(
+                  spinnerData: args,
+                ));
       case '/absent/spinner/chosen_student':
         assert(args != null);
-        return MaterialPageRoute(builder: (_) => ChosenStudentPage(winner: args,));
+        return MaterialPageRoute(
+            builder: (_) => ChosenStudentPage(
+                  winner: args,
+                ));
       default:
-        String errorLog = "log: route: ${settings.name}, args: ${settings.arguments}";
+        String errorLog =
+            "log: route: ${settings.name}, args: ${settings.arguments}";
         return _errorRoute(errorLog);
     }
   }
 }
-

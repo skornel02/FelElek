@@ -125,8 +125,8 @@ class Database {
   }
 
   List<PojoGroup> _jsonToGroups(String json) {
-    Iterable iter = jsonDecode(json).cast<Map<String, dynamic>>();
-    List<PojoGroup> groups = iter.map<PojoGroup>((json) => PojoGroup.fromJson(json)).toList();
+    Iterable iterator = jsonDecode(json).cast<Map<String, dynamic>>();
+    List<PojoGroup> groups = iterator.map<PojoGroup>((json) => PojoGroup.fromJson(json)).toList();
     return groups;
   }
 

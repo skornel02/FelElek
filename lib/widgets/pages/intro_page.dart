@@ -1,31 +1,17 @@
-import 'dart:async';
-
 import 'package:dusza2019/blocs/google_login_bloc.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/widgets/login_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import "dart:math" show pi;
 
-import '../../other/app_state_manager.dart';
 import '../../navigation/business_navigator.dart';
-import '../dialogs/loading_dialog.dart';
 
 class IntroPage extends StatelessWidget {
   static const double angle = pi / 16;
-
   static const double dy = -86;
-
-  bool joinLater = false;
-
-  bool processingDeepLink = false;
-
-  int groupId;
-
-  var slides;
 
   void exitIntro() {
     BusinessNavigator().currentState().pushReplacementNamed('/');
@@ -64,7 +50,6 @@ class IntroPage extends StatelessWidget {
               bloc: BlocProvider.of<GoogleLoginBloc>(context),
               builder: (BuildContext context, GoogleLoginState state) {
                 if (state is GoogleLoginSuccessfulState) {
-                  //Update cache
                   BlocProvider.of<GroupsBloc>(context)
                       .dispatch(SyncWithGoogleDriveEvent(state.accessToken));
                   return Row(
@@ -84,21 +69,20 @@ class IntroPage extends StatelessWidget {
                       )
                     ],
                   );
-                } else {
-                  return Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Text(
-                          "A szinkronizációhoz jelentkezzen be:",
-                          style: TextStyle(fontSize: 17),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      LoginWidget()
-                    ],
-                  );
                 }
+                return Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        "A szinkronizációhoz jelentkezzen be:",
+                        style: TextStyle(fontSize: 17),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    LoginWidget()
+                  ],
+                );
               },
             ),
             RaisedButton(

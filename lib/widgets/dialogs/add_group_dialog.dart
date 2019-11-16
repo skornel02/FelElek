@@ -1,23 +1,19 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
-import 'package:dusza2019/other/hazizz_localizations.dart';
+import 'package:dusza2019/other/felelek_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dialogs.dart';
 
 class AddGroupDialog extends StatefulWidget {
-
-
   AddGroupDialog({Key key}) : super(key: key);
-
 
   @override
   _AddGroupDialog createState() => new _AddGroupDialog();
 }
 
 class _AddGroupDialog extends State<AddGroupDialog> {
-
   final double width = 300;
   final double height = 130;
 
@@ -25,15 +21,17 @@ class _AddGroupDialog extends State<AddGroupDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var dialog = HazizzDialog(width: width, height: height,
+    var dialog = DialogHelper(
+        width: width,
+        height: height,
         header: Container(
           width: width,
           color: Theme.of(context).primaryColor,
           child: Padding(
             padding: const EdgeInsets.all(5),
-            child:
-            Center(
-              child: AutoSizeText( "Add group",
+            child: Center(
+              child: AutoSizeText(
+                "Add group",
                 style: TextStyle(
                   fontSize: 30.0,
                   fontWeight: FontWeight.w700,
@@ -41,7 +39,6 @@ class _AddGroupDialog extends State<AddGroupDialog> {
                 maxLines: 1,
                 minFontSize: 20,
                 maxFontSize: 30,
-
               ),
             ),
           ),
@@ -55,17 +52,15 @@ class _AddGroupDialog extends State<AddGroupDialog> {
                     children: <Widget>[
                       TextField(
                         style: TextStyle(fontSize: 22),
-                        inputFormatters:[
+                        inputFormatters: [
                           LengthLimitingTextInputFormatter(30),
                         ],
                         autofocus: true,
-
                         controller: _gradeTextEditingController,
                         textInputAction: TextInputAction.send,
                       ),
                     ],
-                  )
-              ),
+                  )),
             ],
           ),
         ),
@@ -79,25 +74,22 @@ class _AddGroupDialog extends State<AddGroupDialog> {
                 onPressed: () {
                   Navigator.of(context).pop(null);
                 },
-                color: Colors.transparent
-            ),
+                color: Colors.transparent),
             FlatButton(
                 child: Center(
-                  child: Text(locText(context, key: "add"),
-                    style: TextStyle(
-                      //  fontFamily: 'Montserrat',
-                    ),
+                  child: Text(
+                    locText(context, key: "add"),
+                    style: TextStyle(),
                   ),
                 ),
                 onPressed: () async {
-                  GroupEvent event = AddGroupEvent(_gradeTextEditingController.text);
+                  GroupEvent event =
+                      AddGroupEvent(_gradeTextEditingController.text);
                   BlocProvider.of<GroupsBloc>(context).dispatch(event);
                   Navigator.of(context).pop();
-                }
-            ),
+                }),
           ],
-        )
-    );
+        ));
     return dialog;
   }
 }

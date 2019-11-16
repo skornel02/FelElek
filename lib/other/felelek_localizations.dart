@@ -4,16 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 const _keyLangCode = "key_langCode";
 
 String locText(BuildContext context, {@required String key, List<String> args}){
-  return HazizzLocalizations.of(context)?.translate(key, args: args);
+  return FelElekLocalizations.of(context)?.translate(key, args: args);
 }
 
 Future<String> locTextContextless({@required String key, List<String> args}) async {
-  return await HazizzLocalizationsNoContext.translate(key, args: args);
+  return await FelElekLocalizationsNoContext.translate(key, args: args);
 }
 
 Future<Locale> getPreferredLocale() async{
@@ -53,9 +51,7 @@ List<Locale> getSupportedLocales() {
   return locales;
 }
 
-
-
-class HazizzLocalizationsNoContext{
+class FelElekLocalizationsNoContext{
 
   static Map<String, String> localizedStrings;
 
@@ -105,17 +101,17 @@ class HazizzLocalizationsNoContext{
   }
 }
 
-class HazizzLocalizations {
+class FelElekLocalizations {
 
 
   Locale locale;
 
-  HazizzLocalizations(this.locale);
+  FelElekLocalizations(this.locale);
 
   // Helper method to keep the code in the widgets concise
   // Localizations are accessed using an InheritedWidget "of" syntax
-  static HazizzLocalizations of(BuildContext context) {
-    return Localizations.of<HazizzLocalizations>(context, HazizzLocalizations);
+  static FelElekLocalizations of(BuildContext context) {
+    return Localizations.of<FelElekLocalizations>(context, FelElekLocalizations);
   }
 
   Map<String, String> _localizedStrings;
@@ -166,18 +162,18 @@ class HazizzLocalizations {
   }
 
   // Static member to have a simple access to the delegate from the MaterialApp
-  static const LocalizationsDelegate<HazizzLocalizations> delegate =
-  _HazizzLocalizationsDelegate();
+  static const LocalizationsDelegate<FelElekLocalizations> delegate =
+  _FelElekLocalizationsDelegate();
 
 }
 
 // LocalizationsDelegate is a factory for a set of localized resources
 // In this case, the localized strings will be gotten in an AppLocalizations object
-class _HazizzLocalizationsDelegate
-    extends LocalizationsDelegate<HazizzLocalizations> {
+class _FelElekLocalizationsDelegate
+    extends LocalizationsDelegate<FelElekLocalizations> {
   // This delegate instance will never change (it doesn't even have fields!)
   // It can provide a constant constructor.
-  const _HazizzLocalizationsDelegate();
+  const _FelElekLocalizationsDelegate();
 
   @override
   bool isSupported(Locale locale) {
@@ -186,13 +182,13 @@ class _HazizzLocalizationsDelegate
   }
 
   @override
-  Future<HazizzLocalizations> load(Locale locale) async {
+  Future<FelElekLocalizations> load(Locale locale) async {
     // AppLocalizations class is where the JSON loading actually runs
-    HazizzLocalizations localizations = new HazizzLocalizations(locale);
+    FelElekLocalizations localizations = new FelElekLocalizations(locale);
     await localizations.load(locale);
     return localizations;
   }
 
   @override
-  bool shouldReload(_HazizzLocalizationsDelegate old) => false;
+  bool shouldReload(_FelElekLocalizationsDelegate old) => false;
 }

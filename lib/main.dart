@@ -12,60 +12,31 @@ import 'package:dynamic_theme/dynamic_theme.dart';
 import 'navigation/business_navigator.dart';
 import 'navigation/route_generator.dart';
 import 'other/app_state_manager.dart';
-import 'other/hazizz_localizations.dart';
-import 'other/hazizz_theme.dart';
+import 'other/felelek_localizations.dart';
+import 'other/felelek_theme.dart';
 
 String startPage;
-
 ThemeData themeData;
-
 bool newComer = false;
-
-bool isLoggedIn = true;
-
-bool isFromNotification = false;
-
-String tasksTomorrowSerialzed;
-
-//MainTabBlocs mainTabBlocs = MainTabBlocs();
-//LoginBlocs loginBlocs = LoginBlocs();
-
 Locale preferredLocale;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // preferredLocale = await getPreferredLocale();
-
-//  await HazizzMessageHandler().configure();
-
-  // fromNotification();
-
   await AppState.appStartProcedure();
 
-  themeData = await HazizzTheme.getCurrentTheme();
+  themeData = await FelElekTheme.getCurrentTheme();
+  newComer = await AppState.isNewComer();
+  AppState.setNotNewComer();
 
-
-  if (!(await AppState.isNewComer())) {
-    if (!(await AppState.isLoggedIn())) { // !(await AppState.isLoggedIn())
-      isLoggedIn = false;
-    } else {
-      AppState.mainAppPartStartProcedure();
-    }
-  } else {
-    isLoggedIn = false;
-    newComer = true;
-  }
-
-  runApp(EasyLocalization(child: HazizzApp()));
+  runApp(EasyLocalization(child: FelElekApp()));
 }
 
-class HazizzApp extends StatefulWidget {
+class FelElekApp extends StatefulWidget {
   @override
-  _HazizzApp createState() => _HazizzApp();
+  _FelElekApp createState() => _FelElekApp();
 }
 
-class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver {
+class _FelElekApp extends State<FelElekApp> with WidgetsBindingObserver {
   // Locale preferredLocale;
   DateTime currentBackPressTime;
   DateTime lastActive;
@@ -97,32 +68,17 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver {
     }
 
     if (state == AppLifecycleState.resumed) {
-      if (lastActive != null) {
-
-      }
+      if (lastActive != null) {}
     }
 
-    if (state == AppLifecycleState.suspending) {
-
-    }
+    if (state == AppLifecycleState.suspending) {}
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isLoggedIn) {
-      if (!isFromNotification) {
-        startPage = "login";
-      } else {
-        startPage = "/tasksTomorrow";
-      }
-    } else if (newComer) {
-      startPage = "intro";
-    }
-    else {
-      startPage = "login";
-    }
+    startPage = newComer ? "/intro" : "/";
 
-    print("startpage: ${startPage}");
+    print("Starting page: $startPage");
 
     return new DynamicTheme(
         data: (brightness) => themeData,
@@ -141,26 +97,22 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver {
               ],
               child: MaterialApp(
                 navigatorKey: BusinessNavigator().navigatorKey,
-                title: 'Hazizz Mobile',
+                title: 'FelElek',
                 showPerformanceOverlay: false,
                 theme: theme,
-                initialRoute: /*"/tasksTomorrow",*/ startPage,
+                initialRoute: startPage,
                 onGenerateRoute: RouteGenerator.generateRoute,
-
                 localizationsDelegates: [
-                  HazizzLocalizations.delegate,
+                  FelElekLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                 ],
                 supportedLocales: getSupportedLocales(),
-
-
                 localeResolutionCallback: (locale, supportedLocales) {
-                  // Check if the current device locale is supported
                   print("prCode1: ${preferredLocale.toString()}");
                   if (preferredLocale != null) {
-                    print("prCode: ${preferredLocale
-                        .languageCode}, ${preferredLocale.countryCode}");
+                    print(
+                        "prCode: ${preferredLocale.languageCode}, ${preferredLocale.countryCode}");
                     return preferredLocale;
                   }
                   for (var supportedLocale in supportedLocales) {
@@ -170,14 +122,9 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver {
                       return supportedLocale;
                     }
                   }
-                  // If the locale of the device is not supported, use the first one
-                  // from the list (English, in this case).
                   return supportedLocales.first;
                 },
-
-              )
-          );
-        }
-    );
+              ));
+        });
   }
 }

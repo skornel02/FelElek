@@ -1,12 +1,12 @@
 import 'package:package_info/package_info.dart';
 
-class HazizzAppInfo{
+class FelElekAppInfo{
 
-  static final HazizzAppInfo _singleton = new HazizzAppInfo._internal();
-  factory HazizzAppInfo() {
+  static final FelElekAppInfo _singleton = new FelElekAppInfo._internal();
+  factory FelElekAppInfo() {
     return _singleton;
   }
-  HazizzAppInfo._internal();
+  FelElekAppInfo._internal();
 
   PackageInfo _packageInfo;
 
@@ -18,7 +18,7 @@ class HazizzAppInfo{
     throw Exception("packageInfo was not initalized");
   }
 
-  Future<PackageInfo> initalize() async {
+  Future<PackageInfo> initialize() async {
     _packageInfo = await PackageInfo.fromPlatform();
     return _packageInfo;
   }

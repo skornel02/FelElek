@@ -1,6 +1,6 @@
 import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
-import 'package:dusza2019/other/hazizz_localizations.dart';
+import 'package:dusza2019/other/felelek_localizations.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:dusza2019/widgets/dialogs/dialogs.dart';
 import 'package:dusza2019/widgets/items/student_edit_item_widget.dart';
@@ -21,7 +21,7 @@ class GroupEditPage extends StatelessWidget {
             return BlocBuilder(
               bloc: BlocProvider.of<GroupsBloc>(context),
               builder: (BuildContext context, GroupState state) {
-                if(state is LoadedGroupState){
+                if (state is LoadedGroupState) {
                   return Container(
                       child: Scaffold(
                           floatingActionButton: FloatingActionButton(
@@ -34,7 +34,8 @@ class GroupEditPage extends StatelessWidget {
                             child: Column(
                               children: <Widget>[
                                 Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       IconButton(
                                         icon: Icon(FontAwesomeIcons.arrowLeft),
@@ -59,7 +60,6 @@ class GroupEditPage extends StatelessWidget {
                                 ),
                                 Expanded(
                                     child: ListView.builder(
-                                      // physics: BouncingScrollPhysics(),
                                         itemCount: group.students.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {

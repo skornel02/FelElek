@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StudentAbsentWidget extends StatelessWidget {
-  PojoStudent student;
-  PojoGroup group;
+  final PojoStudent student;
+  final PojoGroup group;
 
   StudentAbsentWidget({this.student, this.group});
 
@@ -23,30 +23,31 @@ class StudentAbsentWidget extends StatelessWidget {
                       left: 8, /*top: 4, bottom: 4*/
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          student.name + " (${student.grades.length} jegy)",
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.w700),
-                        ),
-                        BlocBuilder(
-                          bloc: BlocProvider.of<SelectedBloc>(context),
-                          builder: (BuildContext context, SelectedState state) {
-                            if (state is SelectionReadyState){
-                              bool absent = state.absentStudents.contains(student);
-                              return Checkbox(
-                                value: absent,
-                                onChanged: (bool next) {
-                                  BlocProvider.of<SelectedBloc>(context)
-                                      .dispatch(SetAbsentStudent(student, next));
-                                },
-                              );
-                            }
-                            return Center(child: CircularProgressIndicator());
-                          },
-                        )
-                      ],
-                    )))));
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            student.name + " (${student.grades.length} jegy)",
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.w700),
+                          ),
+                          BlocBuilder(
+                              bloc: BlocProvider.of<SelectedBloc>(context),
+                              builder:
+                                  (BuildContext context, SelectedState state) {
+                                if (state is SelectionReadyState) {
+                                  bool absent =
+                                      state.absentStudents.contains(student);
+                                  return Checkbox(
+                                      value: absent,
+                                      onChanged: (bool next) {
+                                        BlocProvider.of<SelectedBloc>(context)
+                                            .dispatch(SetAbsentStudent(
+                                                student, next));
+                                      });
+                                }
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              })
+                        ])))));
   }
 }
