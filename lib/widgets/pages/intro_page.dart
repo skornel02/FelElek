@@ -14,15 +14,7 @@ import '../../other/app_state_manager.dart';
 import '../../navigation/business_navigator.dart';
 import '../dialogs/loading_dialog.dart';
 
-class IntroPage extends StatefulWidget {
-  IntroPage({Key key}) : super(key: key);
-
-  @override
-  _IntroPage createState() => _IntroPage();
-}
-
-class _IntroPage extends State<IntroPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class IntroPage extends StatelessWidget {
   static const double angle = pi / 16;
 
   static const double dy = -86;
@@ -34,73 +26,6 @@ class _IntroPage extends State<IntroPage>
   int groupId;
 
   var slides;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
-  Widget introPageBuilder(Widget title, Widget description,
-      {int backgroundIndex}) {
-    return SingleChildScrollView(
-      child: Stack(
-        children: <Widget>[
-          Container(
-            height: MediaQuery
-                .of(context)
-                .size
-                .height, //-  MediaQuery.of(context).padding.top,
-            //  width: MediaQuery.of(context).size.width,
-            /*  child: SvgPicture.asset(
-              "assets/images/hatter-$backgroundIndex.svg",
-              // semanticsLabel: 'Acme Logo'
-              fit: BoxFit.fitHeight,
-
-              height: MediaQuery.of(context).size.height -  MediaQuery.of(context).padding.top,
-              width: MediaQuery.of(context).size.width,
-            ),
-            */
-          ),
-          Container(
-            height: MediaQuery
-                .of(context)
-                .size
-                .height -
-                MediaQuery
-                    .of(context)
-                    .padding
-                    .top,
-            //    width: MediaQuery.of(context).size.width,
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  Stack(
-                    children: <Widget>[
-                      SafeArea(
-                        child: Container(
-                          // height: 100,
-                          // child: NotebookBackgroundWidget()
-                        ),
-                      ),
-                      Center(child: title)
-                    ],
-                  ),
-                  // description,
-                  Expanded(child: description)
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   void exitIntro() {
     BusinessNavigator().currentState().pushReplacementNamed(
@@ -126,7 +51,7 @@ class _IntroPage extends State<IntroPage>
                     textAlign: TextAlign.center),
                 BlocBuilder(
                   bloc: BlocProvider.of<GoogleLoginBloc>(context),
-                  builder: (BuildContext context, GoogleLoginState state)  {
+                  builder: (BuildContext context, GoogleLoginState state) {
                     if (state is GoogleLoginSuccessfulState) {
                       //Update cache
                       BlocProvider.of<GroupsBloc>(context)
@@ -135,7 +60,10 @@ class _IntroPage extends State<IntroPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Text(state.email, style: TextStyle(fontSize: 18),),
+                          Text(
+                            state.email,
+                            style: TextStyle(fontSize: 18),
+                          ),
                           IconButton(
                             icon: Icon(FontAwesomeIcons.signOutAlt),
                             onPressed: () {
@@ -167,7 +95,7 @@ class _IntroPage extends State<IntroPage>
                 RaisedButton(
                   child: Text("Tovább"),
                   onPressed: () {
-                    Navigator.pushNamed(context, "/");
+                    exitIntro();
                   },
                 )
               ],
@@ -175,9 +103,4 @@ class _IntroPage extends State<IntroPage>
           )),
     );
   }
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
-
 }
