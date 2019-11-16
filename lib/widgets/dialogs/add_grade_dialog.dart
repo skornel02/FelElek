@@ -16,8 +16,8 @@ class AddGradeDialog extends StatefulWidget {
 }
 
 class _AddGradeDialog extends State<AddGradeDialog> {
-  final double width = 300;
-  final double height = 130;
+  final double width = 280;
+  final double height = 90;
 
   int currentGrade = 5;
 
@@ -37,7 +37,7 @@ class _AddGradeDialog extends State<AddGradeDialog> {
               child: AutoSizeText(
                 "Add grade",
                 style: TextStyle(
-                  fontSize: 30.0,
+                  fontSize: 25.0,
                   fontWeight: FontWeight.w700,
                 ),
                 maxLines: 1,
