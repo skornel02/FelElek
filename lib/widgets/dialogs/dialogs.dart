@@ -1,36 +1,43 @@
+import 'package:dusza2019/pojos/pojo_group.dart';
+import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:dusza2019/widgets/dialogs/add_group_dialog.dart';
 import 'package:dusza2019/widgets/dialogs/add_user_dialog.dart';
 import 'package:flutter/material.dart';
 
-import '../../other/felelek_localizations.dart';
-import '../../other/felelek_theme.dart';
 import 'add_grade_dialog.dart';
-
+import 'delete_grade_dialog.dart';
+import 'delete_group_dialog.dart';
+import 'delete_student_dialog.dart';
 
 // 280 min width
-class DialogHelper extends Dialog{
-
+class DialogHelper extends Dialog {
   static const double buttonBarHeight = 48.0;
 
   final Widget header, content;
   final Widget actionButtons;
   final double height, width;
 
-  DialogHelper({this.header, this.content, this.actionButtons,@required this.height,@required this.width});
+  DialogHelper(
+      {this.header,
+      this.content,
+      this.actionButtons,
+      @required this.height,
+      @required this.width});
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Container(
             height: height + buttonBarHeight,
             width: width,
             decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
+                BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
             child: Column(
               children: <Widget>[
                 Container(
-                  width: width*2,
+                  width: width * 2,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10.0),
@@ -45,16 +52,13 @@ class DialogHelper extends Dialog{
                     child: Center(child: header),
                   ),
                 ),
-
                 Expanded(
-                  child: Builder(
-                      builder: (BuildContext context){
-                        if(content != null){
-                          return content;
-                        }
-                        return Container();
-                      }
-                  ),
+                  child: Builder(builder: (BuildContext context) {
+                    if (content != null) {
+                      return content;
+                    }
+                    return Container();
+                  }),
                 ),
                 Center(
                   child: Row(
@@ -66,30 +70,72 @@ class DialogHelper extends Dialog{
                   ),
                 )
               ],
-            )
-        ));
+            )));
   }
 }
 
-Future showAddGroupDialog(BuildContext context,) async{
+Future showAddGroupDialog(
+  BuildContext context,
+) async {
   var d = AddGroupDialog();
-  var result = showDialog(context: context, builder: (context2){
-    return d;
-  });
+  var result = showDialog(
+      context: context,
+      builder: (context2) {
+        return d;
+      });
   return result;
 }
 
-Future showAddStudentDialog(BuildContext context,) async{
+Future showAddStudentDialog(
+  BuildContext context,
+) async {
   var d = AddStudentDialog();
-  var result = showDialog(context: context, builder: (context2){
-    return d;
-  });
+  var result = showDialog(
+      context: context,
+      builder: (context2) {
+        return d;
+      });
   return result;
 }
 
-Future<int> showAddGradeDialog(BuildContext context,) async{
-  var result = await showDialog(context: context, builder: (context2){
-    return AddGradeDialog();
-  });
+Future<int> showAddGradeDialog(
+  BuildContext context,
+) async {
+  var result = await showDialog(
+      context: context,
+      builder: (context2) {
+        return AddGradeDialog();
+      });
+  return result;
+}
+
+Future<int> showDeleteGroupDialog(
+  BuildContext context,
+) async {
+  var result = await showDialog(
+      context: context,
+      builder: (context2) {
+        return DeleteGroupDialog();
+      });
+  return result;
+}
+
+Future<int> showDeleteStudentDialog(
+    BuildContext context, PojoStudent student, PojoGroup group) async {
+  var result = await showDialog(
+      context: context,
+      builder: (context2) {
+        return DeleteStudentDialog(student: student, group: group);
+      });
+  return result;
+}
+
+Future<int> showDeleteGradeDialog(BuildContext context, int index,
+    PojoStudent student, PojoGroup group) async {
+  var result = await showDialog(
+      context: context,
+      builder: (context2) {
+        return DeleteGradeDialog(index: index, student: student, group: group);
+      });
   return result;
 }

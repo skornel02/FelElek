@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:animator/animator.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
@@ -110,6 +111,19 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
                 );
               },
             ),
+
+            Transform.rotate(
+              angle: -math.pi,
+              child: Transform.translate(
+                offset: Offset(0, MediaQuery.of(context).size.height - 100),
+                child: Image.asset(
+                  'assets/images/claw3.png',
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.scaleDown,
+                ),
+              ),
+            ),
+
             Column(children: [
               AnimatedBuilder(
                 animation: studentController,

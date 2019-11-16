@@ -1,7 +1,7 @@
-import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:dusza2019/pojos/pojo_student.dart';
+import 'package:dusza2019/widgets/dialogs/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -23,25 +23,33 @@ class StudentEditorWidget extends StatelessWidget {
                 child: Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          IconButton(
-                              icon: Icon(FontAwesomeIcons.times),
-                              color: Colors.red,
-                              onPressed: () {
-                                BlocProvider.of<GroupsBloc>(context).dispatch(
-                                    RemoveStudentEvent(student, group));
-                              }),
-                          Text(student.name,
-                              style: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.w700)),
-                          IconButton(
-                              icon: Icon(FontAwesomeIcons.edit),
-                              onPressed: () {
-                                BlocProvider.of<SelectedBloc>(context)
-                                    .dispatch(SetSelectedStudent(student));
-                                Navigator.pushNamed(context, "/student/edit");
-                              })
-                        ])))));
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(FontAwesomeIcons.times),
+                          color: Colors.red,
+                          onPressed: () async {
+                            await showDeleteStudentDialog(context, student, group);
+                          },
+                        ),
+                        Text(student.name,
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.w700
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(FontAwesomeIcons.edit),
+                          onPressed: (){
+                              BlocProvider.of<SelectedBloc>(context)
+                                  .dispatch(SetSelectedStudent(student));
+                              Navigator.pushNamed(context, "/student/edit");
+                          },
+                        ),
+                      ],
+                    )
+                )
+            )
+        )
+    );
   }
 }

@@ -36,6 +36,7 @@ class MyGame extends Game with TapDetector {
 
   final countdown = Timer(5);
 
+  final countdown_start = Timer(0.5);
 
   List<StudentSprite> students;
 
@@ -58,12 +59,12 @@ class MyGame extends Game with TapDetector {
 
     students = [];
 
-    conveyors = [ConveyorSprite(x: 0, y: screenSize.height/2 + 40, width: screenSize.width),
-                 ConveyorSprite(x: -screenSize.width, y: screenSize.height/2 + 40, width: screenSize.width),
+    conveyors = [ConveyorSprite(x: 0, y: screenSize.height/2 + 60, width: screenSize.width),
+                 ConveyorSprite(x: -screenSize.width, y: screenSize.height/2 + 60, width: screenSize.width),
     ];
 
 
-    claw = ClawSprite(x: screenSize.width/2 - 42, y: -screenSize.height + 200 );
+    claw = ClawSprite(x: screenSize.width/2 - 42, y: -screenSize.height + 200);
 
     bgRect = Rect.fromLTWH(0, 0, screenSize.width, screenSize.height);
     bgColor = new Paint()..color = Colors.white;
@@ -73,7 +74,11 @@ class MyGame extends Game with TapDetector {
 
   void init() async {
     countdown.start();
+    countdown_start.start();
+
+
     resize(await Flame.util.initialDimensions());
+    screenSize = await Flame.util.initialDimensions();
   }
 
   void spawnWinner(){
@@ -105,69 +110,77 @@ class MyGame extends Game with TapDetector {
 
   @override
   void update(double t) {
-    deltaTime = t;
+    print("asd1");
+    countdown_start.update(t);
+    if(countdown_start.isFinished()){
+      print("asd2");
+      deltaTime = t;
 
-    for(ConveyorSprite c in conveyors){
-      c.update(t);
-      if(c.x > screenSize.width){
-        c.x = -screenSize.width;
+      for(ConveyorSprite c in conveyors){
+        c.update(t);
+        if(c.x > screenSize.width){
+          c.x = -screenSize.width;
+        }
       }
-    }
 
-    if(winnerStudentSpawned){
-      double distance = screenSize.width/2 - (winnerStudent.x + 20);
-      print(screenSize.width/2 - winnerStudent.x);
-      if(winnerStudent.x >= screenSize.width/2 * 0.5){
-        acc_x = (screenSize.width/2 - winnerStudent.x)/ vel_x / deltaTime;
-        acc_x = (distance) / 100000 / deltaTime;
-        if (acc_x < 0)
-          acc_x = -1;
+      if(winnerStudentSpawned){
+        double distance = screenSize.width/2 - (winnerStudent.x + 20);
+        print(screenSize.width/2 - winnerStudent.x);
+        if(winnerStudent.x >= screenSize.width/2 * 0.5){
+          acc_x = (screenSize.width/2 - winnerStudent.x)/ vel_x / deltaTime;
+          acc_x = (distance) / 100000 / deltaTime;
+          if (acc_x < 0)
+            acc_x = -1;
+        }
       }
-    }
 
-    if(vel_x > 0 && acc_x != -1){
-      vel_x -= acc_x;
-    }else{
-      vel_x = 0;
-      //Megállt
-      double distance = screenSize.width/2 - (winnerStudent.x + 20);
+      if(vel_x > 0 && acc_x != -1){
+        vel_x -= acc_x;
+      }else{
+        vel_x = 0;
+        //Megállt
+        double distance = screenSize.width/2 - (winnerStudent.x + 20);
 
-      if(!poped){
+        if(!poped){
 
-        WinnerData winner = WinnerData(student: spinnerData.winner, imgPath: winnerStudent.imgPath);
-        BusinessNavigator().currentState().popAndPushNamed("/absent/spinner/chosen_student", arguments: winner);
-        
-        poped = true;
+          WinnerData winner = WinnerData(student: spinnerData.winner, imgPath: winnerStudent.imgPath);
+          BusinessNavigator().currentState().popAndPushNamed("/absent/spinner/chosen_student", arguments: winner);
+
+          poped = true;
+        }
       }
-    }
 
-    countdown.update(t);
-
-
-    if(students.isEmpty || students[students.length-1].x >= 10 && students[students.length-1].x < screenSize.width + 50){
+      countdown.update(t);
 
 
-      if(countdown.isFinished() && !winnerStudentSpawned){
+      if(students.isEmpty || students[students.length-1].x >= 10 && students[students.length-1].x < screenSize.width + 50){
 
-        spawnWinner();
 
-      }
+        if(countdown.isFinished() && !winnerStudentSpawned){
+
+          spawnWinner();
+
+        }
         // slowing down
-      //  vel_x -= acc_x;
-      else{
-        addStudent();
-      }
-
-    }
-
-    for(int i = 0; i < students.length; i++){
-      if(students[i].x >= screenSize.width+50 ){
+        //  vel_x -= acc_x;
+        else{
+          addStudent();
+        }
 
       }
-    }
-    students.forEach((StudentSprite s) => s.update(t));
 
-    lastTime = t;
+      for(int i = 0; i < students.length; i++){
+        if(students[i].x >= screenSize.width+50 ){
+
+        }
+      }
+      students.forEach((StudentSprite s) => s.update(t));
+
+      lastTime = t;
+    }
+
+
+
   }
 
   @override
@@ -176,9 +189,12 @@ class MyGame extends Game with TapDetector {
     canvas.restore();
     canvas.save();
 
-    claw.render(canvas);
-    canvas.restore();
-    canvas.save();
+    if(claw.height < screenSize.height){
+      claw.render(canvas);
+      canvas.restore();
+      canvas.save();
+    }
+
 
     conveyors.forEach((ConveyorSprite c) {
       c.render(canvas);
