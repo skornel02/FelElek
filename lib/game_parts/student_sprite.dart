@@ -9,6 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+String a(int n){
+  if(n <= 9){
+    return "0$n";
+  }
+  return n.toString();
+}
+
 class StudentSprite extends SpriteComponent {
 
   double vel_x;
@@ -20,7 +27,7 @@ class StudentSprite extends SpriteComponent {
 
     Random r = Random();
 
-    sprite = Sprite("emberek${r.nextInt(40)}.png", height: 100, width: 100);
+    super.sprite = Sprite("emberek-${a(r.nextInt(39)+1)}.png", height: 100, width: 100);
 
   }
   
