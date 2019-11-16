@@ -1,6 +1,7 @@
 import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
+import 'package:dusza2019/widgets/dialogs/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -42,13 +43,12 @@ class GroupItemWidget extends StatelessWidget{
                           IconButton(
                             icon: Icon(FontAwesomeIcons.times),
                             color: Colors.red,
-                            onPressed: (){
+                            onPressed: () async {
                               if(isSelected) {
                                 SelectedBloc bloc = BlocProvider.of<SelectedBloc>(context);
                                 bloc.dispatch(SetSelectedGroup(null));
                               }
-                              BlocProvider.of<GroupsBloc>(context)
-                                  .dispatch(RemoveGroupEvent(group));
+                              await showDeleteGroupDialog(context);
                             },
                           ),
                           Text(group.name,

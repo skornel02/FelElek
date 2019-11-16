@@ -1,3 +1,5 @@
+import 'package:dusza2019/pojos/pojo_group.dart';
+import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:dusza2019/widgets/dialogs/add_group_dialog.dart';
 import 'package:dusza2019/widgets/dialogs/add_user_dialog.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,9 @@ import 'package:flutter/material.dart';
 import '../../other/hazizz_localizations.dart';
 import '../../other/hazizz_theme.dart';
 import 'add_grade_dialog.dart';
+import 'delete_grade_dialog.dart';
+import 'delete_group_dialog.dart';
+import 'delete_student_dialog.dart';
 
 
 // 280 min width
@@ -102,6 +107,29 @@ Future<int> showAddGradeDialog(BuildContext context,) async{
   });
   return result;
 }
+
+Future<int> showDeleteGroupDialog(BuildContext context,) async{
+  var result = await showDialog(context: context, builder: (context2){
+    return DeleteGroupDialog();
+  });
+  return result;
+}
+Future<int> showDeleteStudentDialog(BuildContext context, PojoStudent student, PojoGroup group) async{
+  var result = await showDialog(context: context, builder: (context2){
+    return DeleteStudentDialog(student: student, group: group);
+  });
+  return result;
+}
+
+
+
+Future<int> showDeleteGradeDialog(BuildContext context,int index, PojoStudent student, PojoGroup group) async{
+  var result = await showDialog(context: context, builder: (context2){
+    return DeleteGradeDialog(index: index, student: student, group: group);
+  });
+  return result;
+}
+
 
 Future<bool> showDeleteTaskDialog(context, {@required int taskId}) async {
 
