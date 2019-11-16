@@ -21,7 +21,6 @@ class GroupItemWidget extends StatelessWidget{
         return GestureDetector(
           onTap: (){
             SelectedBloc bloc = BlocProvider.of<SelectedBloc>(context);
-            print(isSelected);
             if(isSelected){
               bloc.dispatch(SetSelectedGroup(null));
             }else{

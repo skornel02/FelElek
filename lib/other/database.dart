@@ -66,6 +66,7 @@ class Database {
       print("Local is behind... updating");
       await saveGroups(await _getGroupsFromDrive(accessToken, fileId));
     }
+    prefs.setString("GDriveLastSync", DateTime.now().toIso8601String());
   }
 
   Future<String> _getDBFileIdFromDrive(String accessToken) async {
@@ -120,7 +121,7 @@ class Database {
   Future<void> _updateGroupsOnDrive(String accessToken, String fileId, List<PojoGroup> groups) async {
     final headers = { 'Authorization': 'Bearer $accessToken', 'Content-Type': 'application/json; charset=UTF-8'};
     final initiateUri = Uri.https('www.googleapis.com', '/upload/drive/v3/files/$fileId');
-    final initiateResponse = await patch(initiateUri, headers: headers, body: json.encode(groups));
+    await patch(initiateUri, headers: headers, body: json.encode(groups));
   }
 
   List<PojoGroup> _jsonToGroups(String json) {

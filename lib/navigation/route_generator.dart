@@ -3,8 +3,8 @@ import 'package:dusza2019/widgets/pages/choose_absent_page.dart';
 import 'package:dusza2019/widgets/pages/chosen_student_page.dart';
 import 'package:dusza2019/widgets/pages/edit_student_page.dart';
 import 'package:dusza2019/widgets/pages/choose_group_page.dart';
-import 'package:dusza2019/widgets/pages/login_page.dart';
-import 'package:dusza2019/widgets/pages/login_page.dart';
+import 'package:dusza2019/widgets/pages/sync_page.dart';
+import 'package:dusza2019/widgets/pages/sync_page.dart';
 import 'package:dusza2019/widgets/pages/spinner_page.dart';
 import 'package:dusza2019/widgets/pages/edit_group_page.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class RouteGenerator{
 
     switch (settings.name) {
       case '/login':
-        return MaterialPageRoute(builder: (_) => LoginPage());
+        return MaterialPageRoute(builder: (_) => SyncPage());
       case 'intro':
         return MaterialPageRoute(builder: (_) => IntroPage());
       case '/':

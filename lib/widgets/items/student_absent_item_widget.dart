@@ -1,10 +1,8 @@
-import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:dusza2019/pojos/pojo_group.dart';
 import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class StudentAbsentWidget extends StatelessWidget {
   PojoStudent student;
@@ -28,7 +26,7 @@ class StudentAbsentWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          student.name,
+                          student.name + " (${student.grades.length} jegy)",
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.w700),
                         ),
