@@ -56,7 +56,7 @@ class RouteGenerator{
         return MaterialPageRoute(builder: (_) => SpinnerPage(spinnerData: args,));
       case '/absent/spinner/chosen_student':
         assert(args != null);
-        return MaterialPageRoute(builder: (_) => ChosenStudentPage(student: args,));
+        return MaterialPageRoute(builder: (_) => ChosenStudentPage(winner: args,));
       default:
         String errorLog = "log: route: ${settings.name}, args: ${settings.arguments}";
         return _errorRoute(errorLog);
