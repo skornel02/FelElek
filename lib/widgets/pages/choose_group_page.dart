@@ -57,7 +57,9 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                           IconButton(
                             icon: Icon(FontAwesomeIcons.fileImport),
                             color: Colors.black,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, "/import");
+                            },
                           ),
                         ]),
                     Expanded(

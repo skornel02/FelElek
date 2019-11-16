@@ -33,10 +33,26 @@ class GroupEditPage extends StatelessWidget {
                           body: SafeArea(
                             child: Column(
                               children: <Widget>[
-                                Text(
-                                  "${locText(context, key: "group")}: ${group.name}",
-                                  style: TextStyle(fontSize: 26),
-                                ),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      IconButton(
+                                        icon: Icon(FontAwesomeIcons.arrowLeft),
+                                        color: Colors.black,
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      Text(
+                                        "${locText(context, key: "group")}: ${group.name}",
+                                        style: TextStyle(fontSize: 26),
+                                      ),
+                                      IconButton(
+                                        icon: Icon(FontAwesomeIcons.fileImport),
+                                        color: Colors.transparent,
+                                        onPressed: () {},
+                                      ),
+                                    ]),
                                 Text(
                                   "${group.students.length} felhasználó",
                                   style: TextStyle(fontSize: 22),

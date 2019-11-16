@@ -190,6 +190,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.1"
+  csv:
+    dependency: "direct main"
+    description:
+      name: csv
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.3"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -300,13 +307,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.20.1"
-  flutter_local_notifications:
-    dependency: "direct main"
-    description:
-      name: flutter_local_notifications
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.8.4"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -721,13 +721,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1+2"
-  toast:
-    dependency: "direct main"
-    description:
-      name: toast
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.5"
   typed_data:
     dependency: transitive
     description:

@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../login_widget.dart';
 
-class SyncPage extends StatelessWidget {
+class ImportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +26,7 @@ class SyncPage extends StatelessWidget {
                   Navigator.pop(context);
                 },
               ),
-              Text("Szinkronizáció", style: TextStyle(fontSize: 26)),
+              Text("Importálás", style: TextStyle(fontSize: 26)),
               IconButton(
                 icon: Icon(FontAwesomeIcons.fileImport),
                 color: Colors.transparent,

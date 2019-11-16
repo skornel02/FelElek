@@ -45,7 +45,6 @@ class MyGame extends Game with TapDetector {
   MyGame({this.screenSize, @required this.spinnerData}){
     acc_x = 0.0;
     vel_x = screenSize.width / 100;
-    defalt_vel_x = vel_x;
 
     students = [
       StudentSprite(x: 10, y: 100),

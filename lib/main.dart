@@ -6,7 +6,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/easy_localization_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 
@@ -32,27 +31,6 @@ String tasksTomorrowSerialzed;
 //LoginBlocs loginBlocs = LoginBlocs();
 
 Locale preferredLocale;
-
-Future<bool> fromNotification() async {
-  var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  var notificationAppLaunchDetails =
-  await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-
-  // var notificationAppLaunchDetails = await HazizzNotification.flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-  print(
-      "from notif1: ${notificationAppLaunchDetails.didNotificationLaunchApp}");
-  print("from notif2: ${notificationAppLaunchDetails.payload}");
-  if (notificationAppLaunchDetails.didNotificationLaunchApp) {
-    isFromNotification = true;
-    String payload = notificationAppLaunchDetails.payload;
-    if (payload != null) {
-      tasksTomorrowSerialzed = payload;
-    }
-  } else {
-    //isFromNotification = true;
-  }
-  return isFromNotification;
-}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

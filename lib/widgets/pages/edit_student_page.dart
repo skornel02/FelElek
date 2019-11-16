@@ -33,8 +33,24 @@ class StudentEditPage extends StatelessWidget {
                         body: SafeArea(
                             child: Column(
                               children: <Widget>[
-                                Text("Diák: ${student.name}",
-                                    style: TextStyle(fontSize: 26)),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      IconButton(
+                                        icon: Icon(FontAwesomeIcons.arrowLeft),
+                                        color: Colors.black,
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      Text("Diák: ${student.name}",
+                                          style: TextStyle(fontSize: 26)),
+                                      IconButton(
+                                        icon: Icon(FontAwesomeIcons.fileImport),
+                                        color: Colors.transparent,
+                                        onPressed: () {},
+                                      ),
+                                    ]),
                                 Text("Jegyek", style: TextStyle(fontSize: 20)),
                                 Expanded(
                                     child: ListView.builder(

@@ -8,6 +8,7 @@ import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:dusza2019/widgets/items/student_absent_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AbsentPage extends StatelessWidget {
   AbsentPage({Key key}) : super(key: key);
@@ -34,10 +35,26 @@ class AbsentPage extends StatelessWidget {
                           body: SafeArea(
                             child: Column(
                               children: <Widget>[
-                                Text(
-                                  "${locText(context, key: "group")}: ${group.name}",
-                                  style: TextStyle(fontSize: 26),
-                                ),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      IconButton(
+                                        icon: Icon(FontAwesomeIcons.arrowLeft),
+                                        color: Colors.black,
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      Text(
+                                        "${locText(context, key: "group")}: ${group.name}",
+                                        style: TextStyle(fontSize: 26),
+                                      ),
+                                      IconButton(
+                                        icon: Icon(FontAwesomeIcons.fileImport),
+                                        color: Colors.transparent,
+                                        onPressed: () {},
+                                      ),
+                                    ]),
                                 Text(
                                   "${nonAbsent.length} felhasználó jelen",
                                   style: TextStyle(fontSize: 22),
@@ -53,8 +70,6 @@ class AbsentPage extends StatelessWidget {
                                         })),
                                 Builder(builder: (BuildContext context) {
                                   if(nonAbsent.length > 0) {
-
-
                                     return Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: SizedBox(
@@ -62,15 +77,10 @@ class AbsentPage extends StatelessWidget {
                                           width: double.maxFinite,
                                           child: RaisedButton(
                                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-
                                             child: Text("Kezdés", style: TextStyle(fontSize: 24)),
                                             onPressed: (){
                                               SpinnerData data = new SpinnerData(nonAbsent, pickWinner(nonAbsent));
                                               Navigator.pushNamed(context, "/absent/spinner", arguments: data);
-
-
-                                              // Navigator.pushNamed(context, "/absent/spinner/chosen_student", arguments: choseStudents[0]);
-
                                             },
                                           )
                                       ),
