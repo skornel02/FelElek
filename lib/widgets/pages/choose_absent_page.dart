@@ -56,16 +56,27 @@ class _AbsentPage extends State<AbsentPage> with AutomaticKeepAliveClientMixin {
                             }
                         )
                     ),
-                    RaisedButton(
-                      child: Text(locText(context, key: "next")),
-                      onPressed: (){
-                      //  Navigator.pushNamed(context, "/absent/spinner", arguments: choseStudents);
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: SizedBox(
+                          height: 50,
+                          width: double.maxFinite,
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+
+                            child: Text(locText(context, key: "next"), style: TextStyle(fontSize: 24)),
+                            onPressed: (){
+                                Navigator.pushNamed(context, "/absent/spinner", arguments: choseStudents);
 
 
-                        Navigator.pushNamed(context, "/absent/spinner/chosen_student", arguments: choseStudents[0]);
+                             // Navigator.pushNamed(context, "/absent/spinner/chosen_student", arguments: choseStudents[0]);
 
-                      },
+                            },
+                          )
+                      ),
                     )
+
+
                   ],
                 ),
                 onRefresh: () async => groupsBloc.dispatch(ReloadGroupEvent()) //await getData()

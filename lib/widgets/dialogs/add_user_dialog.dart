@@ -20,7 +20,7 @@ class AddStudentDialog extends StatefulWidget {
 class _AddStudentDialog extends State<AddStudentDialog> {
 
   final double width = 300;
-  final double height = 190;
+  final double height = 130;
 
   TextEditingController _gradeTextEditingController = TextEditingController();
 
@@ -33,15 +33,17 @@ class _AddStudentDialog extends State<AddStudentDialog> {
           child: Padding(
             padding: const EdgeInsets.all(5),
             child:
-            AutoSizeText( "Add student",
-              style: TextStyle(
-                fontSize: 30.0,
-                fontWeight: FontWeight.w700,
-              ),
-              maxLines: 1,
-              minFontSize: 20,
-              maxFontSize: 30,
+            Center(
+              child: AutoSizeText( "Add student",
+                style: TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.w700,
+                ),
+                maxLines: 1,
+                minFontSize: 20,
+                maxFontSize: 30,
 
+              ),
             ),
           ),
         ),

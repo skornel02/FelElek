@@ -45,6 +45,7 @@ class HazizzTheme{
       button: TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w800),
 
     ),
+    buttonColor: orange,
     brightness: Brightness.light,
     accentColor: red,
     primaryColorDark: dark_red,

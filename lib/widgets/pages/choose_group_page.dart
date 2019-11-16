@@ -27,11 +27,14 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
       //LogConsoleOnShake(
       // tag: "group",
       child: Scaffold(
-          floatingActionButton: FloatingActionButton(
-            child: Icon(FontAwesomeIcons.plus),
-            onPressed: () {
-              showAddGroupDialog(context);
-            },
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(bottom: 50),
+            child: FloatingActionButton(
+              child: Icon(FontAwesomeIcons.plus),
+              onPressed: () {
+                showAddGroupDialog(context);
+              },
+            ),
           ),
           body: SafeArea(
             child: new RefreshIndicator(
@@ -88,13 +91,23 @@ class _GroupsPage extends State<GroupsPage> with AutomaticKeepAliveClientMixin {
                           if(state.group == null){
                             return Center();
                           }else{
-                            return RaisedButton(
-                              child: Text("Új felelés"),
-                              onPressed: () {
-                                if (SelectedBloc().group != null) {}
-                                Navigator.pushNamed(context, "/absent",
-                                    arguments: state.group);
-                              },
+
+
+                            return Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: SizedBox(
+                                height: 50,
+                                width: double.maxFinite,
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                                  child: Text("Új felelés", style: TextStyle(fontSize: 24),),
+                                  onPressed: () {
+                                    if (SelectedBloc().group != null) {}
+                                    Navigator.pushNamed(context, "/absent",
+                                        arguments: state.group);
+                                  },
+                                )
+                              ),
                             );
                           }
                         }

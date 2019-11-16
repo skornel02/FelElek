@@ -10,7 +10,7 @@ class ConveyorSprite extends SpriteComponent {
 
 
   // creates a component that renders the crate.png sprite, with size 16 x 16
-  ConveyorSprite({@required double x, @required double y, this.vel_x = 0.05, double width}) : super.fromSprite(width, 100.0, new Sprite("futoszalag.gif")){
+  ConveyorSprite({@required double x, @required double y, this.vel_x = 0.05, double width}) : super.fromSprite(width, 100.0, new Sprite("futoszalag.png")){
     this.x = x;
     this.y = y;
     this.width;

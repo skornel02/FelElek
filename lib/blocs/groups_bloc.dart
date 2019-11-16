@@ -205,7 +205,6 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
 
         Database().saveGroups(_groups);
         yield LoadedGroupState(_groups);
-        // itt kéne szólni a selected Blocnak
         break;
 
       default:

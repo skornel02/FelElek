@@ -28,9 +28,6 @@ class _SpinnerPage extends State<SpinnerPage> with AutomaticKeepAliveClientMixin
   @override
   Widget build(BuildContext context) {
 
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
   //  List<StudentWidget> students = [];
 
     return Container(
