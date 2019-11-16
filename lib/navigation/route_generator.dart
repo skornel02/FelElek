@@ -1,5 +1,6 @@
 import 'package:dusza2019/widgets/GroupInheritedWidget.dart';
 import 'package:dusza2019/widgets/pages/choose_absent_page.dart';
+import 'package:dusza2019/widgets/pages/chosen_student_page.dart';
 import 'package:dusza2019/widgets/pages/edit_student_page.dart';
 import 'package:dusza2019/widgets/pages/choose_group_page.dart';
 import 'package:dusza2019/widgets/pages/login_page.dart';
@@ -30,6 +31,7 @@ class RouteGenerator{
     // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
 
+
     print("navigating to ${settings.name} with arguments: ${settings.arguments}");
 
 
@@ -51,6 +53,9 @@ class RouteGenerator{
       case '/absent/spinner':
         assert(args != null);
         return MaterialPageRoute(builder: (_) => SpinnerPage(choseStudents: args,));
+      case '/absent/spinner/chosen_student':
+        assert(args != null);
+        return MaterialPageRoute(builder: (_) => ChosenStudentPage(student: args,));
       default:
         String errorLog = "log: route: ${settings.name}, args: ${settings.arguments}";
         return _errorRoute(errorLog);

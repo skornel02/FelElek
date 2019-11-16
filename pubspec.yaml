@@ -11,7 +11,7 @@ dependencies:
 
   flame: 0.17.0
 
-  animator: 1.0.0+1
+  animator: 1.0.0+2
   esys_flutter_share: 1.0.2
   # table_calendar: 2.1.0
   # dio_flutter_transformer: 2.0.10

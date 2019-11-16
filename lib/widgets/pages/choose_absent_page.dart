@@ -59,7 +59,11 @@ class _AbsentPage extends State<AbsentPage> with AutomaticKeepAliveClientMixin {
                     RaisedButton(
                       child: Text(locText(context, key: "next")),
                       onPressed: (){
-                        Navigator.pushNamed(context, "/absent/spinner", arguments: choseStudents);
+                      //  Navigator.pushNamed(context, "/absent/spinner", arguments: choseStudents);
+
+
+                        Navigator.pushNamed(context, "/absent/spinner/chosen_student", arguments: choseStudents[0]);
+
                       },
                     )
                   ],
