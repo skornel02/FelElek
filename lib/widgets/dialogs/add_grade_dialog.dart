@@ -89,8 +89,6 @@ class _AddGradeDialog extends State<AddGradeDialog> {
                     ),
                   ),
                 ),
-
-
                 onPressed: () async {
                   GroupsBloc bloc = BlocProvider.of<GroupsBloc>(context);
                   GroupEvent event = AddGradeEvent(int.parse(_gradeTextEditingController.text),

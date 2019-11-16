@@ -34,20 +34,17 @@ class RouteGenerator{
 
 
     switch (settings.name) {
-      case 'login':
+      case '/login':
         return MaterialPageRoute(builder: (_) => LoginPage());
-      case 'registration':
-      //    return MaterialPageRoute(builder: (_) => RegistrationPage());
       case 'intro':
         return MaterialPageRoute(builder: (_) => IntroPage());
       case '/':
         return MaterialPageRoute(builder: (_) => GroupsPage());//MaterialPageRoute(builder: (_) => MainTabHosterPage());
       case '/student':
-        assert(args != null);
-        return MaterialPageRoute(builder: (_) => GroupEditPage(group: args,));
+        return MaterialPageRoute(builder: (_) => GroupEditPage());
       case '/student/edit':
         assert(args != null);
-        return MaterialPageRoute(builder: (_) => StudentEditPage(args: args,));
+        return MaterialPageRoute(builder: (_) => StudentEditPage());
       case '/absent':
         assert(args != null);
         return MaterialPageRoute(builder: (_) => AbsentPage(group: args,));

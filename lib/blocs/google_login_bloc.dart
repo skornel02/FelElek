@@ -19,44 +19,30 @@ class GoogleLoginButtonPressedEvent extends GoogleLoginEvent {
   List<Object> get props => null;
 }
 
+class GoogleUpdateAccessToken extends GoogleLoginEvent {
+  @override String toString() => 'GoogleUpdateAccessToken';
+  @override
+  List<Object> get props => null;
+}
+
 class GoogleLoginResetEvent extends GoogleLoginEvent {
   @override String toString() => 'GoogleLoginResetEvent';
   @override
   List<Object> get props => null;
 }
 
-class GoogleLoginHaveToAcceptConditionsEvent extends GoogleLoginEvent {
-  @override String toString() => 'GoogleLoginHaveToAcceptConditionsEvent';
+class GoogleReadyToLoginState extends GoogleLoginState {
+  @override String toString() => 'GoogleReadyToLoginState';
   @override
   List<Object> get props => null;
 }
 
-class GoogleLoginAcceptedConditionsEvent extends GoogleLoginEvent {
-  @override String toString() => 'GoogleLoginAcceptedConditionsEvent';
-  @override
-  List<Object> get props => null;
-}
-
-class GoogleLoginRejectConditionsEvent extends GoogleLoginEvent {
-  @override String toString() => 'GoogleLoginRejectedConditionsState';
-  @override
-  List<Object> get props => null;
-}
-
-
-
-class GoogleLoginFineState extends GoogleLoginState {
-  @override String toString() => 'GoogleLoginFineState';
-  @override
-  List<Object> get props => null;
-}
-
-class GoogleLoginPressedButtonState extends GoogleLoginState {
-  @override String toString() => 'GoogleLoginFineState';
-  @override
-  List<Object> get props => null;
-}
 class GoogleLoginSuccessfulState extends GoogleLoginState {
+  final String email;
+  final String accessToken;
+
+  GoogleLoginSuccessfulState(this.email, this.accessToken);
+
   @override String toString() => 'GoogleLoginSuccessfulState';
   @override
   List<Object> get props => null;
@@ -76,32 +62,10 @@ class GoogleLoginFailedState extends GoogleLoginState {
   List<Object> get props => [];
 }
 
-class GoogleLoginAcceptedConditionsState extends GoogleLoginState {
-  @override String toString() => 'GoogleLoginAcceptedConditionsState';
-  @override
-  List<Object> get props => null;
-}
-
-class GoogleLoginRejectedConditionsState extends GoogleLoginState {
-  @override String toString() => 'GoogleLoginRejectedConditionsState';
-  @override
-  List<Object> get props => null;
-}
-
-class GoogleLoginHaveToAcceptConditionsState extends GoogleLoginState {
-  @override String toString() => 'GoogleLoginHaveToAcceptConditionsState';
-  @override
-  List<Object> get props => null;
-}
-
-
 class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
-
-  String _socialToken;
 
   GoogleSignIn _googleSignIn;
   FirebaseAuth _auth;
-
 
   GoogleLoginBloc(){
     _googleSignIn = GoogleSignIn(scopes: [
@@ -113,7 +77,7 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
     _auth = FirebaseAuth.instance;
   }
 
-  GoogleLoginState get initialState => GoogleLoginFineState();
+  GoogleLoginState get initialState => GoogleReadyToLoginState();
 
   @override
   void dispose() {
@@ -130,14 +94,10 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
     await _googleSignIn.signOut();
   }
 
-
   @override
   Stream<GoogleLoginState> mapEventToState(GoogleLoginEvent event) async* {
-
-    if (event is GoogleLoginButtonPressedEvent) {
+    if (event is GoogleLoginButtonPressedEvent || event is GoogleUpdateAccessToken) {
       yield GoogleLoginWaitingState();
-
-      _socialToken = null;
 
       try{
         print("google login: 1");
@@ -147,42 +107,33 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
 
         if(googleUser == null) {
           print("Auth failed!!!");
-        }
-
-        print("google login: 3");
-
-        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-        print("google login: 4");
-
-        final AuthCredential credential = GoogleAuthProvider.getCredential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-        print("google login: 5");
-
-        final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
-        print("signed in " + user.displayName);
-
-        final accessToken = googleAuth.accessToken;
-
-        await Database().syncWithGoogleDrive(accessToken);
-
-        if(_socialToken == null && _socialToken == "canceled"){
-          Crashlytics().recordError(Exception("Social Token is null"), StackTrace.current, context: "Social Token is null");
-          yield GoogleLoginFineState();
+          yield GoogleReadyToLoginState();
         }else{
-          yield GoogleLoginSuccessfulState();
+          print("google login: 3");
+          final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+          print("google login: 4");
+          final AuthCredential credential = GoogleAuthProvider.getCredential(
+            accessToken: googleAuth.accessToken,
+            idToken: googleAuth.idToken,
+          );
+          print("google login: 5");
+
+          final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+          print("signed in " + user.displayName);
+
+          final accessToken = googleAuth.accessToken;
+          yield GoogleLoginSuccessfulState(googleUser.email, accessToken);
         }
       }catch(exception, stacktrace){
         Crashlytics().recordError(exception, stacktrace);
-        yield GoogleLoginFineState();
+        yield GoogleReadyToLoginState();
       }
-
-      print("socialToken is not null: ${_socialToken != null}");
     }
 
     else if(event is GoogleLoginResetEvent){
-      yield GoogleLoginFineState();
+      logout();
+      yield GoogleReadyToLoginState();
     }
   }
 }

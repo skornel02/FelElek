@@ -10,73 +10,51 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
-class StudentEditPage extends StatefulWidget {
-
-  PojoStudent student;
-  PojoGroup group;
-
-  StudentEditPage({Key key, dynamic args}) : super(key: key){
-    student = args[0];
-    group = args[1];
-  }
-
-  @override
-  _StudentEditPage createState() => _StudentEditPage();
-}
-
-class _StudentEditPage extends State<StudentEditPage> with AutomaticKeepAliveClientMixin {
-
-  _StudentEditPage();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class StudentEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(//LogConsoleOnShake(
-      // tag: "group",
-      child: Scaffold(
-        /* appBar: AppBar(
-          title: Text(locText(context, key: "groups")),
-        ),
-        */
-          floatingActionButton: FloatingActionButton(
-            child: Icon(FontAwesomeIcons.plus),
-            onPressed: (){
-              showAddGradeDialog(context);
-            },
-          ),
-          body: SafeArea(
-            child: new RefreshIndicator(
-                child: Column(
-                  children: <Widget>[
-                    Text("Diák: ${widget.student.name}", style: TextStyle(fontSize: 26)),
-                    Text("Jegyek", style: TextStyle(fontSize: 20)),
-                    Expanded(
-                      child: ListView.builder(
-                        // physics: BouncingScrollPhysics(),
-                          itemCount: widget.student.grades.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GradeItemWidget(index: index, student: widget.student, group: widget.group);
-                          }
-                      )
-                    ),
-
-                  ],
-                ),
-                onRefresh: () async => BlocProvider.of<GroupsBloc>(context).dispatch(ReloadGroupEvent()) //await getData()
-            ),
-          )
-      ),
-    );
+    return BlocBuilder(
+        bloc: BlocProvider.of<GroupsBloc>(context),
+        builder: (BuildContext context, GroupState state) {
+          if (state is LoadedGroupState) {
+            PojoStudent student = state.selectedStudent;
+            PojoGroup group = state.selectedGroup;
+            return Container(
+              child: Scaffold(
+                  floatingActionButton: FloatingActionButton(
+                    child: Icon(FontAwesomeIcons.plus),
+                    onPressed: () {
+                      showAddGradeDialog(context);
+                    },
+                  ),
+                  body: SafeArea(
+                    child: new RefreshIndicator(
+                        child: Column(
+                          children: <Widget>[
+                            Text("Diák: ${student.name}",
+                                style: TextStyle(fontSize: 26)),
+                            Text("Jegyek", style: TextStyle(fontSize: 20)),
+                            Expanded(
+                                child: ListView.builder(
+                                    // physics: BouncingScrollPhysics(),
+                                    itemCount: student.grades.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return GradeItemWidget(
+                                          index: index,
+                                          student: student,
+                                          group: group);
+                                    })),
+                          ],
+                        ),
+                        onRefresh: () async =>
+                            BlocProvider.of<GroupsBloc>(context)
+                                .dispatch(ReloadGroupEvent()) //await getData()
+                        ),
+                  )),
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+        });
   }
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 }
-
-

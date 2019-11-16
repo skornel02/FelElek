@@ -20,6 +20,15 @@ class ReloadGroupEvent extends GroupEvent {
   List<Object> get props => null;
 }
 
+class SyncWithGoogleDriveEvent extends GroupEvent {
+  final String accessToken;
+
+  SyncWithGoogleDriveEvent(this.accessToken);
+
+  @override String toString() => 'SyncWithGoogleDriveEvent';
+  @override
+  List<Object> get props => null;
+}
 
 class AddGroupEvent extends GroupEvent {
   final String name;
@@ -143,41 +152,33 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
 
   @override
   Stream<GroupState> mapEventToState(GroupEvent event) async* {
+    yield WaitingGroupState();
 
     switch(event.runtimeType) {
       case ReloadGroupEvent:
-        try {
-          yield WaitingGroupState();
-
-          await _updateGroupState();
-          yield LoadedGroupState(groups, selectedGroup, selectedStudent);
-        } on Exception catch(e){
-          print("log: Exception: ${e.toString()}");
-        }
-
-        break;
+        groups = await Database().getGroups();
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
+      case SyncWithGoogleDriveEvent:
+        SyncWithGoogleDriveEvent e = event;
+        await Database().syncWithGoogleDrive(e.accessToken);
+        groups = await Database().getGroups();
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
       case AddGroupEvent:
         AddGroupEvent e = event;
         groups.add(PojoGroup.fromName(e.name));
 
         Database().saveGroups(groups);
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
-
-        break;
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
       case SetSelectedGroup:
         SetSelectedGroup e = event;
         selectedGroup = e.group;
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
-
-        break;
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
       case RemoveGroupEvent:
         RemoveGroupEvent e = event;
         groups.removeWhere((group) => group.uuId == e.group.uuId);
 
         Database().saveGroups(groups);
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
-
-        break;
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
       case AddStudentEvent:
         AddStudentEvent e = event;
         int biggestId = 0;
@@ -189,15 +190,11 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
             .students.add(PojoStudent.fromName(e.name, biggestId + 1));
 
         Database().saveGroups(groups);
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
-
-        break;
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
       case SetSelectedStudentEvent:
         SetSelectedStudentEvent e = event;
         selectedStudent = e.student;
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
-
-        break;
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
       case RemoveStudentEvent:
         RemoveStudentEvent e = event;
         for(PojoGroup group in groups) {
@@ -207,9 +204,7 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
         }
 
         Database().saveGroups(groups);
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
-        
-        break;
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
       case AddGradeEvent:
         AddGradeEvent e = event;
         groups.firstWhere((group) => group.uuId == e.group.uuId)
@@ -217,9 +212,7 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
               .grades.add(e.grade);
 
         Database().saveGroups(groups);
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
-
-        break;
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
       case RemoveGradeEvent:
         RemoveGradeEvent e = event;
         PojoStudent student = groups.firstWhere((group) => group.uuId == e.group.uuId)
@@ -227,23 +220,10 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
         student.grades.removeAt(e.index);
 
         Database().saveGroups(groups);
-        yield LoadedGroupState(groups, selectedGroup, selectedStudent);
-        break;
+        yield LoadedGroupState(groups, selectedGroup, selectedStudent); break;
       default:
         break;
     }
-  }
-
-  Future<void> _updateGroupState() async{
-    groups = await Database().getGroups();
-  }
-
-  void _placeholder() async {
-    print("Adding placeholders");
-    PojoGroup group = new PojoGroup("GG", "GG", [PojoStudent(id: 0, name: "Péter", isAbsent: false, grades: [1,1,1])]);
-    PojoGroup group2 = new PojoGroup("AA", "BB", [PojoStudent(id: 0, name: "Péter", isAbsent: false, grades: [1,1,1])]);
-    groups.add(group);
-    groups.add(group2);
   }
 
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dusza2019/blocs/google_login_bloc.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/easy_localization_provider.dart';
@@ -91,6 +92,7 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver {
   DateTime lastActive;
 
   GroupsBloc groupsBloc = new GroupsBloc();
+  GoogleLoginBloc loginBloc = new GoogleLoginBloc();
 
   @override
   initState() {
@@ -148,6 +150,9 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver {
               providers: [
                 BlocProvider<GroupsBloc>(
                   builder: (_) => groupsBloc,
+                ),
+                BlocProvider<GoogleLoginBloc>(
+                  builder: (_) => loginBloc,
                 )
               ],
               child: MaterialApp(

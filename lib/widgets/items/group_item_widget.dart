@@ -65,10 +65,9 @@ class _GroupItemWidget extends State<GroupItemWidget> {
                           ),
                           IconButton(
                             icon: Icon(FontAwesomeIcons.edit),
-                            onPressed: (){
+                            onPressed: () {
                               BlocProvider.of<GroupsBloc>(context)
                                   .dispatch(SetSelectedGroup(widget.group));
-                              PathsBloc().dispatch(SetPathGroupEvent(group: widget.group));
                               Navigator.pushNamed(context, "/student", arguments: widget.group);
                             },
                           ),

@@ -19,8 +19,13 @@ class Database {
     try {
       final directory = await getApplicationDocumentsDirectory();
       final file = File('${directory.path}/groups.json');
+      if(!file.existsSync())
+        file.createSync();
+
       print("Groups loaded!");
       String json = await file.readAsString();
+      if(json.isEmpty)
+        json = "[]";
 
       return _jsonToGroups(json);
     } catch (e) {
