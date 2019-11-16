@@ -21,6 +21,7 @@ class _GroupItemWidget extends State<GroupItemWidget> {
 
   bool isSelected = false;
 
+
   @override
   Widget build(BuildContext context) {
 
