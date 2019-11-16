@@ -111,11 +111,12 @@ Future<int> showAddGradeDialog(
 
 Future<int> showDeleteGroupDialog(
   BuildContext context,
+    PojoGroup group,
 ) async {
   var result = await showDialog(
       context: context,
       builder: (context2) {
-        return DeleteGroupDialog();
+        return DeleteGroupDialog(group);
       });
   return result;
 }
