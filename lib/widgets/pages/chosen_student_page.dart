@@ -86,122 +86,129 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
         .animate(CurvedAnimation(
             parent: studentController, curve: Curves.easeInOut));
 
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Animator(
-              tween: Tween<Offset>(
-                  begin: Offset(0, 200),
-                  end: Offset(0, MediaQuery.of(context).size.height + 70)),
-              duration: Duration(milliseconds: animTime),
-              curve: Curves.easeInOut,
-              cycles: 2,
-              builder: (anim) {
-                return Transform.translate(
-                  offset: anim.value,
-                  child: Transform.translate(
-                    offset: Offset(0, -MediaQuery.of(context).size.height),
-                    child: new Image.asset(
-                      'assets/images/claw3.png',
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
-                );
-              },
-            ),
+    return WillPopScope(
+      onWillPop: () async{
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+        return Future.value(false);
 
-            Transform.rotate(
-              angle: -math.pi,
-              child: Transform.translate(
-                offset: Offset(0, MediaQuery.of(context).size.height - 100),
-                child: Image.asset(
-                  'assets/images/claw3.png',
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.scaleDown,
-                ),
-              ),
-            ),
-
-            Column(children: [
-              AnimatedBuilder(
-                animation: studentController,
-                builder: (context, child) {
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              Animator(
+                tween: Tween<Offset>(
+                    begin: Offset(0, 200),
+                    end: Offset(0, MediaQuery.of(context).size.height + 70)),
+                duration: Duration(milliseconds: animTime),
+                curve: Curves.easeInOut,
+                cycles: 2,
+                builder: (anim) {
                   return Transform.translate(
-                      offset: studentAnimation.value,
-                      child: Column(
-                        children: <Widget>[
-                          Image.asset(
-                            widget.winner.imgPath,
-                            width: 200,
-                            height: 200,
-                            fit: BoxFit.scaleDown,
-                          ),
-                          Text(
-                            widget.winner.student.name,
-                            style: TextStyle(fontSize: 30),
-                          )
-                        ],
-                      ));
-                },
-              ),
-            ]),
-            Positioned(
-              bottom: 0,
-              child: FadeTransition(
-                  opacity: buttonAnimation,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 80,
-                    child: Card(
-                      margin: EdgeInsets.all(6),
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      elevation: 10,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8, right: 8),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            RaisedButton(
-                              child: Text(locText(context, key: "back")),
-                              onPressed: () {
-                                BusinessNavigator()
-                                    .currentState()
-                                    .pushReplacementNamed('/');
-                              },
-                            ),
-                            Builder(
-                              builder: (context) {
-                                if (grade == null) {
-                                  return RaisedButton(
-                                    child: Text("jegy hozzáadás"),
-                                    onPressed: () async {
-                                      BlocProvider.of<SelectedBloc>(context)
-                                          .dispatch(SetSelectedStudent(
-                                              widget.winner.student));
-                                      showAddGradeDialog(context).then((int g) {
-                                        setState(() {
-                                          grade = g;
-                                        });
-                                      });
-                                    },
-                                  );
-                                }
-                                return Text(
-                                  "Jegy: $grade",
-                                  style: TextStyle(fontSize: 22),
-                                );
-                              },
-                            )
-                          ],
-                        ),
+                    offset: anim.value,
+                    child: Transform.translate(
+                      offset: Offset(0, -MediaQuery.of(context).size.height),
+                      child: new Image.asset(
+                        'assets/images/claw3.png',
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
-                  )),
-            )
-          ],
+                  );
+                },
+              ),
+
+              Transform.rotate(
+                angle: -math.pi,
+                child: Transform.translate(
+                  offset: Offset(0, MediaQuery.of(context).size.height - 100),
+                  child: Image.asset(
+                    'assets/images/claw3.png',
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.scaleDown,
+                  ),
+                ),
+              ),
+
+              Column(children: [
+                AnimatedBuilder(
+                  animation: studentController,
+                  builder: (context, child) {
+                    return Transform.translate(
+                        offset: studentAnimation.value,
+                        child: Column(
+                          children: <Widget>[
+                            Image.asset(
+                              widget.winner.imgPath,
+                              width: 200,
+                              height: 200,
+                              fit: BoxFit.scaleDown,
+                            ),
+                            Text(
+                              widget.winner.student.name,
+                              style: TextStyle(fontSize: 30),
+                            )
+                          ],
+                        ));
+                  },
+                ),
+              ]),
+              Positioned(
+                bottom: 0,
+                child: FadeTransition(
+                    opacity: buttonAnimation,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 80,
+                      child: Card(
+                        margin: EdgeInsets.all(6),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        elevation: 10,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              RaisedButton(
+                                child: Text(locText(context, key: "back")),
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+                                },
+                              ),
+                              Builder(
+                                builder: (context) {
+                                  if (grade == null) {
+                                    return RaisedButton(
+                                      child: Text("jegy hozzáadás"),
+                                      onPressed: () async {
+                                        BlocProvider.of<SelectedBloc>(context)
+                                            .dispatch(SetSelectedStudent(
+                                                widget.winner.student));
+                                        showAddGradeDialog(context).then((int g) {
+                                          setState(() {
+                                            grade = g;
+                                          });
+                                        });
+                                      },
+                                    );
+                                  }
+                                  return Text(
+                                    "Jegy: $grade",
+                                    style: TextStyle(fontSize: 22),
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    )),
+              )
+            ],
+          ),
         ),
       ),
     );
