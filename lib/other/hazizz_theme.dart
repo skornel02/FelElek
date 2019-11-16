@@ -11,13 +11,14 @@ ThemeData theme(BuildContext context){
 class HazizzTheme{
 
   static const Color
-      red = Color.fromRGBO(242, 5, 48, 1),
-      grey = Color.fromRGBO(64, 100, 115, 1),
-      yellow = Color.fromRGBO(242, 226, 5, 1),
+      red = Color.fromRGBO(242, 61, 61, 1),
 
-      orange = Color.fromRGBO(242, 116, 5, 1),
+      orange = Color.fromRGBO(242, 138, 46, 1),
 
-      dark_red = Color.fromRGBO(140, 3, 3, 1)
+      blue =  Color.fromRGBO(3, 166, 166, 1),
+
+      blue1 =  Color.fromRGBO(3, 127, 140, 1),
+      blue2 =  Color.fromRGBO(74, 136, 217, 1)
   ;
 
   static final Color formColor = Colors.grey.withAlpha(120);
@@ -45,11 +46,11 @@ class HazizzTheme{
       button: TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w800),
 
     ),
-    buttonColor: orange,
+    buttonColor: blue,
     brightness: Brightness.light,
     accentColor: red,
-    primaryColorDark: dark_red,
-    primaryColor: orange,
+    primaryColorDark: blue1,
+    primaryColor: blue2,
     errorColor: red,
   );
 
@@ -73,7 +74,7 @@ class HazizzTheme{
 
     brightness: Brightness.light,
     accentColor: red,
-    primaryColorDark: dark_red,
+    primaryColorDark: blue1,
     primaryColor: orange,
     errorColor: red,
   );

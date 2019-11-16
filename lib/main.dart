@@ -141,7 +141,7 @@ class _HazizzApp extends State<HazizzApp> with WidgetsBindingObserver {
               ],
               child: MaterialApp(
                 navigatorKey: BusinessNavigator().navigatorKey,
-                title: 'Hazizz Mobile',
+                title: 'Fel Elek',
                 showPerformanceOverlay: false,
                 theme: theme,
                 initialRoute: /*"/tasksTomorrow",*/ startPage,

@@ -11,6 +11,8 @@ dependencies:
 
   flame: 0.17.0
 
+  flutter_launcher_icons: 0.7.4
+
   animator: 1.0.0+2
   esys_flutter_share: 1.0.2
   # table_calendar: 2.1.0
@@ -63,6 +65,13 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   json_serializable: 2.3.0
+
+flutter_icons:
+  #  image_path: "assets/images/icon-128x128.png"
+  image_path_android: "assets/images/elek.png"
+  image_path_ios: "assets/images/elek.png"
+  android: true # can specify file name here e.g. "ic_launcher"
+  ios: true # can specify file name here e.g. "My-Launcher-Icon"
 
 
 flutter:

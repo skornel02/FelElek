@@ -5,13 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'game.dart';
 
-String a(int n){
-  if(n <= 9){
-    return "0$n";
-  }
-  return n.toString();
-}
-
 class StudentSprite extends SpriteComponent {
 
   bool slowingDown = false;
@@ -19,10 +12,10 @@ class StudentSprite extends SpriteComponent {
   String imgPath;
 
   // creates a component that renders the crate.png sprite, with size 16 x 16
-  StudentSprite({@required double x, @required double y, int rand = 1}) : super.fromSprite(100.0, 100.0, new Sprite("ember-${a(rand)}.png")){
+  StudentSprite({@required double x, @required double y, int rand = 1}) : super.fromSprite(100.0, 100.0, new Sprite("ember-${rand}.png")){
     this.x = x;
     this.y = y;
-    imgPath = "assets/images/ember-${a(rand)}.png";
+    imgPath = "assets/images/ember-${rand}.png";
   }
 
   void reuse(){
