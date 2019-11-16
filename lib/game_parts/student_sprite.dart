@@ -27,7 +27,7 @@ class StudentSprite extends SpriteComponent {
 
     Random r = Random();
 
-    sprite = Sprite("emberek-${a(r.nextInt(39))}.png", height: 100, width: 100);
+    super.sprite = Sprite("emberek-${a(r.nextInt(39)+1)}.png", height: 100, width: 100);
 
   }
   
