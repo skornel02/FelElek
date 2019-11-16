@@ -153,7 +153,7 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
           children: <Widget>[
 
             Animator(
-              tween: Tween<Offset>(begin: Offset(0, 200), end: Offset(0, MediaQuery.of(context).size.height + 70)),
+              tween: Tween<Offset>(begin: Offset(MediaQuery.of(context).size.width/2 - 0, 200), end: Offset(MediaQuery.of(context).size.width/2 - 0, MediaQuery.of(context).size.height + 70)),
               duration: Duration(milliseconds: animTime),
               curve: Curves.easeInOut,
               cycles: 2,
@@ -164,8 +164,8 @@ class _ChosenStudentPage extends State<ChosenStudentPage> with TickerProviderSta
                     offset: Offset(0, -MediaQuery.of(context).size.height),
                     child: new Image.asset(
                       'assets/images/claw3.png',
-                      width: 650,
-                      height: 12000,
+                      width: 600,
+                     // height: 12000,
                       fit: BoxFit.scaleDown,
                     ),
                   ),
