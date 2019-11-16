@@ -5,11 +5,17 @@ PojoStudent pickWinner(List<PojoStudent> students) {
   if(students.length == 1)
     return students[0];
 
-  int gradeAmountMin = students.map((PojoStudent student) {
-    return student.grades.length;
+  double gradeAmountMin = students.map((PojoStudent student) {
+    double length = student.grades.length.toDouble();
+    if(length == 0)
+      length = 0.5;
+    return length;
   }).reduce(min);
   List<double> diffToMin = students.map((PojoStudent student) {
-    return gradeAmountMin / student.grades.length;
+    double length = student.grades.length.toDouble();
+    if(length == 0)
+      length = 0.5;
+    return gradeAmountMin / length;
   }).toList();
   double sumOfDifferences = 1 / diffToMin.reduce((a, b) => a + b);
   List<double> chance = diffToMin.map((double diffToMin) {
