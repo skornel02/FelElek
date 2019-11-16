@@ -34,109 +34,146 @@ class ImportPage extends StatelessWidget {
               ),
             ]),
         SizedBox(height: 20),
-        BlocBuilder(
-          bloc: BlocProvider.of<GoogleLoginBloc>(context),
-          builder: (BuildContext context, GoogleLoginState state) {
-            if (state is GoogleLoginSuccessfulState) {
-              return Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(state.email, style: TextStyle(fontSize: 18)),
-                      IconButton(
-                        icon: Icon(FontAwesomeIcons.signOutAlt),
-                        onPressed: () {
-                          BlocProvider.of<GoogleLoginBloc>(context)
-                              .dispatch(GoogleLoginResetEvent());
-                        },
-                      )
-                    ],
-                  ),
-                  BlocBuilder(bloc: BlocProvider.of<GroupsBloc>(context),
-                    builder: (BuildContext context, GroupState) {
-                      return Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text("Utoljára szerkesztve:",
-                                  style: TextStyle(fontSize: 18)),
-                              FutureBuilder<SharedPreferences>(
-                                future: SharedPreferences.getInstance(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<SharedPreferences> snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.none:
-                                    case ConnectionState.waiting:
-                                      return Center(child: CircularProgressIndicator());
-                                    default:
-                                      String datetimeString = snapshot.data.getString("DBLastUpdated");
-                                      DateTime datetime =
-                                      DateTime.parse(datetimeString);
-                                      if (datetimeString != null) {
-                                        return new Text(
-                                            DateFormat('yyyy-MM-dd – kk:mm')
-                                                .format(datetime),
-                                            style: TextStyle(fontSize: 16));
-                                      }
-                                  }
-                                  return new Text("-", style: TextStyle(fontSize: 16));
-                                },
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text("Legutolsó szinkron:",
-                                  style: TextStyle(fontSize: 18)),
-                              FutureBuilder<SharedPreferences>(
-                                future: SharedPreferences.getInstance(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<SharedPreferences> snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.none:
-                                    case ConnectionState.waiting:
-                                      return Center(child: CircularProgressIndicator());
-                                    default:
-                                      String datetimeString = snapshot.data.getString("GDriveLastSync");
-                                      DateTime datetime =
-                                      DateTime.parse(datetimeString);
-                                      if (datetimeString != null) {
-                                        return new Text(
-                                            DateFormat('yyyy-MM-dd – kk:mm')
-                                                .format(datetime),
-                                            style: TextStyle(fontSize: 16));
-                                      }
-                                  }
-                                  return new Text("-", style: TextStyle(fontSize: 16));
-                                },
-                              ),
-                            ],
-                          )
-                        ],
-                      );
-                    },),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(FontAwesomeIcons.sync),
-                          color: Colors.blue,
-                          onPressed: () {
-                            BlocProvider.of<GroupsBloc>(context).dispatch(
-                                SyncWithGoogleDriveEvent(state.accessToken));
-                          },
-                        )
-                      ])
-                ],
-              );
-            } else {
-              return LoginWidget();
-            }
-          },
+        Container(
+          child: Column(
+            children: <Widget>[
+              Text("CSV", style: TextStyle(fontSize: 22)),
+              Text("Csoportok beimportálhatók CSV fájl segítségével a következő kikötésekkel: "
+                  "\n * UTF-8 karakter kódolás "
+                  "\n * vesszővel elválasztott "
+                  "\n * első oszlop a diák nevét tartalmazza "
+                  "\n * második oszlop a diák jegyeinek számát tartalmazza "
+                  "\n * harmadik oszlop a diák csoportjának a nevét tartalmazza"),
+              RaisedButton(
+                child: Text("IMPORTÁLÁS"),
+                onPressed: () {
+                  BlocProvider.of<GroupsBloc>(context).dispatch(ImportCSVEvent());
+                },
+              ),
+            ],
+          ),
         ),
+        SizedBox(height: 20),
+        Text("Google sheets", style: TextStyle(fontSize: 22)),
+        Container(
+          child: Column(
+            children: <Widget>[
+              BlocBuilder(
+                bloc: BlocProvider.of<GoogleLoginBloc>(context),
+                builder: (BuildContext context, GoogleLoginState state) {
+                  if (state is GoogleLoginSuccessfulState) {
+                    return Column(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(state.email, style: TextStyle(fontSize: 18)),
+                            IconButton(
+                              icon: Icon(FontAwesomeIcons.signOutAlt),
+                              onPressed: () {
+                                BlocProvider.of<GoogleLoginBloc>(context)
+                                    .dispatch(GoogleLoginResetEvent());
+                              },
+                            )
+                          ],
+                        ),
+                        BlocBuilder(
+                          bloc: BlocProvider.of<GroupsBloc>(context),
+                          builder: (BuildContext context, GroupState) {
+                            return Column(
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text("Utoljára szerkesztve:",
+                                        style: TextStyle(fontSize: 18)),
+                                    FutureBuilder<SharedPreferences>(
+                                      future: SharedPreferences.getInstance(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<SharedPreferences>
+                                          snapshot) {
+                                        switch (snapshot.connectionState) {
+                                          case ConnectionState.none:
+                                          case ConnectionState.waiting:
+                                            return Center(
+                                                child: CircularProgressIndicator());
+                                          default:
+                                            String datetimeString = snapshot.data
+                                                .getString("DBLastUpdated");
+                                            DateTime datetime =
+                                            DateTime.parse(datetimeString);
+                                            if (datetimeString != null) {
+                                              return new Text(
+                                                  DateFormat('yyyy-MM-dd – kk:mm')
+                                                      .format(datetime),
+                                                  style: TextStyle(fontSize: 16));
+                                            }
+                                        }
+                                        return new Text("-",
+                                            style: TextStyle(fontSize: 16));
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text("Legutolsó szinkron:",
+                                        style: TextStyle(fontSize: 18)),
+                                    FutureBuilder<SharedPreferences>(
+                                      future: SharedPreferences.getInstance(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<SharedPreferences>
+                                          snapshot) {
+                                        switch (snapshot.connectionState) {
+                                          case ConnectionState.none:
+                                          case ConnectionState.waiting:
+                                            return Center(
+                                                child: CircularProgressIndicator());
+                                          default:
+                                            String datetimeString = snapshot.data
+                                                .getString("GDriveLastSync");
+                                            DateTime datetime =
+                                            DateTime.parse(datetimeString);
+                                            if (datetimeString != null) {
+                                              return new Text(
+                                                  DateFormat('yyyy-MM-dd – kk:mm')
+                                                      .format(datetime),
+                                                  style: TextStyle(fontSize: 16));
+                                            }
+                                        }
+                                        return new Text("-",
+                                            style: TextStyle(fontSize: 16));
+                                      },
+                                    ),
+                                  ],
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(FontAwesomeIcons.sync),
+                                color: Colors.blue,
+                                onPressed: () {
+                                  BlocProvider.of<GroupsBloc>(context).dispatch(
+                                      SyncWithGoogleDriveEvent(state.accessToken));
+                                },
+                              )
+                            ])
+                      ],
+                    );
+                  } else {
+                    return LoginWidget();
+                  }
+                },
+              )
+            ],
+          )
+        )
       ],
     )));
   }
