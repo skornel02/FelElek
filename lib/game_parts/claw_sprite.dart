@@ -29,15 +29,6 @@ class ClawSprite extends SpriteComponent {
 
   @override
   void update(double t) {
-
-    if(timeToPick){
-      x -= movePosX;
-    }
-
-    if(timeToPick && movePosX == x - movePosX){
-
-    }
-
   }
 
   @override
