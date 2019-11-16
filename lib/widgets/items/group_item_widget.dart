@@ -41,7 +41,7 @@ class GroupItemWidget extends StatelessWidget {
                                 SelectedBloc bloc = BlocProvider.of<SelectedBloc>(context);
                                 bloc.dispatch(SetSelectedGroup(null));
                               }
-                              await showDeleteGroupDialog(context);
+                              await showDeleteGroupDialog(context, group);
                             },
                           ),
                           Text(group.name,
