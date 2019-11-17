@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:dusza2019/resources/pojos/pojo_group.dart';
 import 'package:dusza2019/widgets/dialogs/dialogs.dart';
@@ -44,9 +45,15 @@ class GroupItemWidget extends StatelessWidget {
                               await showDeleteGroupDialog(context, group);
                             },
                           ),
-                          Text(group.name,
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.w700
+                          Expanded(
+                            child: AutoSizeText(group.name,
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.w700
+                              ),
+                              minFontSize: 16,
+                              maxFontSize: 22,
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
                             ),
                           ),
                           IconButton(
