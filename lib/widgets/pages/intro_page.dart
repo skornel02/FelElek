@@ -19,92 +19,101 @@ class IntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
+        body: Stack(
+          children: <Widget>[
 
-          Image.asset("assets/images/hatter-02.png",
-            height: MediaQuery.of(context).size.height,
-            fit: BoxFit.fitHeight,
-          ),
-          SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Container(
-                      width: 200,
-                      height: 200,
-                      child: CircleAvatar(
-                        backgroundColor: Theme.of(context).backgroundColor,
-                        child: Transform.translate(
-                          offset: Offset(0, 0),
-                          child: Container(
-                              decoration: new BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: new DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: AssetImage("assets/images/elek2.png"),
-                                  )
-                              )
+            Image.asset("assets/images/hatter-02.png",
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height,
+              fit: BoxFit.fitHeight,
+            ),
+            SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Container(
+                        width: 200,
+                        height: 200,
+                        child: CircleAvatar(
+                          backgroundColor: Theme
+                              .of(context)
+                              .backgroundColor,
+                          child: Transform.translate(
+                            offset: Offset(0, 0),
+                            child: Container(
+                                decoration: new BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: new DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: AssetImage(
+                                          "assets/images/elek2.png"),
+                                    )
+                                )
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Text(locText(context, key: "introGreeting"),
-                        style: TextStyle(fontSize: 17), textAlign: TextAlign.center),
-                    BlocBuilder(
-                      bloc: BlocProvider.of<GoogleLoginBloc>(context),
-                      builder: (BuildContext context, GoogleLoginState state) {
-                        if (state is GoogleLoginSuccessfulState) {
-                          BlocProvider.of<GroupsBloc>(context)
-                              .dispatch(SyncWithGoogleDriveEvent(state.accessToken));
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                      Text(locText(context, key: "introGreeting"),
+                          style: TextStyle(fontSize: 17),
+                          textAlign: TextAlign.center),
+                      BlocBuilder(
+                        bloc: BlocProvider.of<GoogleLoginBloc>(context),
+                        builder: (BuildContext context,
+                            GoogleLoginState state) {
+                          if(state is GoogleLoginSuccessfulState) {
+                            BlocProvider.of<GroupsBloc>(context)
+                                .dispatch(
+                                SyncWithGoogleDriveEvent(state.accessToken));
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  state.email,
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                IconButton(
+                                  icon: Icon(FontAwesomeIcons.signOutAlt),
+                                  onPressed: () {
+                                    BlocProvider.of<GoogleLoginBloc>(context)
+                                        .dispatch(GoogleLoginResetEvent());
+                                  },
+                                )
+                              ],
+                            );
+                          }
+                          return Column(
                             children: <Widget>[
-                              Text(
-                                state.email,
-                                style: TextStyle(fontSize: 18),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  locText(context, key: "introLogInToSync"),
+                                  style: TextStyle(fontSize: 17),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                              IconButton(
-                                icon: Icon(FontAwesomeIcons.signOutAlt),
-                                onPressed: () {
-                                  BlocProvider.of<GoogleLoginBloc>(context)
-                                      .dispatch(GoogleLoginResetEvent());
-                                },
-                              )
+                              LoginWidget()
                             ],
                           );
-                        }
-                        return Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Text(
-                                locText(context, key: "introLogInToSync"),
-                                style: TextStyle(fontSize: 17),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            LoginWidget()
-                          ],
-                        );
-                      },
-                    ),
+                        },
+                      ),
 
-                    RaisedButton(
-                      child: Text(locText(context, key: "proceed")),
-                      onPressed: () {
-                        exitIntro();
-                      },
-                    )
-                  ],
-                ),
-              )),
+                      RaisedButton(
+                        child: Text(locText(context, key: "proceed")),
+                        onPressed: () {
+                          exitIntro();
+                        },
+                      )
+                    ],
+                  ),
+                )),
 
-        ],
-      )
+          ],
+        )
     );
   }
 }

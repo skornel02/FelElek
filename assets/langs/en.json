@@ -23,7 +23,15 @@
   "csvTitle": "CSV",
   "csvDescription": "Csoportok beimportálhatók CSV fájl segítségével a következő kikötésekkel: \n * UTF-8 karakter kódolás \n * vesszővel elválasztott \n * első oszlop a diák nevét tartalmazza \n * második oszlop a diák jegyeinek számát tartalmazza \n * harmadik oszlop a diák csoportjának a nevét tartalmazza",
   "import": "import",
+  "templateOpen": "Open",
+  "templateCreate": "Create",
+  "templateRemove": "Remove",
+  "importTemplate": "Import",
   "sheetsTitle": "Google Sheets",
+
+  "templateStudentName": "Johan <Name of student>",
+  "templateGradesAmount": "3 <Amount of grade>",
+  "templateGroupName": "Physics <Name of group>",
 
   "introLogInToSync": "Log in to synchronize",
   "introGreeting" :  "Üdv! Én vagyok Elek, a saját felelés-asszisztensed. Kezdjük is el!",
