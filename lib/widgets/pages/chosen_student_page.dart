@@ -44,10 +44,22 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
     mechAnimation = Tween(begin: 0.0, end: 500.0).animate(mechController);
     mechController.forward();
 
+    mechController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        mechController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        mechController.forward();
+      }
+    });
+
     studentController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: animTime),
     );
+
+    Timer(Duration(milliseconds: animTime), () {
+      studentController.forward();
+    });
 
     buttonController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 1000));
@@ -55,18 +67,6 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
     buttonAnimation = Tween(begin: 0.0, end: 1.0).animate(buttonController);
     Timer(Duration(milliseconds: animTime * 2), () {
       buttonController.forward();
-    });
-
-    Timer(Duration(milliseconds: animTime), () {
-      studentController.forward();
-    });
-
-    mechController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        mechController.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        mechController.forward();
-      }
     });
   }
 
@@ -140,6 +140,7 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
                         offset: studentAnimation.value,
                         child: Column(
                           children: <Widget>[
+
                             Image.asset(
                               widget.winner.imgPath,
                               width: 200,
