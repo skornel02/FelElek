@@ -54,11 +54,12 @@ class ImportPage extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
-          Text(locText(context, key: "sheetsTitle"),
-              style: TextStyle(fontSize: 22)),
           Container(
               child: Column(
             children: <Widget>[
+              Text(locText(context, key: "sheetsTitle"),
+                  style: TextStyle(fontSize: 22)),
+              Text(locText(context, key: "sheetsDescription")),
               BlocBuilder(
                 bloc: BlocProvider.of<GoogleLoginBloc>(context),
                 builder: (BuildContext context, GoogleLoginState state) {
