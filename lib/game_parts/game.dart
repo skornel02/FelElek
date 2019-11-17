@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:dusza2019/navigation/business_navigator.dart';
@@ -32,7 +33,7 @@ class MyGame extends Game with TapDetector {
 
   Size screenSize;
 
-  final countdown = Timer(5);
+  final countdown = Timer((8 + Random().nextInt(8)).toDouble());
 
   final countdownStart = Timer(0.5);
 
@@ -89,7 +90,7 @@ class MyGame extends Game with TapDetector {
         y: screenSize.height / 2,
         rand: pojoStudents[counter % pojoStudents.length].id % 100);
     students.add(
-        winnerStudent); //x: - screenSize.width - 10, y: screenSize.height/2, vel_x: 0.1)];
+        winnerStudent);
     winnerStudentSpawned = true;
     counter++;
   }
@@ -100,7 +101,7 @@ class MyGame extends Game with TapDetector {
           x: -70,
           y: screenSize.height / 2,
           rand: pojoStudents[counter % pojoStudents.length].id % 100),
-    ); //x: - screenSize.width - 10, y: screenSize.height/2, vel_x: 0.1)];
+    );
     counter++;
   }
 
