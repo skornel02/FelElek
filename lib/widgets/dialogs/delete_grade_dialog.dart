@@ -30,7 +30,7 @@ class DeleteGradeDialog extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             child: Center(
               child: AutoSizeText(
-                "Biztos hogy törlőd a jegyet?",
+                locText(context, key: "gradeRemovalConfirmation"),
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,

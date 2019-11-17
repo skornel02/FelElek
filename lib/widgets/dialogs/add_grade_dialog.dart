@@ -31,7 +31,7 @@ class _AddGradeDialog extends State<AddGradeDialog> {
             padding: const EdgeInsets.all(5),
             child: Center(
               child: AutoSizeText(
-                "Add grade",
+                locText(context, key: "addGrade"),
                 style: TextStyle(
                   fontSize: 25.0,
                   fontWeight: FontWeight.w700,
@@ -82,7 +82,7 @@ class _AddGradeDialog extends State<AddGradeDialog> {
                   return FlatButton(
                       child: Center(
                         child: Text(
-                          locText(context, key: "add"),
+                          locText(context, key: "add").toUpperCase(),
                           style: TextStyle(),
                         ),
                       ),

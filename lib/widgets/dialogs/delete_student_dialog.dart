@@ -28,7 +28,7 @@ class DeleteStudentDialog extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             child: Center(
               child: AutoSizeText(
-                "Biztos hogy törlőd a diákot?",
+                locText(context, key: "studentRemovalConfirmation"),
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,

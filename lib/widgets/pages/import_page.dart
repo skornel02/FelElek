@@ -1,5 +1,6 @@
 import 'package:dusza2019/blocs/google_login_bloc.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
+import 'package:dusza2019/managers/felelek_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +29,7 @@ class ImportPage extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 ),
-                Text("Importálás", style: TextStyle(fontSize: 26)),
+                Text(locText(context, key: "importTitle"), style: TextStyle(fontSize: 26)),
                 IconButton(
                   icon: Icon(FontAwesomeIcons.fileImport),
                   color: Colors.transparent,
@@ -39,15 +40,10 @@ class ImportPage extends StatelessWidget {
         Container(
           child: Column(
               children: <Widget>[
-                Text("CSV", style: TextStyle(fontSize: 22)),
-                Text("Csoportok beimportálhatók CSV fájl segítségével a következő kikötésekkel: "
-                    "\n * UTF-8 karakter kódolás "
-                    "\n * vesszővel elválasztott "
-                    "\n * első oszlop a diák nevét tartalmazza "
-                    "\n * második oszlop a diák jegyeinek számát tartalmazza "
-                    "\n * harmadik oszlop a diák csoportjának a nevét tartalmazza"),
+                Text(locText(context, key: "csvTitle"), style: TextStyle(fontSize: 22)),
+                Text(locText(context, key: "csvDescription")),
                 RaisedButton(
-                  child: Text("IMPORTÁLÁS"),
+                  child: Text(locText(context, key: "import").toUpperCase()),
                   onPressed: () {
                     BlocProvider.of<GroupsBloc>(context).dispatch(ImportCSVEvent());
                   },
@@ -56,7 +52,7 @@ class ImportPage extends StatelessWidget {
           ),
         ),
         SizedBox(height: 20),
-        Text("Google sheets", style: TextStyle(fontSize: 22)),
+        Text(locText(context, key: "sheetsTitle"), style: TextStyle(fontSize: 22)),
         Container(
           child: Column(
               children: <Widget>[
@@ -78,94 +74,7 @@ class ImportPage extends StatelessWidget {
                                 },
                               )
                             ],
-                          ),
-                          BlocBuilder(
-                            bloc: BlocProvider.of<GroupsBloc>(context),
-                            builder: (BuildContext context, GroupState state) {
-                              return Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text("Utoljára szerkesztve:",
-                                          style: TextStyle(fontSize: 18)),
-                                      FutureBuilder<SharedPreferences>(
-                                        future: SharedPreferences.getInstance(),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot<SharedPreferences>
-                                            snapshot) {
-                                          switch (snapshot.connectionState) {
-                                            case ConnectionState.none:
-                                            case ConnectionState.waiting:
-                                              return Center(
-                                                  child: CircularProgressIndicator());
-                                            default:
-                                              String datetimeString = snapshot.data
-                                                  .getString("DBLastUpdated");
-                                              DateTime datetime =
-                                              DateTime.parse(datetimeString);
-                                              if (datetimeString != null) {
-                                                return new Text(
-                                                    DateFormat('yyyy-MM-dd – kk:mm')
-                                                        .format(datetime),
-                                                    style: TextStyle(fontSize: 16));
-                                              }
-                                          }
-                                          return new Text("-",
-                                              style: TextStyle(fontSize: 16));
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text("Legutolsó szinkron:",
-                                          style: TextStyle(fontSize: 18)),
-                                      FutureBuilder<SharedPreferences>(
-                                        future: SharedPreferences.getInstance(),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot<SharedPreferences>
-                                            snapshot) {
-                                          switch (snapshot.connectionState) {
-                                            case ConnectionState.none:
-                                            case ConnectionState.waiting:
-                                              return Center(
-                                                  child: CircularProgressIndicator());
-                                            default:
-                                              String datetimeString = snapshot.data
-                                                  .getString("GDriveLastSync");
-                                              DateTime datetime =
-                                              DateTime.parse(datetimeString);
-                                              if (datetimeString != null) {
-                                                return new Text(
-                                                    DateFormat('yyyy-MM-dd – kk:mm')
-                                                        .format(datetime),
-                                                    style: TextStyle(fontSize: 16));
-                                              }
-                                          }
-                                          return new Text("-",
-                                              style: TextStyle(fontSize: 16));
-                                        },
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              );
-                            },
-                          ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                IconButton(
-                                  icon: Icon(FontAwesomeIcons.sync),
-                                  color: Colors.blue,
-                                  onPressed: () {
-                                    BlocProvider.of<GroupsBloc>(context).dispatch(
-                                        SyncWithGoogleDriveEvent(state.accessToken));
-                                  },
-                                )
-                              ])
+                          )
                         ],
                       );
                     } else {

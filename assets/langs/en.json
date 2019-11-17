@@ -1,4 +1,40 @@
 {
-  "syncTitle": "synchronization",
-  ""
+  "groupTitle": "Groups",
+  "group": "group",
+  "addGroup": "Add group",
+  "groupRemovalConfirmation": "You are about to remove a group",
+  "students": "students",
+  "student": "student",
+  "addStudent": "Add student",
+  "studentRemovalConfirmation": "You are about to remove a student",
+  "grades": "grades",
+  "gradesAmount": "#️⃣",
+  "addGrade": "Add grade",
+  "gradeRemovalConfirmation": "You are about to remove a grade",
+
+  "syncTitle": "Synchronization",
+  "lastEdit": "Last edited",
+  "lastSync": "Last synced",
+
+  "importTitle": "Import",
+  "csvTitle": "CSV",
+  "csvDescription": "Csoportok beimportálhatók CSV fájl segítségével a következő kikötésekkel: \n * UTF-8 karakter kódolás \n * vesszővel elválasztott \n * első oszlop a diák nevét tartalmazza \n * második oszlop a diák jegyeinek számát tartalmazza \n * harmadik oszlop a diák csoportjának a nevét tartalmazza",
+  "import": "import",
+  "sheetsTitle": "Google Sheets",
+
+  "introLogInToSync": "Log in to synchronize",
+  "introGreeting" :  "Üdv! Én vagyok Elek, a saját felelés-asszisztensed. Kezdjük is el!",
+
+  "newElek": "Select absent",
+  "absentPerStudentHere": "students are here",
+
+  "start": "Start",
+  "yes": "Proceed",
+  "no": "Cancel",
+  "add": "Add",
+  "cancel": "Cancel",
+  "proceed": "Proceed",
+  "back": "",
+
+  "info_something_went_wrong": "Something went wrong"
 }

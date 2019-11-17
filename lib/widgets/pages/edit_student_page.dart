@@ -1,5 +1,6 @@
 import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
+import 'package:dusza2019/managers/felelek_localizations.dart';
 import 'package:dusza2019/resources/pojos/pojo_group.dart';
 import 'package:dusza2019/resources/pojos/pojo_student.dart';
 import 'package:dusza2019/widgets/dialogs/dialogs.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class StudentEditPage extends StatelessWidget {
   @override
@@ -44,7 +46,8 @@ class StudentEditPage extends StatelessWidget {
                                       Navigator.pop(context);
                                     },
                                   ),
-                                  Text("Diák: ${student.name}",
+                                  Text(
+                                      "${locText(context, key: "student")}: ${student.name}",
                                       style: TextStyle(fontSize: 26)),
                                   IconButton(
                                     icon: Icon(FontAwesomeIcons.fileImport),
@@ -52,7 +55,10 @@ class StudentEditPage extends StatelessWidget {
                                     onPressed: () {},
                                   ),
                                 ]),
-                            Text("Jegyek", style: TextStyle(fontSize: 20)),
+                            Text(
+                                toBeginningOfSentenceCase(
+                                    locText(context, key: "grades")),
+                                style: TextStyle(fontSize: 20)),
                             Expanded(
                                 child: ListView.builder(
                                     itemCount: student.grades.length,

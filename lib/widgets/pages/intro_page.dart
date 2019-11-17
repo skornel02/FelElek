@@ -1,5 +1,6 @@
 import 'package:dusza2019/blocs/google_login_bloc.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
+import 'package:dusza2019/managers/felelek_localizations.dart';
 import 'package:dusza2019/widgets/login_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,10 +43,8 @@ class IntroPage extends StatelessWidget {
                 ),
               ),
             ),
-            Text(
-                "Üdv! Én vagyok Elek, a saját felelés-asszisztensed. Kezdjük is el!",
-                style: TextStyle(fontSize: 17),
-                textAlign: TextAlign.center),
+            Text(locText(context, key: "introGreeting"),
+                style: TextStyle(fontSize: 17), textAlign: TextAlign.center),
             BlocBuilder(
               bloc: BlocProvider.of<GoogleLoginBloc>(context),
               builder: (BuildContext context, GoogleLoginState state) {
@@ -75,7 +74,7 @@ class IntroPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Text(
-                        "A szinkronizációhoz jelentkezzen be:",
+                        locText(context, key: "introLogInToSync"),
                         style: TextStyle(fontSize: 17),
                         textAlign: TextAlign.center,
                       ),
@@ -86,7 +85,7 @@ class IntroPage extends StatelessWidget {
               },
             ),
             RaisedButton(
-              child: Text("Tovább"),
+              child: Text(locText(context, key: "proceed")),
               onPressed: () {
                 exitIntro();
               },

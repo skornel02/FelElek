@@ -27,7 +27,7 @@ class DeleteGroupDialog extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             child: Center(
               child: AutoSizeText(
-                "Biztos hogy törlőd a csoportot?",
+                locText(context, key: "groupRemovalConfirmation"),
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,

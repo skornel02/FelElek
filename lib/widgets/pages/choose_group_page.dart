@@ -38,7 +38,7 @@ class GroupsPage extends StatelessWidget {
                                 },
                               ),
                               Text(
-                                locText(context, key: "groups"),
+                                locText(context, key: "groupTitle"),
                                 style: TextStyle(fontSize: 26),
                               ),
                               IconButton(
@@ -88,7 +88,7 @@ class GroupsPage extends StatelessWidget {
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10.0)),
-                                          child: Text("Új felelés",
+                                          child: Text(locText(context, key: "newElek"),
                                               style: TextStyle(fontSize: 24)),
                                           onPressed: () {
                                             if (SelectedBloc().group != null) {}
