@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:dusza2019/managers/felelek_localizations.dart';
 import 'package:dusza2019/resources/pojos/pojo_group.dart';
@@ -24,11 +25,20 @@ class StudentAbsentWidget extends StatelessWidget {
                       left: 8, /*top: 4, bottom: 4*/
                     ),
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            student.name +
-                                " (${student.grades.length} ${locText(context, key: "gradesAmount")})",
+                          AutoSizeText(
+                            student.name,
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.w700),
+                            maxLines: 2,
+                            minFontSize: 16,
+                            maxFontSize: 22,
+                          ),
+
+                          Spacer(),
+
+                          Text("(${student.grades.length} ${locText(context, key: "gradesAmount")})",
                             style: TextStyle(
                                 fontSize: 22, fontWeight: FontWeight.w700),
                           ),
@@ -50,6 +60,11 @@ class StudentAbsentWidget extends StatelessWidget {
                                 return Center(
                                     child: CircularProgressIndicator());
                               })
-                        ])))));
+                        ]
+                    )
+                )
+            )
+        )
+    );
   }
 }

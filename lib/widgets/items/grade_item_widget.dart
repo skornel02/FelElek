@@ -18,31 +18,40 @@ class GradeItemWidget extends StatelessWidget {
     return Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5,
-        child: InkWell(
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(grade.toString(),
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.w700
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(FontAwesomeIcons.times),
-                          color: Colors.red,
-                          onPressed: () async {
-                            await showDeleteGradeDialog(context, index, student, group);
-                          },
-                        ),
-                      ],
-                    )
-                )
+        child: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Stack(
+              children: <Widget>[
+
+                Positioned(
+                  left: 0,
+                  child: IconButton(
+                    icon: Icon(FontAwesomeIcons.times),
+                    color: Colors.red,
+                    onPressed: () async {
+                      await showDeleteGradeDialog(context, index, student, group);
+                    },
+                  ),
+                ),
+
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(grade.toString(),
+                      style: TextStyle(
+                          fontSize: 22, fontWeight: FontWeight.w700
+                      ),
+                    ),
+                  ),
+                ),
+
+                Container(),
+
+              ],
             )
         )
+
+
     );
   }
 }
