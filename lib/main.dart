@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dusza2019/blocs/google_login_bloc.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
+import 'package:dusza2019/blocs/sheets_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/easy_localization_provider.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,7 @@ class _FelElekApp extends State<FelElekApp> with WidgetsBindingObserver {
   GroupsBloc groupsBloc = new GroupsBloc();
   GoogleLoginBloc googleBloc = new GoogleLoginBloc();
   SelectedBloc selectedBloc = new SelectedBloc();
+  SheetBloc sheetBloc = new SheetBloc();
 
   @override
   initState() {
@@ -51,6 +53,7 @@ class _FelElekApp extends State<FelElekApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     groupsBloc.dispatch(ReloadGroupEvent());
     googleBloc.dispatch(GoogleCheckAlreadyLoggedIn());
+    sheetBloc.dispatch(StartupEvent());
   }
 
   @override
@@ -93,6 +96,9 @@ class _FelElekApp extends State<FelElekApp> with WidgetsBindingObserver {
                 ),
                 BlocProvider<SelectedBloc>(
                   builder: (_) => selectedBloc,
+                ),
+                BlocProvider<SheetBloc>(
+                  builder: (_) => sheetBloc,
                 )
               ],
               child: MaterialApp(

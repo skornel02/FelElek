@@ -14,71 +14,64 @@ abstract class GoogleLoginState extends Equatable {
 }
 
 class GoogleCheckAlreadyLoggedIn extends GoogleLoginEvent {
-  @override String toString() => 'GoogleCheckAlreadyLoggedIn';
   @override
-  List<Object> get props => null;
+  String toString() => 'GoogleCheckAlreadyLoggedIn';
 }
 
 class GoogleLoginButtonPressedEvent extends GoogleLoginEvent {
-  @override String toString() => 'GoogleLoginButtonPressed';
   @override
-  List<Object> get props => null;
+  String toString() => 'GoogleLoginButtonPressed';
 }
 
 class GoogleUpdateAccessToken extends GoogleLoginEvent {
-  @override String toString() => 'GoogleUpdateAccessToken';
   @override
-  List<Object> get props => null;
+  String toString() => 'GoogleUpdateAccessToken';
 }
 
 class GoogleLoginResetEvent extends GoogleLoginEvent {
-  @override String toString() => 'GoogleLoginResetEvent';
   @override
-  List<Object> get props => null;
+  String toString() => 'GoogleLoginResetEvent';
 }
 
 class GoogleReadyToLoginState extends GoogleLoginState {
-  @override String toString() => 'GoogleReadyToLoginState';
   @override
-  List<Object> get props => null;
+  String toString() => 'GoogleReadyToLoginState';
 }
 
 class GoogleLoginSuccessfulState extends GoogleLoginState {
   final String email;
   final String accessToken;
+  final Map<String, String> headers;
 
-  GoogleLoginSuccessfulState(this.email, this.accessToken);
+  GoogleLoginSuccessfulState(this.email, this.accessToken, this.headers);
 
-  @override String toString() => 'GoogleLoginSuccessfulState';
   @override
-  List<Object> get props => null;
+  String toString() => 'GoogleLoginSuccessfulState';
 }
 
 class GoogleLoginWaitingState extends GoogleLoginState {
-  @override String toString() => 'GoogleLoginWaitingState';
   @override
-  List<Object> get props => null;
+  String toString() => 'GoogleLoginWaitingState';
 }
 
 class GoogleLoginFailedState extends GoogleLoginState {
   GoogleLoginFailedState() : super([]);
 
-  @override String toString() => 'GoogleLoginFailedState';
   @override
-  List<Object> get props => [];
+  String toString() => 'GoogleLoginFailedState';
 }
 
 class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
-
   GoogleSignIn _googleSignIn;
   FirebaseAuth _auth;
 
-  GoogleLoginBloc(){
+  GoogleLoginBloc() {
     _googleSignIn = GoogleSignIn(scopes: [
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/userinfo.profile",
       "openid",
-      "https://www.googleapis.com/auth/drive.appdata"
+      "https://www.googleapis.com/auth/drive.appdata",
+      "https://www.googleapis.com/auth/drive.file"
     ]);
     _auth = FirebaseAuth.instance;
   }
@@ -91,7 +84,7 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
     super.dispose();
   }
 
-  void reset(){
+  void reset() {
     this.dispatch(GoogleLoginResetEvent());
   }
 
@@ -102,55 +95,66 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
 
   @override
   Stream<GoogleLoginState> mapEventToState(GoogleLoginEvent event) async* {
-    if (event is GoogleLoginButtonPressedEvent || event is GoogleUpdateAccessToken) {
-      yield GoogleLoginWaitingState();
+    switch (event.runtimeType) {
+      case GoogleLoginButtonPressedEvent:
+      case GoogleUpdateAccessToken:
+        yield GoogleLoginWaitingState();
 
-      try{
-        print("google login: 1");
-        final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+        try {
+          print("google login: 1");
+          final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
 
-        print("google login: 2");
+          print("google login: 2");
 
-        if(googleUser == null) {
-          print("Auth failed!!!");
+          if (googleUser == null) {
+            print("Auth failed!!!");
+            yield GoogleReadyToLoginState();
+          } else {
+            print("google login: 3");
+            final GoogleSignInAuthentication googleAuth =
+                await googleUser.authentication;
+
+            print("google login: 4");
+            final AuthCredential credential = GoogleAuthProvider.getCredential(
+              accessToken: googleAuth.accessToken,
+              idToken: googleAuth.idToken,
+            );
+            print("google login: 5");
+
+            final FirebaseUser user =
+                (await _auth.signInWithCredential(credential)).user;
+            print("signed in " + user.displayName);
+
+            final accessToken = googleAuth.accessToken;
+            yield GoogleLoginSuccessfulState(googleUser.email, accessToken, await googleUser.authHeaders);
+
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setBool("GoogleEnabled", true);
+          }
+        } catch (exception, stacktrace) {
+          Crashlytics().recordError(exception, stacktrace);
           yield GoogleReadyToLoginState();
-        }else{
-          print("google login: 3");
-          final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
-          print("google login: 4");
-          final AuthCredential credential = GoogleAuthProvider.getCredential(
-            accessToken: googleAuth.accessToken,
-            idToken: googleAuth.idToken,
-          );
-          print("google login: 5");
-
-          final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
-          print("signed in " + user.displayName);
-
-          final accessToken = googleAuth.accessToken;
-          yield GoogleLoginSuccessfulState(googleUser.email, accessToken);
-
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setBool("GoogleEnabled", true);
         }
-      }catch(exception, stacktrace){
-        Crashlytics().recordError(exception, stacktrace);
-        yield GoogleReadyToLoginState();
-      }
-    } else if(event is GoogleLoginResetEvent){
-      logout();
-      yield GoogleReadyToLoginState();
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool("GoogleEnabled", false);
-    } else if(event is GoogleCheckAlreadyLoggedIn) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      bool flag = prefs.getBool("GoogleEnabled");
-      if(flag){
-        this.dispatch(GoogleUpdateAccessToken());
-      }
+        break;
+      case GoogleLoginResetEvent:
+        logout();
+        yield GoogleReadyToLoginState();
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool("GoogleEnabled", false);
+
+        break;
+      case GoogleCheckAlreadyLoggedIn:
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        bool flag = prefs.getBool("GoogleEnabled");
+        if (flag) {
+          this.dispatch(GoogleUpdateAccessToken());
+        }
+
+        break;
+      default:
+        break;
     }
   }
 }
-

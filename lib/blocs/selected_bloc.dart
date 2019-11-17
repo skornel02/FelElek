@@ -3,8 +3,6 @@ import 'package:dusza2019/resources/pojos/pojo_group.dart';
 import 'package:dusza2019/resources/pojos/pojo_student.dart';
 import 'package:equatable/equatable.dart';
 
-
-
 abstract class PathEvent extends Equatable {
   PathEvent([List props = const []]) : super(props);
 }
@@ -18,20 +16,17 @@ class SetSelectedGroup extends PathEvent {
 
   SetSelectedGroup(this.group);
 
-  @override String toString() => 'SetSelectedGroupEvent';
   @override
-  List<Object> get props => null;
+  String toString() => 'SetSelectedGroupEvent';
 }
-
 
 class SetSelectedStudent extends PathEvent {
   final PojoStudent student;
 
   SetSelectedStudent(this.student);
 
-  @override String toString() => 'SetStudentEvent';
   @override
-  List<Object> get props => null;
+  String toString() => 'SetStudentEvent';
 }
 
 class SetAbsentStudent extends PathEvent {
@@ -40,35 +35,32 @@ class SetAbsentStudent extends PathEvent {
 
   SetAbsentStudent(this.student, this.absent);
 
-  @override String toString() => 'SetAbsentStudent';
   @override
-  List<Object> get props => null;
+  String toString() => 'SetAbsentStudent';
 }
 
 class InitialPathState extends PathEvent {
-  @override String toString() => 'InitialPathState';
   @override
-  List<Object> get props => null;
+  String toString() => 'InitialPathState';
 }
+
 class WaitingForSelection extends SelectedState {
-  @override String toString() => 'WaitingPathState';
   @override
-  List<Object> get props => null;
+  String toString() => 'WaitingPathState';
 }
+
 class SelectionReadyState extends SelectedState {
   final PojoGroup group;
   final PojoStudent student;
   final List<PojoStudent> absentStudents;
+
   SelectionReadyState(this.group, this.student, this.absentStudents);
 
-  @override String toString() => 'LoadedPathState';
   @override
-  List<Object> get props => null;
+  String toString() => 'LoadedPathState';
 }
 
-
 class SelectedBloc extends Bloc<PathEvent, SelectedState> {
-
   PojoGroup group;
   PojoStudent student;
   List<PojoStudent> absentStudents;
@@ -79,7 +71,7 @@ class SelectedBloc extends Bloc<PathEvent, SelectedState> {
   @override
   Stream<SelectedState> mapEventToState(PathEvent event) async* {
     yield WaitingForSelection();
-    switch(event.runtimeType) {
+    switch (event.runtimeType) {
       case SetSelectedGroup:
         SetSelectedGroup e = event;
         group = e.group;
@@ -95,9 +87,9 @@ class SelectedBloc extends Bloc<PathEvent, SelectedState> {
         break;
       case SetAbsentStudent:
         SetAbsentStudent e = event;
-        if(e.absent){
+        if (e.absent) {
           absentStudents.add(e.student);
-        }else {
+        } else {
           absentStudents.remove(e.student);
         }
 

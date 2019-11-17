@@ -88,6 +88,7 @@ class IntroPage extends StatelessWidget {
               child: Text(locText(context, key: "proceed")),
               onPressed: () {
                 exitIntro();
+
               },
             )
           ],

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:csv/csv.dart';
-import 'package:dusza2019/managers/database.dart';
+import 'package:dusza2019/managers/database_manager.dart';
 import 'package:dusza2019/resources/csv_student.dart';
 import 'package:dusza2019/resources/pojos/pojo_group.dart';
 import 'package:dusza2019/resources/pojos/pojo_student.dart';
@@ -21,9 +21,6 @@ abstract class GroupState extends Equatable {
 class ReloadGroupEvent extends GroupEvent {
   @override
   String toString() => 'FetchGroupEvent';
-
-  @override
-  List<Object> get props => null;
 }
 
 class SyncWithGoogleDriveEvent extends GroupEvent {
@@ -33,9 +30,6 @@ class SyncWithGoogleDriveEvent extends GroupEvent {
 
   @override
   String toString() => 'SyncWithGoogleDriveEvent';
-
-  @override
-  List<Object> get props => null;
 }
 
 class AddGroupEvent extends GroupEvent {
@@ -45,9 +39,6 @@ class AddGroupEvent extends GroupEvent {
 
   @override
   String toString() => 'AddGroupEvent';
-
-  @override
-  List<Object> get props => null;
 }
 
 class RemoveGroupEvent extends GroupEvent {
@@ -57,9 +48,6 @@ class RemoveGroupEvent extends GroupEvent {
 
   @override
   String toString() => 'RemoveGroupEvent';
-
-  @override
-  List<Object> get props => null;
 }
 
 class AddStudentEvent extends GroupEvent {
@@ -70,9 +58,6 @@ class AddStudentEvent extends GroupEvent {
 
   @override
   String toString() => 'AddStudentEvent';
-
-  @override
-  List<Object> get props => null;
 }
 
 class RemoveStudentEvent extends GroupEvent {
@@ -83,9 +68,6 @@ class RemoveStudentEvent extends GroupEvent {
 
   @override
   String toString() => 'RemoveStudentEvent';
-
-  @override
-  List<Object> get props => null;
 }
 
 class AddGradeEvent extends GroupEvent {
@@ -97,9 +79,6 @@ class AddGradeEvent extends GroupEvent {
 
   @override
   String toString() => 'AddGradeEvent';
-
-  @override
-  List<Object> get props => null;
 }
 
 class RemoveGradeEvent extends GroupEvent {
@@ -112,33 +91,30 @@ class RemoveGradeEvent extends GroupEvent {
   @override
   String toString() =>
       'RemoveGradeEvent: $index, ${student.name}, ${group.name}';
-
-  @override
-  List<Object> get props => null;
 }
 
 class ImportCSVEvent extends GroupEvent {
   @override
   String toString() => 'ImportCSVEvent';
+}
+
+class ImportExternalCSVEvent extends GroupEvent {
+  final List<CSVStudent> students;
+
+  ImportExternalCSVEvent(this.students);
 
   @override
-  List<Object> get props => null;
+  String toString() => 'ImportExternalCSVEvent';
 }
 
 class InitialGroupState extends GroupEvent {
   @override
   String toString() => 'InitialGroupState';
-
-  @override
-  List<Object> get props => null;
 }
 
 class WaitingGroupState extends GroupState {
   @override
   String toString() => 'WaitingGroupState';
-
-  @override
-  List<Object> get props => null;
 }
 
 class LoadedGroupState extends GroupState {
@@ -148,9 +124,6 @@ class LoadedGroupState extends GroupState {
 
   @override
   String toString() => 'LoadedGroupState';
-
-  @override
-  List<Object> get props => null;
 }
 
 class GroupsBloc extends Bloc<GroupEvent, GroupState> {
@@ -252,23 +225,7 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
               students.add(student);
             }
 
-            List<PojoGroup> groups = students
-                .map((CSVStudent student) {
-                  return student.groupName;
-                })
-                .toSet()
-                .map((String groupName) {
-                  return _addGroup(groupName);
-                })
-                .toList();
-
-            students.forEach((CSVStudent csvStudent) {
-              PojoGroup group = groups.firstWhere((group) => group.name == csvStudent.groupName);
-              PojoStudent student = _addStudent(csvStudent.name, group);
-              for(int i = 0 ; i < csvStudent.gradesAmount ; i++){
-                _addGrade(0, student, group);
-              }
-            });
+            _addCSVStudents(students);
 
             Database().saveGroups(_groups);
             yield LoadedGroupState(_groups);
@@ -279,9 +236,37 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
 
         yield LoadedGroupState(_groups);
         break;
+      case ImportExternalCSVEvent:
+        ImportExternalCSVEvent e = event;
+        _addCSVStudents(e.students);
+
+        Database().saveGroups(_groups);
+        yield LoadedGroupState(_groups);
+        break;
     }
 
     print("Group Bloc currentstate: ${currentState.toString()}");
+  }
+
+  void _addCSVStudents(List<CSVStudent> students) {
+    List<PojoGroup> groups = students
+        .map((CSVStudent student) {
+          return student.groupName;
+        })
+        .toSet()
+        .map((String groupName) {
+          return _addGroup(groupName);
+        })
+        .toList();
+
+    students.forEach((CSVStudent csvStudent) {
+      PojoGroup group =
+          groups.firstWhere((group) => group.name == csvStudent.groupName);
+      PojoStudent student = _addStudent(csvStudent.name, group);
+      for (int i = 0; i < csvStudent.gradesAmount; i++) {
+        _addGrade(0, student, group);
+      }
+    });
   }
 
   PojoGroup _addGroup(String name) {
