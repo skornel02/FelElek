@@ -37,6 +37,7 @@
   "templateRemove": "Törlés",
   "importTemplate": "Importálás",
   "sheetsTitle": "Google Táblázatok",
+  "sheetsDescription": "Csoportok importálhatóak Google Táblázatok dokumentmokból. \n * Új sablon a létrehozás gomb megnyomásával hozható létre \n * Módosítsd a sablont \n * Amikor elkészültél, nyomd meg az 'importálás' gombot",
 
   "introLogInToSync": "Jelentkezz be a szinkronizáláshoz",
   "introGreeting" :  "Üdv! Én vagyok Elek, a saját felelés-asszisztensed. Kezdjük is el!",

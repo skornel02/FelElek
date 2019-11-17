@@ -9,8 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class StudentAbsentWidget extends StatelessWidget {
   final PojoStudent student;
   final PojoGroup group;
+  final double chance;
 
-  StudentAbsentWidget({this.student, this.group});
+  StudentAbsentWidget({this.student, this.group, this.chance});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class StudentAbsentWidget extends StatelessWidget {
 
                          // Spacer(),
 
-                          Text("(${student.grades.length} ${locText(context, key: "gradesAmount")})",
+                          Text("(${(chance * 100).toStringAsFixed(0)}%)",
                             style: TextStyle(
                                 fontSize: 22, fontWeight: FontWeight.w700),
                           ),

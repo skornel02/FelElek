@@ -27,6 +27,7 @@ class AbsentPage extends StatelessWidget {
                     absents.forEach((PojoStudent absent) {
                       nonAbsent.remove(absent);
                     });
+                    List<double> chances = calculateChances(nonAbsent);
 
                     return Scaffold(
                         body: SafeArea(
@@ -57,9 +58,14 @@ class AbsentPage extends StatelessWidget {
                           child: ListView.builder(
                               itemCount: group.students.length,
                               itemBuilder: (BuildContext context, int index) {
+                                PojoStudent student = group.students[index];
+                                int chanceIndex = nonAbsent
+                                    .indexWhere((matching) => matching.id == student.id);
+                                double chance = chanceIndex == -1 ? 0 : chances[chanceIndex];
                                 return StudentAbsentWidget(
-                                    student: group.students[index],
-                                    group: group);
+                                    student: student,
+                                    group: group,
+                                  chance: chance,);
                               })),
                       Builder(builder: (BuildContext context) {
                         if (nonAbsent.length > 0) {
