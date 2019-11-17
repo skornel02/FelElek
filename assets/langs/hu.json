@@ -40,6 +40,10 @@
   "sheetsTitle": "Google Táblázatok",
   "sheetsDescription": "Csoportok importálhatóak Google Táblázatok dokumentmokból. \n * Új sablon a létrehozás gomb megnyomásával hozható létre \n * Módosítsd a sablont \n * Amikor elkészültél, nyomd meg az 'importálás' gombot",
 
+  "templateStudentName": "Jonás <Name of student>",
+  "templateGradesAmount": "3 <Amount of grade>",
+  "templateGroupName": "Fizika <Name of group>",
+
   "introLogInToSync": "Jelentkezz be a szinkronizáláshoz",
   "introGreeting" :  "Üdv! Én vagyok Elek, a saját felelés-asszisztensed. Kezdjük is el!",
 

@@ -239,13 +239,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.0"
-  esys_flutter_share:
-    dependency: "direct main"
-    description:
-      name: esys_flutter_share
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.2"
   file_picker:
     dependency: "direct main"
     description:
@@ -526,7 +519,7 @@ packages:
       name: package_info
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.0+6"
+    version: "0.4.0+10"
   package_resolver:
     dependency: transitive
     description:
@@ -590,13 +583,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.0"
-  preferences:
-    dependency: "direct main"
-    description:
-      name: preferences
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.1"
   provider:
     dependency: transitive
     description:
@@ -632,13 +618,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.22.6"
-  share:
-    dependency: "direct main"
-    description:
-      name: share
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.6.3+1"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -693,13 +672,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  sticky_headers:
-    dependency: "direct main"
-    description:
-      name: sticky_headers
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.8"
   stream_channel:
     dependency: transitive
     description:
