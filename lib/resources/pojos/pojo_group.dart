@@ -1,4 +1,4 @@
-import 'package:dusza2019/pojos/pojo_student.dart';
+import 'package:dusza2019/resources/pojos/pojo_student.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 

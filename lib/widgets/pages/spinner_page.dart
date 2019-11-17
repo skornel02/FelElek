@@ -1,7 +1,4 @@
 import 'package:dusza2019/game_parts/game.dart';
-import 'package:dusza2019/game_parts/student_sprite.dart';
-import 'package:dusza2019/other/spinner_data.dart';
-import 'package:dusza2019/pojos/pojo_student.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 

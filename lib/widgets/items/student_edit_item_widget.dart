@@ -1,6 +1,6 @@
 import 'package:dusza2019/blocs/selected_bloc.dart';
-import 'package:dusza2019/pojos/pojo_group.dart';
-import 'package:dusza2019/pojos/pojo_student.dart';
+import 'package:dusza2019/resources/pojos/pojo_group.dart';
+import 'package:dusza2019/resources/pojos/pojo_student.dart';
 import 'package:dusza2019/widgets/dialogs/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

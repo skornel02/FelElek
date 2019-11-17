@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:csv/csv.dart';
-import 'package:dusza2019/other/database.dart';
-import 'package:dusza2019/pojos/pojo_csv_student.dart';
-import 'package:dusza2019/pojos/pojo_group.dart';
-import 'package:dusza2019/pojos/pojo_student.dart';
+import 'package:dusza2019/managers/database.dart';
+import 'package:dusza2019/resources/csv_student.dart';
+import 'package:dusza2019/resources/pojos/pojo_group.dart';
+import 'package:dusza2019/resources/pojos/pojo_student.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 
@@ -111,7 +111,7 @@ class RemoveGradeEvent extends GroupEvent {
 
   @override
   String toString() =>
-      'RemoveGradeEvent: ${index}, ${student.name}, ${group.name}';
+      'RemoveGradeEvent: $index, ${student.name}, ${group.name}';
 
   @override
   List<Object> get props => null;

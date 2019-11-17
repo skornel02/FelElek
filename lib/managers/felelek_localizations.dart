@@ -16,7 +16,7 @@ Future<String> locTextContextless({@required String key, List<String> args}) asy
 
 Future<Locale> getPreferredLocale() async{
   String preferredLangCode = (await getPreferredLangCode());
-  print("preferredLangCode:  ${preferredLangCode}");
+  print("preferredLangCode:  $preferredLangCode");
   if(preferredLangCode != null) {
     return Locale(preferredLangCode,);
   }
@@ -59,7 +59,7 @@ class FelElekLocalizationsNoContext{
     // Load the language JSON file from the "lang" folder
     String preferredLangCode = await getPreferredLangCode();
     String jsonString =
-    await rootBundle.loadString('assets/langs/${preferredLangCode}.json');
+    await rootBundle.loadString('assets/langs/$preferredLangCode.json');
 
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
@@ -154,8 +154,6 @@ class FelElekLocalizations {
   }
 
   String translateFromList({@required String key, @required int index}) {
-    Map jsonList = jsonDecode(_localizedStrings[key]);
-    // List asd = jsonList.map((i)=>i).toList();
     List<String> textList = jsonDecode(_localizedStrings[key]);
     String text = textList[index];
     return text;

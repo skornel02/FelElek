@@ -1,9 +1,7 @@
-
+import 'package:dusza2019/game_parts/game.dart';
 import 'package:flame/components/component.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
-
-import 'game.dart';
 
 class StudentSprite extends SpriteComponent {
 
@@ -12,10 +10,10 @@ class StudentSprite extends SpriteComponent {
   String imgPath;
 
   // creates a component that renders the crate.png sprite, with size 16 x 16
-  StudentSprite({@required double x, @required double y, int rand = 1}) : super.fromSprite(100.0, 100.0, new Sprite("ember-${rand}.png")){
+  StudentSprite({@required double x, @required double y, int rand = 1}) : super.fromSprite(100.0, 100.0, new Sprite("ember-$rand.png")){
     this.x = x;
     this.y = y;
-    imgPath = "assets/images/ember-${rand}.png";
+    imgPath = "assets/images/ember-$rand.png";
   }
 
   void reuse(){
@@ -32,8 +30,8 @@ class StudentSprite extends SpriteComponent {
   @override
   void update(double t) {
 
-    if(MyGame.vel_x > 0){
-      x += MyGame.vel_x;
+    if(MyGame.velocityX > 0){
+      x += MyGame.velocityX;
     }
 
 

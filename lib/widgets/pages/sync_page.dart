@@ -1,5 +1,6 @@
 import 'package:dusza2019/blocs/google_login_bloc.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
+import 'package:dusza2019/managers/felelek_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +29,7 @@ class SyncPage extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 ),
-                Text("Szinkronizáció", style: TextStyle(fontSize: 26)),
+                Text(locText(context, key: "syncTitle"), style: TextStyle(fontSize: 26)),
                 IconButton(
                   icon: Icon(FontAwesomeIcons.fileImport),
                   color: Colors.transparent,
@@ -63,7 +64,7 @@ class SyncPage extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Text("Utoljára szerkesztve:",
+                                Text(locText(context, key: "lastEdit") + ": ",
                                     style: TextStyle(fontSize: 18)),
                                 FutureBuilder<SharedPreferences>(
                                   future: SharedPreferences.getInstance(),
@@ -96,7 +97,7 @@ class SyncPage extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Text("Legutolsó szinkron:",
+                                Text(locText(context, key: "lastSync") + ": ",
                                     style: TextStyle(fontSize: 18)),
                                 FutureBuilder<SharedPreferences>(
                                   future: SharedPreferences.getInstance(),

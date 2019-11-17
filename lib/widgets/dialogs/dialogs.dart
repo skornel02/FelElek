@@ -1,5 +1,5 @@
-import 'package:dusza2019/pojos/pojo_group.dart';
-import 'package:dusza2019/pojos/pojo_student.dart';
+import 'package:dusza2019/resources/pojos/pojo_group.dart';
+import 'package:dusza2019/resources/pojos/pojo_student.dart';
 import 'package:dusza2019/widgets/dialogs/add_group_dialog.dart';
 import 'package:dusza2019/widgets/dialogs/add_user_dialog.dart';
 import 'package:flutter/material.dart';

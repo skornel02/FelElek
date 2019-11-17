@@ -4,7 +4,6 @@ import 'package:dusza2019/widgets/pages/edit_student_page.dart';
 import 'package:dusza2019/widgets/pages/choose_group_page.dart';
 import 'package:dusza2019/widgets/pages/import_page.dart';
 import 'package:dusza2019/widgets/pages/sync_page.dart';
-import 'package:dusza2019/widgets/pages/sync_page.dart';
 import 'package:dusza2019/widgets/pages/spinner_page.dart';
 import 'package:dusza2019/widgets/pages/edit_group_page.dart';
 import 'package:flutter/material.dart';

@@ -11,9 +11,9 @@ import 'package:dynamic_theme/dynamic_theme.dart';
 
 import 'navigation/business_navigator.dart';
 import 'navigation/route_generator.dart';
-import 'other/app_state_manager.dart';
-import 'other/felelek_localizations.dart';
-import 'other/felelek_theme.dart';
+import 'managers/app_state_manager.dart';
+import 'managers/felelek_localizations.dart';
+import 'resources/felelek_theme.dart';
 
 String startPage;
 ThemeData themeData;

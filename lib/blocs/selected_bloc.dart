@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:dusza2019/pojos/pojo_group.dart';
-import 'package:dusza2019/pojos/pojo_student.dart';
+import 'package:dusza2019/resources/pojos/pojo_group.dart';
+import 'package:dusza2019/resources/pojos/pojo_student.dart';
 import 'package:equatable/equatable.dart';
 
 
@@ -56,9 +56,9 @@ class WaitingForSelection extends SelectedState {
   List<Object> get props => null;
 }
 class SelectionReadyState extends SelectedState {
-  PojoGroup group;
-  PojoStudent student;
-  List<PojoStudent> absentStudents;
+  final PojoGroup group;
+  final PojoStudent student;
+  final List<PojoStudent> absentStudents;
   SelectionReadyState(this.group, this.student, this.absentStudents);
 
   @override String toString() => 'LoadedPathState';

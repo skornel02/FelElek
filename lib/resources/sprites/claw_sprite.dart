@@ -1,23 +1,22 @@
-
 import 'package:flame/components/component.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 
-import 'game.dart';
+class ClawSprite extends SpriteComponent {
 
-class ConveyorSprite extends SpriteComponent {
+  bool timeToPick = false;
 
+  double movePosX = 0;
+
+  double oldY;
 
   // creates a component that renders the crate.png sprite, with size 16 x 16
-  ConveyorSprite({@required double x, @required double y, double width}) : super.fromSprite(width, 50.0, new Sprite("futoszalag.png")){
+  ClawSprite({@required double x, @required double y}) : super.fromSprite(84, 750, new Sprite("claw3.png")){
     this.x = x;
     this.y = y;
-    this.width;
+    oldY = y;
   }
 
-  void reuse(){
-
-  }
 
   @override
   void resize(Size size) {
@@ -28,9 +27,6 @@ class ConveyorSprite extends SpriteComponent {
 
   @override
   void update(double t) {
-    if(MyGame.vel_x > 0){
-      x += MyGame.vel_x;
-    }
   }
 
   @override

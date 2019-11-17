@@ -81,7 +81,7 @@ class ImportPage extends StatelessWidget {
                           ),
                           BlocBuilder(
                             bloc: BlocProvider.of<GroupsBloc>(context),
-                            builder: (BuildContext context, GroupState) {
+                            builder: (BuildContext context, GroupState state) {
                               return Column(
                                 children: <Widget>[
                                   Row(

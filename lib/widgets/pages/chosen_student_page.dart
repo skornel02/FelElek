@@ -3,9 +3,8 @@ import 'dart:math' as math;
 
 import 'package:animator/animator.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
-import 'package:dusza2019/navigation/business_navigator.dart';
-import 'package:dusza2019/other/felelek_localizations.dart';
-import 'package:dusza2019/other/winner_data.dart';
+import 'package:dusza2019/managers/felelek_localizations.dart';
+import 'package:dusza2019/resources/winner_data.dart';
 import 'package:dusza2019/widgets/dialogs/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

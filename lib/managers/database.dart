@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dusza2019/pojos/pojo_group.dart';
+import 'package:dusza2019/resources/pojos/pojo_group.dart';
 import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,6 +31,7 @@ class Database {
     } catch (e) {
       print("Couldn't read file " + e.toString());
     }
+    return new List();
   }
 
   Future<void> saveGroups(List<PojoGroup> groups) async {
