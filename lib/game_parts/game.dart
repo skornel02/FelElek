@@ -66,9 +66,7 @@ class MyGame extends Game with TapDetector {
           y: screenSize.height / 2 + 60,
           width: screenSize.width),
     ];
-
-    claw =
-        ClawSprite(x: screenSize.width / 2 - 42, y: -screenSize.height + 200);
+    claw = ClawSprite(x: screenSize.width / 2 - 42, y: -screenSize.height + 200);
 
     bgRect = Rect.fromLTWH(0, 0, screenSize.width, screenSize.height);
     bgColor = new Paint()..color = Colors.white;

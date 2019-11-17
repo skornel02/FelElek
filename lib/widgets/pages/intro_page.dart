@@ -35,31 +35,38 @@ class IntroPage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      Container(
-                        width: 200,
-                        height: 200,
-                        child: CircleAvatar(
-                          backgroundColor: Theme
-                              .of(context)
-                              .backgroundColor,
-                          child: Transform.translate(
-                            offset: Offset(0, 0),
-                            child: Container(
-                                decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: new DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: AssetImage(
-                                          "assets/images/elek2.png"),
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            width: 200,
+                            height: 200,
+                            child: CircleAvatar(
+                              backgroundColor: Theme
+                                  .of(context)
+                                  .backgroundColor,
+                              child: Transform.translate(
+                                offset: Offset(0, 0),
+                                child: Container(
+                                    decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: new DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: AssetImage(
+                                              "assets/images/elek2.png"),
+                                        )
                                     )
-                                )
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: Text(locText(context, key: "introGreeting"),
+                                style: TextStyle(fontSize: 17),
+                                textAlign: TextAlign.center),
+                          ),
+                        ],
                       ),
-                      Text(locText(context, key: "introGreeting"),
-                          style: TextStyle(fontSize: 17),
-                          textAlign: TextAlign.center),
                       BlocBuilder(
                         bloc: BlocProvider.of<GoogleLoginBloc>(context),
                         builder: (BuildContext context,

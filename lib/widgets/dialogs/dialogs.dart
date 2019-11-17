@@ -13,64 +13,76 @@ import 'delete_student_dialog.dart';
 class DialogHelper extends Dialog {
   static const double buttonBarHeight = 48.0;
 
+  Widget decor;
   final Widget header, content;
   final Widget actionButtons;
   final double height, width;
 
   DialogHelper(
-      {this.header,
+      {this.decor,
+      this.header,
       this.content,
       this.actionButtons,
       @required this.height,
-      @required this.width});
+      @required this.width}){
+    if(decor == null){
+      decor = Container(width: 10, height: 10, );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        child: Container(
-            height: height + buttonBarHeight,
-            width: width,
-            decoration:
+        child: Stack(
+          children: <Widget>[
+            Container(
+                height: height + buttonBarHeight,
+                width: width,
+                decoration:
                 BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  width: width * 2,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      topRight: Radius.circular(10.0),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      width: width * 2,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.0),
+                          topRight: Radius.circular(10.0),
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.0),
+                          topRight: Radius.circular(10.0),
+                        ),
+                        child: Center(child: header),
+                      ),
                     ),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      topRight: Radius.circular(10.0),
+                    Expanded(
+                      child: Builder(builder: (BuildContext context) {
+                        if (content != null) {
+                          return content;
+                        }
+                        return Container();
+                      }),
                     ),
-                    child: Center(child: header),
-                  ),
-                ),
-                Expanded(
-                  child: Builder(builder: (BuildContext context) {
-                    if (content != null) {
-                      return content;
-                    }
-                    return Container();
-                  }),
-                ),
-                Center(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      actionButtons,
-                    ],
-                  ),
-                )
-              ],
-            )));
+                    Center(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          actionButtons,
+                        ],
+                      ),
+                    )
+                  ],
+                )),
+            decor,
+          ],
+        )
+    );
   }
 }
 

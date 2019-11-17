@@ -32,6 +32,10 @@
   "csvTitle": "CSV",
   "csvDescription": "Csoportok beimportálhatók CSV fájl segítségével a következő kikötésekkel: \n * UTF-8 karakter kódolás \n * vesszővel elválasztott \n * első oszlop a diák nevét tartalmazza \n * második oszlop a diák jegyeinek számát tartalmazza \n * harmadik oszlop a diák csoportjának a nevét tartalmazza",
   "import": "importálás",
+  "templateOpen": "Megnyitás",
+  "templateCreate": "Létrehozás",
+  "templateRemove": "Törlés",
+  "importTemplate": "Importálás",
   "sheetsTitle": "Google Táblázatok",
 
   "introLogInToSync": "Jelentkezz be a szinkronizáláshoz",

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dusza2019/blocs/groups_bloc.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
@@ -24,25 +26,39 @@ class _AddGradeDialog extends State<AddGradeDialog> {
     var dialog = DialogHelper(
         width: width,
         height: height,
-        header: Container(
-          width: width,
-          color: Theme.of(context).primaryColor,
-          child: Padding(
-            padding: const EdgeInsets.all(5),
-            child: Center(
-              child: AutoSizeText(
-                locText(context, key: "addGrade"),
-                style: TextStyle(
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.w700,
-                ),
-                maxLines: 1,
-                minFontSize: 20,
-                maxFontSize: 30,
-              ),
-            ),
+        decor: Transform.translate(
+          offset: Offset(0, -120),
+          child: Image.asset(
+            'assets/images/ember_jegy-${Random().nextInt(5)+1}.png',
+            width: 134,
+            fit: BoxFit.scaleDown,
           ),
         ),
+        header: Stack(
+          children: <Widget>[
+            Container(
+              width: width,
+              color: Theme.of(context).primaryColor,
+              child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Center(
+                  child: AutoSizeText(
+                    locText(context, key: "addGrade"),
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    maxLines: 1,
+                    minFontSize: 20,
+                    maxFontSize: 30,
+                  ),
+                ),
+              ),
+            ),
+
+          ],
+        ),
+
         content: Container(
           child: Stack(
             children: <Widget>[
