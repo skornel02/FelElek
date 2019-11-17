@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
 import 'package:dusza2019/resources/pojos/pojo_group.dart';
 import 'package:dusza2019/resources/pojos/pojo_student.dart';
@@ -32,9 +33,14 @@ class StudentEditorWidget extends StatelessWidget {
                             await showDeleteStudentDialog(context, student, group);
                           },
                         ),
-                        Text(student.name,
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.w700
+                        Expanded(
+                          child: AutoSizeText(student.name,
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.w700
+                            ),
+                            minFontSize: 16,
+                            maxFontSize: 22,
+                            maxLines: 2,
                           ),
                         ),
                         IconButton(

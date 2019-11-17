@@ -34,8 +34,8 @@
   "templateGradesAmount": "3 <Amount of grade>",
   "templateGroupName": "Physics <Name of group>",
 
-  "introLogInToSync": "Log in to synchronize",
   "introGreeting" :  "Hi! I'm Elek, your very own oral test assistant. Let's start!",
+  "introLogInToSync": "Log in to synchronize",
 
   "newElek": "Select absent",
   "absentPerStudentHere": "students are here",

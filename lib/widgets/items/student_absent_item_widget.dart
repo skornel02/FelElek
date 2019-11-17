@@ -28,16 +28,18 @@ class StudentAbsentWidget extends StatelessWidget {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          AutoSizeText(
-                            student.name,
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.w700),
-                            maxLines: 2,
-                            minFontSize: 16,
-                            maxFontSize: 22,
+                          Expanded(
+                            child: AutoSizeText(
+                              student.name,
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.w700),
+                              maxLines: 2,
+                              minFontSize: 16,
+                              maxFontSize: 22,
+                            ),
                           ),
 
-                          Spacer(),
+                         // Spacer(),
 
                           Text("(${(chance * 100).toStringAsFixed(0)}%)",
                             style: TextStyle(
