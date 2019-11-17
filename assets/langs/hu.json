@@ -1,3 +1,52 @@
 {
+  "discovery_sync": "Sync your groups",
+  "discovery_import": "Import your groups",
+  "discovery_import_description": "To import groups just tap here",
+  "discovery_add": "Add groups",
 
+  "discovery_group_item": "Interactions",
+  "discovery_group_item_description": "Tap on the X to delete the group,\ntap on the edit button to edit the group,\ntap on the item to select it",
+
+
+  "groupTitle": "Groups",
+  "group": "group",
+  "addGroup": "Add group",
+  "groupRemovalConfirmation": "You are about to remove a group",
+  "students": "students",
+  "student": "student",
+  "addStudent": "Add student",
+  "studentRemovalConfirmation": "You are about to remove a student",
+  "grades": "grades",
+  "gradesAmount": "#️⃣",
+  "addGrade": "Add grade",
+  "gradeRemovalConfirmation": "You are about to remove a grade",
+  "noGroups": "You don't have groups yet",
+  "noStudents": "You don't have students yet",
+  "noGrades": "No grades added yet",
+
+  "syncTitle": "Synchronization",
+  "lastEdit": "Last edited",
+  "lastSync": "Last synced",
+
+  "importTitle": "Import",
+  "csvTitle": "CSV",
+  "csvDescription": "Csoportok beimportálhatók CSV fájl segítségével a következő kikötésekkel: \n * UTF-8 karakter kódolás \n * vesszővel elválasztott \n * első oszlop a diák nevét tartalmazza \n * második oszlop a diák jegyeinek számát tartalmazza \n * harmadik oszlop a diák csoportjának a nevét tartalmazza",
+  "import": "import",
+  "sheetsTitle": "Google Sheets",
+
+  "introLogInToSync": "Log in to synchronize",
+  "introGreeting" :  "Üdv! Én vagyok Elek, a saját felelés-asszisztensed. Kezdjük is el!",
+
+  "newElek": "Select absent",
+  "absentPerStudentHere": "students are here",
+
+  "start": "Start",
+  "yes": "Proceed",
+  "no": "Cancel",
+  "add": "Add",
+  "cancel": "Cancel",
+  "proceed": "Proceed",
+  "back": "",
+
+  "info_something_went_wrong": "Something went wrong"
 }

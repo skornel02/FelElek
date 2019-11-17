@@ -46,21 +46,23 @@ class _AddGradeDialog extends State<AddGradeDialog> {
         content: Container(
           child: Stack(
             children: <Widget>[
-              DropdownButton(
-                value: _currentGrade,
-                onChanged: (value) {
-                  setState(() {
-                    _currentGrade = value;
-                  });
-                },
-                items: [
-                  DropdownMenuItem(child: Text("1"), value: 1),
-                  DropdownMenuItem(child: Text("2"), value: 2),
-                  DropdownMenuItem(child: Text("3"), value: 3),
-                  DropdownMenuItem(child: Text("4"), value: 4),
-                  DropdownMenuItem(child: Text("5"), value: 5),
-                ],
-              ),
+              Transform.scale(scale: 1.4,
+                child: DropdownButton(
+                  value: _currentGrade,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentGrade = value;
+                    });
+                  },
+                  items: [
+                    DropdownMenuItem(child: Text("1"), value: 1),
+                    DropdownMenuItem(child: Text("2"), value: 2),
+                    DropdownMenuItem(child: Text("3"), value: 3),
+                    DropdownMenuItem(child: Text("4"), value: 4),
+                    DropdownMenuItem(child: Text("5"), value: 5),
+                  ],
+                ),
+              )
             ],
           ),
         ),

@@ -28,6 +28,8 @@ void main() async {
   newComer = await AppState.isNewComer();
   AppState.setNotNewComer();
 
+  await AppState.init();
+
   runApp(EasyLocalization(child: FelElekApp()));
 }
 
@@ -96,35 +98,36 @@ class _FelElekApp extends State<FelElekApp> with WidgetsBindingObserver {
                 )
               ],
               child: MaterialApp(
-                navigatorKey: BusinessNavigator().navigatorKey,
-                title: 'FelElek',
-                showPerformanceOverlay: false,
-                theme: theme,
-                initialRoute: startPage,
-                onGenerateRoute: RouteGenerator.generateRoute,
-                localizationsDelegates: [
-                  FelElekLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                ],
-                supportedLocales: getSupportedLocales(),
-                localeResolutionCallback: (locale, supportedLocales) {
-                  print("prCode1: ${preferredLocale.toString()}");
-                  if (preferredLocale != null) {
-                    print(
-                        "prCode: ${preferredLocale.languageCode}, ${preferredLocale.countryCode}");
-                    return preferredLocale;
-                  }
-                  for (var supportedLocale in supportedLocales) {
-                    if (supportedLocale.languageCode == locale?.languageCode &&
-                        supportedLocale.countryCode == locale.countryCode) {
-                      setPreferredLocale(supportedLocale);
-                      return supportedLocale;
+                  navigatorKey: BusinessNavigator().navigatorKey,
+                  title: 'FelElek',
+                  showPerformanceOverlay: false,
+                  theme: theme,
+                  initialRoute: startPage,
+                  onGenerateRoute: RouteGenerator.generateRoute,
+                  localizationsDelegates: [
+                    FelElekLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                  ],
+                  supportedLocales: getSupportedLocales(),
+                  localeResolutionCallback: (locale, supportedLocales) {
+                    print("prCode1: ${preferredLocale.toString()}");
+                    if (preferredLocale != null) {
+                      print(
+                          "prCode: ${preferredLocale.languageCode}, ${preferredLocale.countryCode}");
+                      return preferredLocale;
                     }
-                  }
-                  return supportedLocales.first;
-                },
-              ));
+                    for (var supportedLocale in supportedLocales) {
+                      if (supportedLocale.languageCode == locale?.languageCode &&
+                          supportedLocale.countryCode == locale.countryCode) {
+                        setPreferredLocale(supportedLocale);
+                        return supportedLocale;
+                      }
+                    }
+                    return supportedLocales.first;
+                  },
+                ),
+              );
         });
   }
 }

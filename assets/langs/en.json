@@ -11,6 +11,9 @@
   "gradesAmount": "#️⃣",
   "addGrade": "Add grade",
   "gradeRemovalConfirmation": "You are about to remove a grade",
+  "noGroups": "You don't have groups yet",
+  "noStudents": "You don't have students yet",
+  "noGrades": "No grades added yet",
 
   "syncTitle": "Synchronization",
   "lastEdit": "Last edited",

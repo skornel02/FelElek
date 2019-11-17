@@ -61,14 +61,27 @@ class GroupEditPage extends StatelessWidget {
                                   style: TextStyle(fontSize: 22),
                                 ),
                                 Expanded(
-                                    child: ListView.builder(
-                                        itemCount: group.students.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return StudentEditorWidget(
-                                              student: group.students[index],
-                                              group: group);
-                                        })),
+                                    child: Builder(
+                                      builder: (context){
+
+                                        if(group.students.isNotEmpty){
+                                          return ListView.builder(
+                                              itemCount: group.students.length,
+                                              itemBuilder:
+                                                  (BuildContext context, int index) {
+                                                return StudentEditorWidget(
+                                                    student: group.students[index],
+                                                    group: group);
+                                              }
+                                          );
+                                        }
+                                        return Center(
+                                          child: Text(locText(context, key: "noStudents"))
+                                        );
+
+                                      },
+                                    )
+                                ),
                               ],
                             ),
                           )));

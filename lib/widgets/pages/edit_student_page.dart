@@ -60,15 +60,24 @@ class StudentEditPage extends StatelessWidget {
                                     locText(context, key: "grades")),
                                 style: TextStyle(fontSize: 20)),
                             Expanded(
-                                child: ListView.builder(
-                                    itemCount: student.grades.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return GradeItemWidget(
-                                          index: index,
-                                          student: student,
-                                          group: group);
-                                    })),
+                                child: Builder(
+                                  builder: (context){
+                                    if(student.grades.isNotEmpty){
+                                      return ListView.builder(
+                                          itemCount: student.grades.length,
+                                          itemBuilder:
+                                              (BuildContext context, int index) {
+                                            return GradeItemWidget(
+                                                index: index,
+                                                student: student,
+                                                group: group);
+                                          });
+                                    }
+                                    return Center(
+                                        child: Text(locText(context, key: "noGrades"))
+                                    );
+                                  },
+                                )),
                           ],
                         ))),
                   );
@@ -81,3 +90,5 @@ class StudentEditPage extends StatelessWidget {
         });
   }
 }
+
+
