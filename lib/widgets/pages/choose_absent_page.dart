@@ -50,7 +50,7 @@ class AbsentPage extends StatelessWidget {
                                 onPressed: () {}),
                           ]),
                       Text(
-                        "${nonAbsent.length} felhasználó jelen",
+                        "${nonAbsent.length} / ${group.students.length} ${locText(context, key: "absentPerStudentHere")}",
                         style: TextStyle(fontSize: 22),
                       ),
                       Expanded(
@@ -72,7 +72,8 @@ class AbsentPage extends StatelessWidget {
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10.0)),
-                                      child: Text("Kezdés",
+                                      child: Text(
+                                          locText(context, key: "start"),
                                           style: TextStyle(fontSize: 24)),
                                       onPressed: () {
                                         SpinnerData data = new SpinnerData(

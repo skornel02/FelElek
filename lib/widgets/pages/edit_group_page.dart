@@ -7,6 +7,7 @@ import 'package:dusza2019/widgets/items/student_edit_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class GroupEditPage extends StatelessWidget {
   GroupEditPage({Key key}) : super(key: key);
@@ -45,7 +46,8 @@ class GroupEditPage extends StatelessWidget {
                                         },
                                       ),
                                       Text(
-                                        "${locText(context, key: "group")}: ${group.name}",
+                                        "${toBeginningOfSentenceCase(locText(context, key: "group"))}: "
+                                            "${group.name}",
                                         style: TextStyle(fontSize: 26),
                                       ),
                                       IconButton(
@@ -55,7 +57,7 @@ class GroupEditPage extends StatelessWidget {
                                       ),
                                     ]),
                                 Text(
-                                  "${group.students.length} felhasználó",
+                                  "${group.students.length} ${locText(context, key: "students")}" ,
                                   style: TextStyle(fontSize: 22),
                                 ),
                                 Expanded(

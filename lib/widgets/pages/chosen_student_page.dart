@@ -8,6 +8,7 @@ import 'package:dusza2019/resources/winner_data.dart';
 import 'package:dusza2019/widgets/dialogs/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChosenStudentPage extends StatefulWidget {
   final WinnerData winner;
@@ -170,8 +171,9 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              RaisedButton(
-                                child: Text(locText(context, key: "back")),
+                              IconButton(
+                                icon: Icon(FontAwesomeIcons.arrowLeft),
+                                color: Colors.black,
                                 onPressed: () {
                                   Navigator.of(context)
                                       .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
@@ -181,7 +183,7 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
                                 builder: (context) {
                                   if (grade == null) {
                                     return RaisedButton(
-                                      child: Text("jegy hozzáadás"),
+                                      child: Text(locText(context, key: "addGrade")),
                                       onPressed: () async {
                                         BlocProvider.of<SelectedBloc>(context)
                                             .dispatch(SetSelectedStudent(

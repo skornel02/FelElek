@@ -31,7 +31,7 @@ class _AddGroupDialog extends State<AddGroupDialog> {
             padding: const EdgeInsets.all(5),
             child: Center(
               child: AutoSizeText(
-                "Add group",
+                locText(context, key: "addGroup"),
                 style: TextStyle(
                   fontSize: 30.0,
                   fontWeight: FontWeight.w700,
@@ -78,7 +78,7 @@ class _AddGroupDialog extends State<AddGroupDialog> {
             FlatButton(
                 child: Center(
                   child: Text(
-                    locText(context, key: "add"),
+                    locText(context, key: "add").toUpperCase(),
                     style: TextStyle(),
                   ),
                 ),

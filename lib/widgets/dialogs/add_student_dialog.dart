@@ -32,7 +32,7 @@ class _AddStudentDialog extends State<AddStudentDialog> {
             padding: const EdgeInsets.all(5),
             child: Center(
               child: AutoSizeText(
-                "Add student",
+                locText(context, key: "addStudent"),
                 style: TextStyle(
                   fontSize: 30.0,
                   fontWeight: FontWeight.w700,
@@ -83,7 +83,7 @@ class _AddStudentDialog extends State<AddStudentDialog> {
                   return FlatButton(
                       child: Center(
                         child: Text(
-                          locText(context, key: "add"),
+                          locText(context, key: "add").toUpperCase(),
                         ),
                       ),
                       onPressed: () async {

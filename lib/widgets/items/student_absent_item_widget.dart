@@ -1,4 +1,5 @@
 import 'package:dusza2019/blocs/selected_bloc.dart';
+import 'package:dusza2019/managers/felelek_localizations.dart';
 import 'package:dusza2019/resources/pojos/pojo_group.dart';
 import 'package:dusza2019/resources/pojos/pojo_student.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,8 @@ class StudentAbsentWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            student.name + " (${student.grades.length} jegy)",
+                            student.name +
+                                " (${student.grades.length} ${locText(context, key: "gradesAmount")})",
                             style: TextStyle(
                                 fontSize: 22, fontWeight: FontWeight.w700),
                           ),
