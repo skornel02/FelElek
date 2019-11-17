@@ -118,7 +118,9 @@ class SheetBloc extends Bloc<SheetEvent, SheetState> {
         prefs.setString("SheetsID", null);
         break;
       case ImportDataEvent:
+        yield LoadingState();
         ImportDataEvent e = event;
+        print("Importing from Sheets...");
         List<CSVStudent> student = await SheetsManager().readSpreadsheet(e.headers, _fileId);
         yield ImportReadyState(student);
         break;

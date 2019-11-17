@@ -9,6 +9,7 @@ import 'package:dusza2019/widgets/dialogs/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class ChosenStudentPage extends StatefulWidget {
   final WinnerData winner;
@@ -197,7 +198,7 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
                                     );
                                   }
                                   return Text(
-                                    "Jegy: $grade",
+                                    "${toBeginningOfSentenceCase(locText(context, key: "grade"))}: $grade",
                                     style: TextStyle(fontSize: 22),
                                   );
                                 },

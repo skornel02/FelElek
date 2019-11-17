@@ -124,8 +124,12 @@ class GroupsPage extends StatelessWidget {
                           })
                     ],
                   ),
-                  onRefresh: () async => BlocProvider.of<GroupsBloc>(context)
-                      .dispatch(ReloadGroupEvent()) //await getData()
+                  onRefresh: () async {
+                    BlocProvider.of<SelectedBloc>(context)
+                        .dispatch(SetSelectedGroup(null));
+                    BlocProvider.of<GroupsBloc>(context)
+                      .dispatch(ReloadGroupEvent());
+                  } //await getData()
               ),
 
               Builder(
