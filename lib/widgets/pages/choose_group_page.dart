@@ -14,32 +14,28 @@ import 'dart:math' as math;
 import '../items/group_item_widget.dart';
 
 class GroupsPage extends StatelessWidget {
-
   static bool chance = false;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Scaffold(
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 50),
-          child: FloatingActionButton(
-            child: Icon(FontAwesomeIcons.plus),
-            onPressed: () {
-              showAddGroupDialog(context);
-            },
-          )
-        ),
-        body: SafeArea(
-          child: Stack(
-            children: [
+        child: Scaffold(
+            floatingActionButton: Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: FloatingActionButton(
+                  child: Icon(FontAwesomeIcons.plus),
+                  onPressed: () {
+                    showAddGroupDialog(context);
+                  },
+                )),
+            body: SafeArea(
+                child: Stack(children: [
               RefreshIndicator(
                   child: Column(
                     children: <Widget>[
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-
                             IconButton(
                               icon: Icon(FontAwesomeIcons.sync),
                               color: Colors.black,
@@ -47,14 +43,10 @@ class GroupsPage extends StatelessWidget {
                                 Navigator.pushNamed(context, "/login");
                               },
                             ),
-
-
-
                             Text(
                               locText(context, key: "groupTitle"),
                               style: TextStyle(fontSize: 26),
                             ),
-
                             IconButton(
                               icon: Icon(FontAwesomeIcons.download),
                               color: Colors.black,
@@ -62,29 +54,25 @@ class GroupsPage extends StatelessWidget {
                                 Navigator.pushNamed(context, "/import");
                               },
                             ),
-
-
                           ]),
                       Expanded(
                         child: BlocBuilder(
                             bloc: BlocProvider.of<GroupsBloc>(context),
-                            builder:
-                                (BuildContext context, GroupState state) {
+                            builder: (BuildContext context, GroupState state) {
                               if (state is LoadedGroupState) {
                                 List<PojoGroup> groups = state.groups;
-                                if(groups.isNotEmpty){
+                                if (groups.isNotEmpty) {
                                   return new ListView.builder(
                                       itemCount: groups.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return GroupItemWidget(
                                             group: groups[index]);
-                                      }
-                                  );
+                                      });
                                 }
                                 return Center(
-                                    child: Text(locText(context, key: "noGroups"))
-                                );
+                                    child: Text(
+                                        locText(context, key: "noGroups")));
                               } else if (state is WaitingGroupState) {
                                 return Center(
                                   child: CircularProgressIndicator(),
@@ -97,8 +85,7 @@ class GroupsPage extends StatelessWidget {
                       ),
                       BlocBuilder(
                           bloc: BlocProvider.of<SelectedBloc>(context),
-                          builder:
-                              (BuildContext context, SelectedState state) {
+                          builder: (BuildContext context, SelectedState state) {
                             if (state is SelectionReadyState &&
                                 state.group != null) {
                               return Padding(
@@ -109,8 +96,9 @@ class GroupsPage extends StatelessWidget {
                                     child: RaisedButton(
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(10.0)),
-                                        child: Text(locText(context, key: "newElek"),
+                                                BorderRadius.circular(10.0)),
+                                        child: Text(
+                                            locText(context, key: "newElek"),
                                             style: TextStyle(fontSize: 24)),
                                         onPressed: () {
                                           if (SelectedBloc().group != null) {}
@@ -128,17 +116,15 @@ class GroupsPage extends StatelessWidget {
                     BlocProvider.of<SelectedBloc>(context)
                         .dispatch(SetSelectedGroup(null));
                     BlocProvider.of<GroupsBloc>(context)
-                      .dispatch(ReloadGroupEvent());
+                        .dispatch(ReloadGroupEvent());
                   } //await getData()
-              ),
-
+                  ),
               Builder(
-                builder: (context){
-                  if(Random().nextInt(4) == 1 && !chance){
+                builder: (context) {
+                  if (Random().nextInt(4) == 1 && !chance) {
                     return Animator(
                       tween: Tween<Offset>(
-                          begin: Offset(-200, 200),
-                          end: Offset(0, 0)),
+                          begin: Offset(-200, 200), end: Offset(0, 0)),
                       duration: Duration(milliseconds: 2000),
                       curve: Curves.easeInOut,
                       cycles: 2,
@@ -146,9 +132,10 @@ class GroupsPage extends StatelessWidget {
                         return Transform.translate(
                           offset: anim.value,
                           child: Transform.translate(
-                            offset: Offset(-150, MediaQuery.of(context).size.height * 0.68),
+                            offset: Offset(-150,
+                                MediaQuery.of(context).size.height * 0.68),
                             child: Transform.rotate(
-                              angle: math.pi/3,
+                              angle: math.pi / 3,
                               child: Image.asset("assets/images/elek2.png"),
                             ),
                           ),
@@ -160,10 +147,6 @@ class GroupsPage extends StatelessWidget {
                   return Container();
                 },
               ),
-            ]
-          )
-        )
-      )
-    );
+            ]))));
   }
 }

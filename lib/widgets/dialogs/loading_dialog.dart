@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class LoadingDialog extends StatelessWidget {
-
   final Widget child;
   final bool show;
   final Color color;
@@ -22,7 +21,6 @@ class LoadingDialog extends StatelessWidget {
     if (show) {
       final modal = new Stack(
         children: [
-
           new Opacity(
             opacity: 0.5,
             child: ModalBarrier(dismissible: false, color: color),

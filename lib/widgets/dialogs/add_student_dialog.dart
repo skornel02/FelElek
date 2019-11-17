@@ -27,10 +27,10 @@ class _AddStudentDialog extends State<AddStudentDialog> {
     var dialog = DialogHelper(
         width: width,
         height: height,
-        decor:  Transform.translate(
+        decor: Transform.translate(
           offset: Offset(0, -110),
           child: Image.asset(
-            'assets/images/ember_ul-${Random().nextInt(8)+1}.png',
+            'assets/images/ember_ul-${Random().nextInt(8) + 1}.png',
             width: 134,
             fit: BoxFit.scaleDown,
           ),

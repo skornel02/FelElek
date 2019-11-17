@@ -6,26 +6,30 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const _keyLangCode = "key_langCode";
 
-String locText(BuildContext context, {@required String key, List<String> args}){
+String locText(BuildContext context,
+    {@required String key, List<String> args}) {
   return FelElekLocalizations.of(context)?.translate(key, args: args);
 }
 
-Future<String> locTextContextless({@required String key, List<String> args}) async {
+Future<String> locTextContextless(
+    {@required String key, List<String> args}) async {
   return await FelElekLocalizationsNoContext.translate(key, args: args);
 }
 
-Future<Locale> getPreferredLocale() async{
+Future<Locale> getPreferredLocale() async {
   String preferredLangCode = (await getPreferredLangCode());
   print("preferredLangCode:  $preferredLangCode");
-  if(preferredLangCode != null) {
-    return Locale(preferredLangCode,);
+  if (preferredLangCode != null) {
+    return Locale(
+      preferredLangCode,
+    );
   }
-  return null;//Locale("en", "EN");
+  return null; //Locale("en", "EN");
 }
 
-setPreferredLocale(Locale preferredLocale) async{
+setPreferredLocale(Locale preferredLocale) async {
   String preferredLangCode = preferredLocale.languageCode;
-  if(preferredLangCode != null) {
+  if (preferredLangCode != null) {
     setPreferredLangCode(preferredLangCode);
   }
 }
@@ -33,7 +37,7 @@ setPreferredLocale(Locale preferredLocale) async{
 Future<String> getPreferredLangCode() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   String langCode = prefs.getString(_keyLangCode);
-  if(langCode == null) {
+  if (langCode == null) {
     langCode = "en";
   }
   return langCode;
@@ -51,15 +55,14 @@ List<Locale> getSupportedLocales() {
   return locales;
 }
 
-class FelElekLocalizationsNoContext{
-
+class FelElekLocalizationsNoContext {
   static Map<String, String> localizedStrings;
 
   static Future<bool> load() async {
     // Load the language JSON file from the "lang" folder
     String preferredLangCode = await getPreferredLangCode();
     String jsonString =
-    await rootBundle.loadString('assets/langs/$preferredLangCode.json');
+        await rootBundle.loadString('assets/langs/$preferredLangCode.json');
 
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
@@ -71,29 +74,29 @@ class FelElekLocalizationsNoContext{
   }
 
   // This method will be called from every widget which needs a localized text
-  static Future<String> translate(String key, {@required List<String> args }) async {
-
-    String nullCheckAndReturn(String text){
-      if(text == null){
+  static Future<String> translate(String key,
+      {@required List<String> args}) async {
+    String nullCheckAndReturn(String text) {
+      if (text == null) {
         return "ERROR: KEY NOT FOUND";
       }
       return text;
     }
 
-    if(localizedStrings == null){
+    if (localizedStrings == null) {
       await load();
     }
 
     print("locale: translate args: $args");
 
     String text = localizedStrings[key];
-    if(args == null) {
+    if (args == null) {
       return nullCheckAndReturn(text);
     }
 
     print("locale: translate  args length: ${args.length}");
 
-    for(int i = 0; i < args.length; i++) {
+    for (int i = 0; i < args.length; i++) {
       print("locale: translate iteration: $i");
       text = text.replaceFirst(RegExp('{}'), args[i]);
     }
@@ -102,8 +105,6 @@ class FelElekLocalizationsNoContext{
 }
 
 class FelElekLocalizations {
-
-
   Locale locale;
 
   FelElekLocalizations(this.locale);
@@ -111,7 +112,8 @@ class FelElekLocalizations {
   // Helper method to keep the code in the widgets concise
   // Localizations are accessed using an InheritedWidget "of" syntax
   static FelElekLocalizations of(BuildContext context) {
-    return Localizations.of<FelElekLocalizations>(context, FelElekLocalizations);
+    return Localizations.of<FelElekLocalizations>(
+        context, FelElekLocalizations);
   }
 
   Map<String, String> _localizedStrings;
@@ -119,7 +121,8 @@ class FelElekLocalizations {
   Future<bool> load(Locale l) async {
     locale = l;
     // Load the language JSON file from the "lang" folder
-    String jsonString = await rootBundle.loadString('assets/langs/${locale.languageCode}.json');
+    String jsonString =
+        await rootBundle.loadString('assets/langs/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
     _localizedStrings = jsonMap.map((key, value) {
@@ -130,9 +133,9 @@ class FelElekLocalizations {
   }
 
   // This method will be called from every widget which needs a localized text
-  String translate(String key, {@required List<String> args }) {
-    String nullCheckAndReturn(String text){
-      if(text == null){
+  String translate(String key, {@required List<String> args}) {
+    String nullCheckAndReturn(String text) {
+      if (text == null) {
         return "ERROR: KEY NOT FOUND";
       }
       return text;
@@ -140,13 +143,13 @@ class FelElekLocalizations {
 
     String text = _localizedStrings[key];
 
-    if(args == null) {
+    if (args == null) {
       return nullCheckAndReturn(text);
     }
 
     print("locale: translate  args length: ${args.length}");
 
-    for(int i = 0; i < args.length; i++) {
+    for (int i = 0; i < args.length; i++) {
       print("locale: translate  iter: $i");
       text = text.replaceFirst(RegExp('{}'), args[i]);
     }
@@ -161,8 +164,7 @@ class FelElekLocalizations {
 
   // Static member to have a simple access to the delegate from the MaterialApp
   static const LocalizationsDelegate<FelElekLocalizations> delegate =
-  _FelElekLocalizationsDelegate();
-
+      _FelElekLocalizationsDelegate();
 }
 
 // LocalizationsDelegate is a factory for a set of localized resources

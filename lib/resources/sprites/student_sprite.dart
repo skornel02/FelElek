@@ -4,37 +4,32 @@ import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 
 class StudentSprite extends SpriteComponent {
-
   bool slowingDown = false;
 
   String imgPath;
 
   // creates a component that renders the crate.png sprite, with size 16 x 16
-  StudentSprite({@required double x, @required double y, int rand = 1}) : super.fromSprite(100.0, 100.0, new Sprite("ember-$rand.png")){
+  StudentSprite({@required double x, @required double y, int rand = 1})
+      : super.fromSprite(100.0, 100.0, new Sprite("ember-$rand.png")) {
     this.x = x;
     this.y = y;
     imgPath = "assets/images/ember-$rand.png";
   }
 
-  void reuse(){
-
-  }
+  void reuse() {}
 
   @override
   void resize(Size size) {
     // we don't need to set the x and y in the constructor, we can set then here
-    this.x = (size.width - this.width)/ 2;
+    this.x = (size.width - this.width) / 2;
     this.y = (size.height - this.height) / 2;
   }
 
   @override
   void update(double t) {
-
-    if(MyGame.velocityX > 0){
+    if (MyGame.velocityX > 0) {
       x += MyGame.velocityX;
     }
-
-
   }
 
   @override
@@ -42,5 +37,4 @@ class StudentSprite extends SpriteComponent {
     // TODO: implement render
     super.render(canvas);
   }
-
 }

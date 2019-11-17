@@ -59,13 +59,16 @@ class AbsentPage extends StatelessWidget {
                               itemCount: group.students.length,
                               itemBuilder: (BuildContext context, int index) {
                                 PojoStudent student = group.students[index];
-                                int chanceIndex = nonAbsent
-                                    .indexWhere((matching) => matching.id == student.id);
-                                double chance = chanceIndex == -1 ? 0 : chances[chanceIndex];
+                                int chanceIndex = nonAbsent.indexWhere(
+                                    (matching) => matching.id == student.id);
+                                double chance = chanceIndex == -1
+                                    ? 0
+                                    : chances[chanceIndex];
                                 return StudentAbsentWidget(
-                                    student: student,
-                                    group: group,
-                                  chance: chance,);
+                                  student: student,
+                                  group: group,
+                                  chance: chance,
+                                );
                               })),
                       Builder(builder: (BuildContext context) {
                         if (nonAbsent.length > 0) {

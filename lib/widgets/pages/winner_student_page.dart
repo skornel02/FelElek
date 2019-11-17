@@ -11,16 +11,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
-class ChosenStudentPage extends StatefulWidget {
+class WinnerStudentPage extends StatefulWidget {
   final WinnerData winner;
 
-  ChosenStudentPage({Key key, @required this.winner}) : super(key: key);
+  WinnerStudentPage({Key key, @required this.winner}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ChosenStudentPage();
 }
 
-class _ChosenStudentPage extends State<ChosenStudentPage>
+class _ChosenStudentPage extends State<WinnerStudentPage>
     with TickerProviderStateMixin {
   int grade;
 
@@ -88,11 +88,10 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
             parent: studentController, curve: Curves.easeInOut));
 
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: () async {
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
         return Future.value(false);
-
       },
       child: Scaffold(
         body: SafeArea(
@@ -111,7 +110,7 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
                     child: Transform.translate(
                       offset: Offset(0, -MediaQuery.of(context).size.height),
                       child: new Image.asset(
-                        'assets/images/claw3.png',
+                        'assets/images/crane.png',
                         width: MediaQuery.of(context).size.width,
                         fit: BoxFit.scaleDown,
                       ),
@@ -119,19 +118,17 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
                   );
                 },
               ),
-
               Transform.rotate(
                 angle: -math.pi,
                 child: Transform.translate(
                   offset: Offset(0, MediaQuery.of(context).size.height - 100),
                   child: Image.asset(
-                    'assets/images/claw3.png',
+                    'assets/images/crane.png',
                     width: MediaQuery.of(context).size.width,
                     fit: BoxFit.scaleDown,
                   ),
                 ),
               ),
-
               Column(children: [
                 AnimatedBuilder(
                   animation: studentController,
@@ -140,7 +137,6 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
                         offset: studentAnimation.value,
                         child: Column(
                           children: <Widget>[
-
                             Image.asset(
                               widget.winner.imgPath,
                               width: 200,
@@ -177,20 +173,22 @@ class _ChosenStudentPage extends State<ChosenStudentPage>
                                 icon: Icon(FontAwesomeIcons.arrowLeft),
                                 color: Colors.black,
                                 onPressed: () {
-                                  Navigator.of(context)
-                                      .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      '/', (Route<dynamic> route) => false);
                                 },
                               ),
                               Builder(
                                 builder: (context) {
                                   if (grade == null) {
                                     return RaisedButton(
-                                      child: Text(locText(context, key: "addGrade")),
+                                      child: Text(
+                                          locText(context, key: "addGrade")),
                                       onPressed: () async {
                                         BlocProvider.of<SelectedBloc>(context)
                                             .dispatch(SetSelectedStudent(
                                                 widget.winner.student));
-                                        showAddGradeDialog(context).then((int g) {
+                                        showAddGradeDialog(context)
+                                            .then((int g) {
                                           setState(() {
                                             grade = g;
                                           });

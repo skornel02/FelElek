@@ -8,10 +8,9 @@ ThemeData theme(BuildContext context) {
 class FelElekTheme {
   static const Color red = Color.fromRGBO(242, 61, 61, 1),
       orange = Color.fromRGBO(242, 138, 46, 1),
-      blue =  Color.fromRGBO(3, 166, 166, 1),
-      blue1 =  Color.fromRGBO(3, 127, 140, 1),
-      blue2 =  Color.fromRGBO(74, 136, 217, 1)
-  ;
+      blue = Color.fromRGBO(3, 166, 166, 1),
+      blue1 = Color.fromRGBO(3, 127, 140, 1),
+      blue2 = Color.fromRGBO(74, 136, 217, 1);
   static final Color formColor = Colors.grey.withAlpha(120);
 
   static Color get warningColor => red;

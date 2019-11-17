@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dusza2019/blocs/selected_bloc.dart';
-import 'package:dusza2019/managers/felelek_localizations.dart';
 import 'package:dusza2019/resources/pojos/pojo_group.dart';
 import 'package:dusza2019/resources/pojos/pojo_student.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,10 @@ class StudentAbsentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String percentage = (chance * 100).toStringAsFixed(0) + "%";
+    if(percentage == "0%" && chance != 0.0)
+      percentage = "<1%";
+
     return Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5,
@@ -39,9 +42,10 @@ class StudentAbsentWidget extends StatelessWidget {
                             ),
                           ),
 
-                         // Spacer(),
+                          // Spacer(),
 
-                          Text("(${(chance * 100).toStringAsFixed(0)}%)",
+                          Text(
+                            "($percentage)",
                             style: TextStyle(
                                 fontSize: 22, fontWeight: FontWeight.w700),
                           ),
@@ -63,11 +67,6 @@ class StudentAbsentWidget extends StatelessWidget {
                                 return Center(
                                     child: CircularProgressIndicator());
                               })
-                        ]
-                    )
-                )
-            )
-        )
-    );
+                        ])))));
   }
 }

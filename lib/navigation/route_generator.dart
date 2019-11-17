@@ -1,5 +1,5 @@
 import 'package:dusza2019/widgets/pages/choose_absent_page.dart';
-import 'package:dusza2019/widgets/pages/chosen_student_page.dart';
+import 'package:dusza2019/widgets/pages/winner_student_page.dart';
 import 'package:dusza2019/widgets/pages/edit_student_page.dart';
 import 'package:dusza2019/widgets/pages/choose_group_page.dart';
 import 'package:dusza2019/widgets/pages/import_page.dart';
@@ -57,7 +57,7 @@ class RouteGenerator {
       case '/absent/spinner/chosen_student':
         assert(args != null);
         return MaterialPageRoute(
-            builder: (_) => ChosenStudentPage(
+            builder: (_) => WinnerStudentPage(
                   winner: args,
                 ));
       default:

@@ -5,5 +5,4 @@ class SpinnerData {
   final PojoStudent winner;
 
   SpinnerData(this.students, this.winner);
-
 }

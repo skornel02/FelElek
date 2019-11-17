@@ -30,14 +30,15 @@ class StudentEditorWidget extends StatelessWidget {
                           icon: Icon(FontAwesomeIcons.times),
                           color: Colors.red,
                           onPressed: () async {
-                            await showDeleteStudentDialog(context, student, group);
+                            await showDeleteStudentDialog(
+                                context, student, group);
                           },
                         ),
                         Expanded(
-                          child: AutoSizeText(student.name,
+                          child: AutoSizeText(
+                            student.name,
                             style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.w700
-                            ),
+                                fontSize: 22, fontWeight: FontWeight.w700),
                             minFontSize: 16,
                             maxFontSize: 22,
                             maxLines: 2,
@@ -45,17 +46,13 @@ class StudentEditorWidget extends StatelessWidget {
                         ),
                         IconButton(
                           icon: Icon(FontAwesomeIcons.edit),
-                          onPressed: (){
-                              BlocProvider.of<SelectedBloc>(context)
-                                  .dispatch(SetSelectedStudent(student));
-                              Navigator.pushNamed(context, "/student/edit");
+                          onPressed: () {
+                            BlocProvider.of<SelectedBloc>(context)
+                                .dispatch(SetSelectedStudent(student));
+                            Navigator.pushNamed(context, "/student/edit");
                           },
                         ),
                       ],
-                    )
-                )
-            )
-        )
-    );
+                    )))));
   }
 }

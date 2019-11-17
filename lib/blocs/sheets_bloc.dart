@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dusza2019/managers/sheets_manager.dart';
 import 'package:dusza2019/resources/csv_student.dart';
-import 'package:dusza2019/resources/pojos/pojo_group.dart';
-import 'package:dusza2019/resources/pojos/pojo_student.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -89,9 +87,9 @@ class SheetBloc extends Bloc<SheetEvent, SheetState> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String fileId = prefs.getString("SheetsID");
         print("FileId $fileId");
-        if(fileId == null){
+        if (fileId == null) {
           yield NoTemplateState();
-        }else {
+        } else {
           _fileId = fileId;
           yield TemplateReadyState(_fileId);
         }
@@ -121,7 +119,8 @@ class SheetBloc extends Bloc<SheetEvent, SheetState> {
         yield LoadingState();
         ImportDataEvent e = event;
         print("Importing from Sheets...");
-        List<CSVStudent> student = await SheetsManager().readSpreadsheet(e.headers, _fileId);
+        List<CSVStudent> student =
+            await SheetsManager().readSpreadsheet(e.headers, _fileId);
         yield ImportReadyState(student);
         break;
     }

@@ -22,36 +22,29 @@ class GradeItemWidget extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8),
             child: Stack(
               children: <Widget>[
-
                 Positioned(
                   left: 0,
                   child: IconButton(
                     icon: Icon(FontAwesomeIcons.times),
                     color: Colors.red,
                     onPressed: () async {
-                      await showDeleteGradeDialog(context, index, student, group);
+                      await showDeleteGradeDialog(
+                          context, index, student, group);
                     },
                   ),
                 ),
-
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: Text(grade.toString(),
-                      style: TextStyle(
-                          fontSize: 22, fontWeight: FontWeight.w700
-                      ),
+                    child: Text(
+                      grade.toString(),
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
                     ),
                   ),
                 ),
-
                 Container(),
-
               ],
-            )
-        )
-
-
-    );
+            )));
   }
 }

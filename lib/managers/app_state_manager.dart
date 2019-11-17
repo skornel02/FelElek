@@ -4,14 +4,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../resources/app_info.dart';
 
-class AppState{
-
-  static bool b_seenIntro = false;
-  static bool b_seenGroupItemIntro = false;
+class AppState {
+  static bool bSeenIntro = false;
+  static bool bSeenGroupItemIntro = false;
 
   static init() async {
-    b_seenIntro = await seenIntro();
-    b_seenGroupItemIntro = await seenGroupItemIntro();
+    bSeenIntro = await seenIntro();
+    bSeenGroupItemIntro = await seenGroupItemIntro();
   }
 
   static const key_seenGroupItemIntro = "key_seenGroupItemIntro2";
@@ -41,14 +40,14 @@ class AppState{
     SharedPreferences sp = await SharedPreferences.getInstance();
 
     String newComer = sp.getString(key_newComer);
-    if(newComer == value_newComer_false){
+    if (newComer == value_newComer_false) {
       return false;
     }
     return true;
   }
 
   static Future setHaveSeenIntro() async {
-    b_seenIntro = true;
+    bSeenIntro = true;
     SharedPreferences sp = await SharedPreferences.getInstance();
     sp.setBool(key_seenIntro, true);
   }
@@ -57,14 +56,14 @@ class AppState{
     SharedPreferences sp = await SharedPreferences.getInstance();
 
     bool s = sp.getBool(key_seenIntro);
-    if(s == null){
+    if (s == null) {
       return false;
     }
     return s;
   }
 
   static Future setHaveSeenGroupItemIntro() async {
-    b_seenGroupItemIntro = true;
+    bSeenGroupItemIntro = true;
     SharedPreferences sp = await SharedPreferences.getInstance();
     sp.setBool(key_seenGroupItemIntro, true);
   }
@@ -73,11 +72,9 @@ class AppState{
     SharedPreferences sp = await SharedPreferences.getInstance();
 
     bool s = sp.getBool(key_seenGroupItemIntro);
-    if(s == null){
+    if (s == null) {
       return false;
     }
     return s;
   }
-
-
 }

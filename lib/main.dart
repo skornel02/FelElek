@@ -89,51 +89,51 @@ class _FelElekApp extends State<FelElekApp> with WidgetsBindingObserver {
         data: (brightness) => themeData,
         themedWidgetBuilder: (context, theme) {
           return MultiBlocProvider(
-              providers: [
-                BlocProvider<GroupsBloc>(
-                  builder: (_) => groupsBloc,
-                ),
-                BlocProvider<GoogleLoginBloc>(
-                  builder: (_) => googleBloc,
-                ),
-                BlocProvider<SelectedBloc>(
-                  builder: (_) => selectedBloc,
-                ),
-                BlocProvider<SheetBloc>(
-                  builder: (_) => sheetBloc,
-                )
+            providers: [
+              BlocProvider<GroupsBloc>(
+                builder: (_) => groupsBloc,
+              ),
+              BlocProvider<GoogleLoginBloc>(
+                builder: (_) => googleBloc,
+              ),
+              BlocProvider<SelectedBloc>(
+                builder: (_) => selectedBloc,
+              ),
+              BlocProvider<SheetBloc>(
+                builder: (_) => sheetBloc,
+              )
+            ],
+            child: MaterialApp(
+              navigatorKey: BusinessNavigator().navigatorKey,
+              title: 'FelElek',
+              showPerformanceOverlay: false,
+              theme: theme,
+              initialRoute: startPage,
+              onGenerateRoute: RouteGenerator.generateRoute,
+              localizationsDelegates: [
+                FelElekLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
               ],
-              child: MaterialApp(
-                  navigatorKey: BusinessNavigator().navigatorKey,
-                  title: 'FelElek',
-                  showPerformanceOverlay: false,
-                  theme: theme,
-                  initialRoute: startPage,
-                  onGenerateRoute: RouteGenerator.generateRoute,
-                  localizationsDelegates: [
-                    FelElekLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                  ],
-                  supportedLocales: getSupportedLocales(),
-                  localeResolutionCallback: (locale, supportedLocales) {
-                    print("prCode1: ${preferredLocale.toString()}");
-                    if (preferredLocale != null) {
-                      print(
-                          "prCode: ${preferredLocale.languageCode}, ${preferredLocale.countryCode}");
-                      return preferredLocale;
-                    }
-                    for (var supportedLocale in supportedLocales) {
-                      if (supportedLocale.languageCode == locale?.languageCode &&
-                          supportedLocale.countryCode == locale.countryCode) {
-                        setPreferredLocale(supportedLocale);
-                        return supportedLocale;
-                      }
-                    }
-                    return supportedLocales.first;
-                  },
-                ),
-              );
+              supportedLocales: getSupportedLocales(),
+              localeResolutionCallback: (locale, supportedLocales) {
+                print("prCode1: ${preferredLocale.toString()}");
+                if (preferredLocale != null) {
+                  print(
+                      "prCode: ${preferredLocale.languageCode}, ${preferredLocale.countryCode}");
+                  return preferredLocale;
+                }
+                for (var supportedLocale in supportedLocales) {
+                  if (supportedLocale.languageCode == locale?.languageCode &&
+                      supportedLocale.countryCode == locale.countryCode) {
+                    setPreferredLocale(supportedLocale);
+                    return supportedLocale;
+                  }
+                }
+                return supportedLocales.first;
+              },
+            ),
+          );
         });
   }
 }

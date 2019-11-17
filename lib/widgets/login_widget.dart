@@ -6,13 +6,12 @@ import '../blocs/google_login_bloc.dart';
 import 'dialogs/loading_dialog.dart';
 
 class LoginWidget extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     Widget googleSignInButtonWidget = GoogleSignInButton(
-      onPressed: (){
-        BlocProvider.of<GoogleLoginBloc>(context).dispatch(GoogleLoginButtonPressedEvent());
+      onPressed: () {
+        BlocProvider.of<GoogleLoginBloc>(context)
+            .dispatch(GoogleLoginButtonPressedEvent());
       },
     );
 
@@ -23,9 +22,9 @@ class LoginWidget extends StatelessWidget {
         BlocListener(
           bloc: BlocProvider.of<GoogleLoginBloc>(context),
           listener: (context, state) async {
-            if(state is GoogleLoginWaitingState){
+            if (state is GoogleLoginWaitingState) {
               _isLoading = true;
-            }else{
+            } else {
               _isLoading = false;
             }
           },
@@ -36,13 +35,9 @@ class LoginWidget extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            googleSignInButtonWidget
-          ],
+          children: <Widget>[googleSignInButtonWidget],
         ),
       ),
-
     );
   }
-
 }

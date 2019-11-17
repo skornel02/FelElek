@@ -47,7 +47,7 @@ class GroupEditPage extends StatelessWidget {
                                       ),
                                       Text(
                                         "${toBeginningOfSentenceCase(locText(context, key: "group"))}: "
-                                            "${group.name}",
+                                        "${group.name}",
                                         style: TextStyle(fontSize: 26),
                                       ),
                                       IconButton(
@@ -57,31 +57,26 @@ class GroupEditPage extends StatelessWidget {
                                       ),
                                     ]),
                                 Text(
-                                  "${group.students.length} ${locText(context, key: "students")}" ,
+                                  "${group.students.length} ${locText(context, key: "students")}",
                                   style: TextStyle(fontSize: 22),
                                 ),
-                                Expanded(
-                                    child: Builder(
-                                      builder: (context){
-
-                                        if(group.students.isNotEmpty){
-                                          return ListView.builder(
-                                              itemCount: group.students.length,
-                                              itemBuilder:
-                                                  (BuildContext context, int index) {
-                                                return StudentEditorWidget(
-                                                    student: group.students[index],
-                                                    group: group);
-                                              }
-                                          );
-                                        }
-                                        return Center(
-                                          child: Text(locText(context, key: "noStudents"))
-                                        );
-
-                                      },
-                                    )
-                                ),
+                                Expanded(child: Builder(
+                                  builder: (context) {
+                                    if (group.students.isNotEmpty) {
+                                      return ListView.builder(
+                                          itemCount: group.students.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return StudentEditorWidget(
+                                                student: group.students[index],
+                                                group: group);
+                                          });
+                                    }
+                                    return Center(
+                                        child: Text(locText(context,
+                                            key: "noStudents")));
+                                  },
+                                )),
                               ],
                             ),
                           )));

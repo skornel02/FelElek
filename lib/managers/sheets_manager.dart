@@ -70,11 +70,9 @@ class SheetsManager {
       RowData data = rowData[i];
       String name = data.values[0].effectiveValue.stringValue;
       int gradesAmount = 0;
-      try{
+      try {
         gradesAmount = data.values[1].effectiveValue.numberValue.floor();
-      }catch(ex){
-
-      }
+      } catch (ex) {}
       String groupName = data.values[2].effectiveValue.stringValue;
       CSVStudent student = new CSVStudent(name, gradesAmount, groupName);
       students.add(student);

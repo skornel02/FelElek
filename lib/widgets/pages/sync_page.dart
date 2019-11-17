@@ -29,7 +29,8 @@ class SyncPage extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 ),
-                Text(locText(context, key: "syncTitle"), style: TextStyle(fontSize: 26)),
+                Text(locText(context, key: "syncTitle"),
+                    style: TextStyle(fontSize: 26)),
                 IconButton(
                   icon: Icon(FontAwesomeIcons.fileImport),
                   color: Colors.transparent,
@@ -65,8 +66,7 @@ class SyncPage extends StatelessWidget {
                             FutureBuilder<SharedPreferences>(
                               future: SharedPreferences.getInstance(),
                               builder: (BuildContext context,
-                                  AsyncSnapshot<SharedPreferences>
-                                  snapshot) {
+                                  AsyncSnapshot<SharedPreferences> snapshot) {
                                 switch (snapshot.connectionState) {
                                   case ConnectionState.none:
                                   case ConnectionState.waiting:
@@ -77,10 +77,12 @@ class SyncPage extends StatelessWidget {
                                         .getString("DBLastUpdated");
                                     if (datetimeString != null) {
                                       DateTime datetime =
-                                      DateTime.parse(datetimeString);
-                                      return new Text(locText(context, key: "lastEdit") + ": " +
-                                          DateFormat('yyyy-MM-dd – kk:mm')
-                                              .format(datetime),
+                                          DateTime.parse(datetimeString);
+                                      return new Text(
+                                          locText(context, key: "lastEdit") +
+                                              ": " +
+                                              DateFormat('yyyy-MM-dd – kk:mm')
+                                                  .format(datetime),
                                           style: TextStyle(fontSize: 16));
                                     }
                                 }
@@ -92,34 +94,36 @@ class SyncPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                            //    Text(locText(context, key: "lastSync") + ": ",
-                             //       style: TextStyle(fontSize: 18)),
                                 FutureBuilder<SharedPreferences>(
-                                    future: SharedPreferences.getInstance(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<SharedPreferences>
-                                            snapshot) {
-                                      switch (snapshot.connectionState) {
-                                        case ConnectionState.none:
-                                        case ConnectionState.waiting:
-                                          return Center(
-                                              child: CircularProgressIndicator());
-                                        default:
-                                          String datetimeString = snapshot.data
-                                              .getString("GDriveLastSync");
-                                          if (datetimeString != null) {
-                                            DateTime datetime =
-                                                DateTime.parse(datetimeString);
-                                            return new Text( locText(context, key: "lastSync") + ": "+
-                                                DateFormat('yyyy-MM-dd – kk:mm')
-                                                    .format(datetime),
-                                                style: TextStyle(fontSize: 16));
-                                          }
-                                      }
-                                      return new Text("-",
-                                          style: TextStyle(fontSize: 16));
-                                    },
-                                  ),
+                                  future: SharedPreferences.getInstance(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<SharedPreferences>
+                                          snapshot) {
+                                    switch (snapshot.connectionState) {
+                                      case ConnectionState.none:
+                                      case ConnectionState.waiting:
+                                        return Center(
+                                            child: CircularProgressIndicator());
+                                      default:
+                                        String datetimeString = snapshot.data
+                                            .getString("GDriveLastSync");
+                                        if (datetimeString != null) {
+                                          DateTime datetime =
+                                              DateTime.parse(datetimeString);
+                                          return new Text(
+                                              locText(context,
+                                                      key: "lastSync") +
+                                                  ": " +
+                                                  DateFormat(
+                                                          'yyyy-MM-dd – kk:mm')
+                                                      .format(datetime),
+                                              style: TextStyle(fontSize: 16));
+                                        }
+                                    }
+                                    return new Text("-",
+                                        style: TextStyle(fontSize: 16));
+                                  },
+                                ),
                               ],
                             )
                           ],

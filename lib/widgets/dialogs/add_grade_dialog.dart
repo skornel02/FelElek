@@ -29,7 +29,7 @@ class _AddGradeDialog extends State<AddGradeDialog> {
         decor: Transform.translate(
           offset: Offset(0, -120),
           child: Image.asset(
-            'assets/images/ember_jegy-${Random().nextInt(5)+1}.png',
+            'assets/images/ember_jegy-${Random().nextInt(5) + 1}.png',
             width: 134,
             fit: BoxFit.scaleDown,
           ),
@@ -55,14 +55,13 @@ class _AddGradeDialog extends State<AddGradeDialog> {
                 ),
               ),
             ),
-
           ],
         ),
-
         content: Container(
           child: Stack(
             children: <Widget>[
-              Transform.scale(scale: 1.4,
+              Transform.scale(
+                scale: 1.4,
                 child: DropdownButton(
                   value: _currentGrade,
                   onChanged: (value) {

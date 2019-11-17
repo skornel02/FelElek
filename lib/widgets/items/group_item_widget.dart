@@ -15,22 +15,25 @@ class GroupItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder(
       bloc: BlocProvider.of<SelectedBloc>(context),
-      builder: (BuildContext context, SelectedState state){
+      builder: (BuildContext context, SelectedState state) {
         bool isSelected = state is SelectionReadyState && state.group == group;
         return GestureDetector(
-          onTap: (){
+          onTap: () {
             SelectedBloc bloc = BlocProvider.of<SelectedBloc>(context);
             bloc.dispatch(SetSelectedGroup(isSelected ? null : group));
           },
           child: Card(
-              color: isSelected ? Colors.grey : Theme.of(context).scaffoldBackgroundColor,
+              color: isSelected
+                  ? Colors.grey
+                  : Theme.of(context).scaffoldBackgroundColor,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               elevation: 5,
               child: Align(
                   alignment: Alignment.centerLeft,
-                  child:
-                  Padding(
-                      padding: const EdgeInsets.only(left: 8, /*top: 4, bottom: 4*/),
+                  child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 8, /*top: 4, bottom: 4*/
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -38,18 +41,19 @@ class GroupItemWidget extends StatelessWidget {
                             icon: Icon(FontAwesomeIcons.times),
                             color: Colors.red,
                             onPressed: () async {
-                              if(isSelected) {
-                                SelectedBloc bloc = BlocProvider.of<SelectedBloc>(context);
+                              if (isSelected) {
+                                SelectedBloc bloc =
+                                    BlocProvider.of<SelectedBloc>(context);
                                 bloc.dispatch(SetSelectedGroup(null));
                               }
                               await showDeleteGroupDialog(context, group);
                             },
                           ),
                           Expanded(
-                            child: AutoSizeText(group.name,
+                            child: AutoSizeText(
+                              group.name,
                               style: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.w700
-                              ),
+                                  fontSize: 22, fontWeight: FontWeight.w700),
                               minFontSize: 16,
                               maxFontSize: 22,
                               maxLines: 2,
@@ -61,14 +65,12 @@ class GroupItemWidget extends StatelessWidget {
                             onPressed: () {
                               BlocProvider.of<SelectedBloc>(context)
                                   .dispatch(SetSelectedGroup(group));
-                              Navigator.pushNamed(context, "/student", arguments: group);
+                              Navigator.pushNamed(context, "/student",
+                                  arguments: group);
                             },
                           ),
                         ],
-                      )
-                  )
-              )
-          ),
+                      )))),
         );
       },
     );

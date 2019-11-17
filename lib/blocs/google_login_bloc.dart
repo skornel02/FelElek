@@ -126,7 +126,8 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
             print("signed in " + user.displayName);
 
             final accessToken = googleAuth.accessToken;
-            yield GoogleLoginSuccessfulState(googleUser.email, accessToken, await googleUser.authHeaders);
+            yield GoogleLoginSuccessfulState(
+                googleUser.email, accessToken, await googleUser.authHeaders);
 
             SharedPreferences prefs = await SharedPreferences.getInstance();
             prefs.setBool("GoogleEnabled", true);

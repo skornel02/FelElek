@@ -1,7 +1,6 @@
 import 'package:package_info/package_info.dart';
 
-class FelElekAppInfo{
-
+class FelElekAppInfo {
   static final FelElekAppInfo _singleton = new FelElekAppInfo._internal();
   factory FelElekAppInfo() {
     return _singleton;
@@ -10,9 +9,8 @@ class FelElekAppInfo{
 
   PackageInfo _packageInfo;
 
-
-  PackageInfo get getInfo{
-    if(_packageInfo != null){
+  PackageInfo get getInfo {
+    if (_packageInfo != null) {
       return _packageInfo;
     }
     throw Exception("packageInfo was not initalized");
@@ -22,5 +20,4 @@ class FelElekAppInfo{
     _packageInfo = await PackageInfo.fromPlatform();
     return _packageInfo;
   }
-
 }

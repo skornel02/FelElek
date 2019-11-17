@@ -5,5 +5,4 @@ class WinnerData {
   final String imgPath;
 
   WinnerData({this.student, this.imgPath});
-
 }

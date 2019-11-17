@@ -24,9 +24,12 @@ class DialogHelper extends Dialog {
       this.content,
       this.actionButtons,
       @required this.height,
-      @required this.width}){
-    if(decor == null){
-      decor = Container(width: 10, height: 10, );
+      @required this.width}) {
+    if (decor == null) {
+      decor = Container(
+        width: 10,
+        height: 10,
+      );
     }
   }
 
@@ -41,7 +44,7 @@ class DialogHelper extends Dialog {
                 height: height + buttonBarHeight,
                 width: width,
                 decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
                 child: Column(
                   children: <Widget>[
                     Container(
@@ -81,8 +84,7 @@ class DialogHelper extends Dialog {
                 )),
             decor,
           ],
-        )
-    );
+        ));
   }
 }
 
@@ -123,7 +125,7 @@ Future<int> showAddGradeDialog(
 
 Future<int> showDeleteGroupDialog(
   BuildContext context,
-    PojoGroup group,
+  PojoGroup group,
 ) async {
   var result = await showDialog(
       context: context,

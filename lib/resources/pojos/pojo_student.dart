@@ -3,10 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'pojo_student.g.dart';
 
-
 @JsonSerializable()
-class PojoStudent{
-
+class PojoStudent {
   String name;
 
   int id;
@@ -15,7 +13,11 @@ class PojoStudent{
 
   bool isAbsent;
 
-  PojoStudent({@required this.name, @required this.id, @required this.grades, @required this.isAbsent});
+  PojoStudent(
+      {@required this.name,
+      @required this.id,
+      @required this.grades,
+      @required this.isAbsent});
 
   PojoStudent.fromName(this.name, this.id) {
     grades = new List();
@@ -28,5 +30,4 @@ class PojoStudent{
 
   @override
   Map<String, dynamic> toJson() => _$PojoStudentToJson(this);
-
 }

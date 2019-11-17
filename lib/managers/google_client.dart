@@ -15,5 +15,4 @@ class GoogleHttpClient extends IOClient {
   @override
   Future<Response> head(Object url, {Map<String, String> headers}) =>
       super.head(url, headers: headers..addAll(_headers));
-
 }
