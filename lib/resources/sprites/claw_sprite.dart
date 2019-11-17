@@ -11,7 +11,7 @@ class ClawSprite extends SpriteComponent {
 
   // creates a component that renders the crate.png sprite, with size 16 x 16
   ClawSprite({@required double x, @required double y})
-      : super.fromSprite(84, 750, new Sprite("crane.png")) {
+      : super.fromSprite(84, 750, new Sprite("claw3.png")) {
     this.x = x;
     this.y = y;
     oldY = y;
