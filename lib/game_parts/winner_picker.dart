@@ -28,6 +28,7 @@ PojoStudent pickWinner(List<PojoStudent> students) {
 }
 
 List<double> calculateChances(List<PojoStudent> students) {
+  if(students.isEmpty) return [];
   double gradeAmountMin = students.map((PojoStudent student) {
     double length = student.grades.length.toDouble();
     if(length == 0)

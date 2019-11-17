@@ -60,70 +60,77 @@ class SyncPage extends StatelessWidget {
                       bloc: BlocProvider.of<GroupsBloc>(context),
                       builder: (BuildContext context, _) {
                         return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(locText(context, key: "lastEdit") + ": ",
                                     style: TextStyle(fontSize: 18)),
-                                FutureBuilder<SharedPreferences>(
-                                  future: SharedPreferences.getInstance(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<SharedPreferences>
-                                          snapshot) {
-                                    switch (snapshot.connectionState) {
-                                      case ConnectionState.none:
-                                      case ConnectionState.waiting:
-                                        return Center(
-                                            child: CircularProgressIndicator());
-                                      default:
-                                        String datetimeString = snapshot.data
-                                            .getString("DBLastUpdated");
-                                        if (datetimeString != null) {
-                                          DateTime datetime =
-                                              DateTime.parse(datetimeString);
-                                          return new Text(
-                                              DateFormat('yyyy-MM-dd – kk:mm')
-                                                  .format(datetime),
-                                              style: TextStyle(fontSize: 16));
-                                        }
-                                    }
-                                    return new Text("-",
-                                        style: TextStyle(fontSize: 16));
-                                  },
+                                Expanded(
+                                  child: FutureBuilder<SharedPreferences>(
+                                    future: SharedPreferences.getInstance(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<SharedPreferences>
+                                            snapshot) {
+                                      switch (snapshot.connectionState) {
+                                        case ConnectionState.none:
+                                        case ConnectionState.waiting:
+                                          return Center(
+                                              child: CircularProgressIndicator());
+                                        default:
+                                          String datetimeString = snapshot.data
+                                              .getString("DBLastUpdated");
+                                          if (datetimeString != null) {
+                                            DateTime datetime =
+                                                DateTime.parse(datetimeString);
+                                            return new Text(
+                                                DateFormat('yyyy-MM-dd – kk:mm')
+                                                    .format(datetime),
+                                                style: TextStyle(fontSize: 16));
+                                          }
+                                      }
+                                      return new Text("-",
+                                          style: TextStyle(fontSize: 16));
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(locText(context, key: "lastSync") + ": ",
                                     style: TextStyle(fontSize: 18)),
-                                FutureBuilder<SharedPreferences>(
-                                  future: SharedPreferences.getInstance(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<SharedPreferences>
-                                          snapshot) {
-                                    switch (snapshot.connectionState) {
-                                      case ConnectionState.none:
-                                      case ConnectionState.waiting:
-                                        return Center(
-                                            child: CircularProgressIndicator());
-                                      default:
-                                        String datetimeString = snapshot.data
-                                            .getString("GDriveLastSync");
-                                        if (datetimeString != null) {
-                                          DateTime datetime =
-                                              DateTime.parse(datetimeString);
-                                          return new Text(
-                                              DateFormat('yyyy-MM-dd – kk:mm')
-                                                  .format(datetime),
-                                              style: TextStyle(fontSize: 16));
-                                        }
-                                    }
-                                    return new Text("-",
-                                        style: TextStyle(fontSize: 16));
-                                  },
+                                Expanded(
+                                  child: FutureBuilder<SharedPreferences>(
+                                    future: SharedPreferences.getInstance(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<SharedPreferences>
+                                            snapshot) {
+                                      switch (snapshot.connectionState) {
+                                        case ConnectionState.none:
+                                        case ConnectionState.waiting:
+                                          return Center(
+                                              child: CircularProgressIndicator());
+                                        default:
+                                          String datetimeString = snapshot.data
+                                              .getString("GDriveLastSync");
+                                          if (datetimeString != null) {
+                                            DateTime datetime =
+                                                DateTime.parse(datetimeString);
+                                            return new Text(
+                                                DateFormat('yyyy-MM-dd – kk:mm')
+                                                    .format(datetime),
+                                                style: TextStyle(fontSize: 16));
+                                          }
+                                      }
+                                      return new Text("-",
+                                          style: TextStyle(fontSize: 16));
+                                    },
+                                  ),
                                 ),
                               ],
                             )
