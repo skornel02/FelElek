@@ -25,6 +25,16 @@ apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'io.fabric'
 
+def propertiesFilename = "private_key.properties"
+
+
+if (!project.file(propertiesFilename).exists()) {
+    propertiesFilename = "public_key.properties"
+}
+
+def signingProperties = new Properties()
+signingProperties.load(new FileInputStream(file(propertiesFilename)))
+
 android {
     compileSdkVersion 28
 
@@ -45,14 +55,33 @@ android {
 
     }
 
+    signingConfigs {
+        release {
+            /*
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            */
+
+            keyAlias signingProperties.releaseSignKeyAlias
+            keyPassword signingProperties.releaseSignKeyPassword
+            storeFile file(signingProperties.releaseStoreFilePath)
+            storePassword signingProperties.releaseStorePassword
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
 
-            minifyEnabled false
+            minifyEnabled true
             useProguard true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
     }
 }

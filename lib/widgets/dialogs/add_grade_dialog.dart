@@ -9,6 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dialogs.dart';
 
 class AddGradeDialog extends StatefulWidget {
+
+  String imgPath = 'assets/images/ember_jegy-${Random().nextInt(5) + 1}.png';
+
   AddGradeDialog({Key key}) : super(key: key);
 
   @override
@@ -29,7 +32,7 @@ class _AddGradeDialog extends State<AddGradeDialog> {
         decor: Transform.translate(
           offset: Offset(0, -120),
           child: Image.asset(
-            'assets/images/ember_jegy-${Random().nextInt(5) + 1}.png',
+            widget.imgPath,
             width: 134,
             fit: BoxFit.scaleDown,
           ),
