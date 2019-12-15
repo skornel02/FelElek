@@ -2,7 +2,7 @@
 
 An open source oral test chooser mobile application for teachers.
 
-Made for Dusza Árpád 2019 mobile programming hackathon
+Made in Dusza Árpád 2019 mobile programming hackathon
 
 ## Getting Started
 
