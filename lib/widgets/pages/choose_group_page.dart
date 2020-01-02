@@ -121,7 +121,7 @@ class GroupsPage extends StatelessWidget {
                   ),
               Builder(
                 builder: (context) {
-                  if (Random().nextInt(4) == 1 && !chance) {
+                  if (Random().nextInt(6) == 1 && !chance) {
                     return Animator(
                       tween: Tween<Offset>(
                           begin: Offset(-200, 200), end: Offset(0, 0)),
