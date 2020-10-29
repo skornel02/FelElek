@@ -1,4 +1,4 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+// import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,8 +27,8 @@ class AppState {
 
   static Future<void> appStartProcedure() async {
     await FelElekAppInfo().initialize();
-    Crashlytics.instance.enableInDevMode = true;
-    FlutterError.onError = Crashlytics.instance.recordFlutterError;
+    // Crashlytics.instance.enableInDevMode = true;
+    // FlutterError.onError = Crashlytics.instance.recordFlutterError;
   }
 
   static Future setNotNewComer() async {

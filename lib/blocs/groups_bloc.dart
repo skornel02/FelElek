@@ -9,6 +9,7 @@ import 'package:dusza2019/resources/pojos/pojo_group.dart';
 import 'package:dusza2019/resources/pojos/pojo_student.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 abstract class GroupEvent extends Equatable {
   GroupEvent([List props = const []]) : super(props);
@@ -209,27 +210,44 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
 
       case ImportCSVEvent:
         try {
-          String filePath = await FilePicker.getFilePath(
-              type: FileType.ANY, fileExtension: "");
-          print(filePath);
-          if (filePath != null) {
-            final input = new File(filePath).openRead();
-            final fields = await input
-                .transform(utf8.decoder)
-                .transform(new CsvToListConverter())
-                .toList();
+          final file = (await FilePicker.platform
+                  .pickFiles(type: FileType.any, allowMultiple: false))
+              .files
+              .single;
 
-            List<CSVStudent> students = new List();
-            for (List<dynamic> row in fields) {
-              CSVStudent student = CSVStudent.fromRow(row);
-              students.add(student);
+          List<dynamic> data;
+
+          if (!kIsWeb) {
+            String filePath = file.path;
+            print(filePath);
+            if (filePath != null) {
+              final input = new File(filePath).openRead();
+              final fields = await input
+                  .transform(utf8.decoder)
+                  .transform(new CsvToListConverter())
+                  .toList();
             }
-
-            _addCSVStudents(students);
-
-            Database().saveGroups(_groups);
-            yield LoadedGroupState(_groups);
+          } else {
+            final dataBytes = file.bytes;
+            String dataString = new String.fromCharCodes(dataBytes);
+            List<List<String>> splitted =
+                dataString.split("\n").map((line) => line.split(",")).toList();
+            data = splitted;
+            for (int i = 0; i < data.length; i++) {
+              data[i][1] = int.parse(data[i][1]);
+            }
           }
+
+          List<CSVStudent> students = new List();
+          for (List<dynamic> row in data) {
+            CSVStudent student = CSVStudent.fromRow(row);
+            students.add(student);
+          }
+
+          _addCSVStudents(students);
+
+          Database().saveGroups(_groups);
+          yield LoadedGroupState(_groups);
         } catch (ex) {
           print("Failed loading csv $ex");
         }

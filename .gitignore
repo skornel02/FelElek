@@ -79,3 +79,5 @@ google-services.json
 *json
 **/hu.json
 .flutter-plugins-dependencies
+lib/generated_plugin_registrant.dart
+ios/Flutter/flutter_export_environment.sh

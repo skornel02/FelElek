@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dusza2019/resources/pojos/pojo_group.dart';
 import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Database {
@@ -16,13 +17,19 @@ class Database {
   Database._internal();
 
   Future<List<PojoGroup>> getGroups() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
-      final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/groups.json');
-      if (!file.existsSync()) file.createSync();
-
+      String json = "";
+      if (!kIsWeb) {
+        final directoryPath = (await getApplicationDocumentsDirectory()).path;
+        final file = File('$directoryPath/groups.json');
+        if (!file.existsSync()) file.createSync();
+        json = await file.readAsString();
+      } else {
+        json = prefs.getString("DBWeb");
+      }
       print("Groups loaded!");
-      String json = await file.readAsString();
+
       if (json.isEmpty) json = "[]";
 
       return _jsonToGroups(json);
@@ -33,12 +40,16 @@ class Database {
   }
 
   Future<void> saveGroups(List<PojoGroup> groups) async {
-    final directory = await getApplicationDocumentsDirectory();
-    final file = File('${directory.path}/groups.json');
-    final text = jsonEncode(groups);
-    await file.writeAsString(text);
-    print('Groups saved!');
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    final text = jsonEncode(groups);
+    if (!kIsWeb) {
+      final directoryPath = (await getApplicationDocumentsDirectory()).path;
+      final file = File('$directoryPath/groups.json');
+      await file.writeAsString(text);
+    } else {
+      prefs.setString("DBWeb", text);
+    }
+    print('Groups saved!');
     prefs.setString("DBLastUpdated", DateTime.now().toIso8601String());
   }
 

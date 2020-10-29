@@ -43,7 +43,8 @@ class DialogHelper extends Dialog {
             Container(
                 height: height + buttonBarHeight,
                 width: width,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
                 child: Column(
                   children: <Widget>[
                     Container(

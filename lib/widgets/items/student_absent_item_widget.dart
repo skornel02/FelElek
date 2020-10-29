@@ -15,8 +15,7 @@ class StudentAbsentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String percentage = (chance * 100).toStringAsFixed(0) + "%";
-    if(percentage == "0%" && chance != 0.0)
-      percentage = "<1%";
+    if (percentage == "0%" && chance != 0.0) percentage = "<1%";
 
     return Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,

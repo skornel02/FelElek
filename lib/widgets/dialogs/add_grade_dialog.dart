@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dialogs.dart';
 
 class AddGradeDialog extends StatefulWidget {
-
   String imgPath = 'assets/images/ember_jegy-${Random().nextInt(5) + 1}.png';
 
   AddGradeDialog({Key key}) : super(key: key);
