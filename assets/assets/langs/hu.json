@@ -1,0 +1,62 @@
+{
+  "discovery_sync": "Csoportok szinkronizálása",
+  "discovery_import": "Csoportok importálása",
+  "discovery_import_description": "A csoportok importálásához nyomj ide",
+  "discovery_add": "Csoport hozzáadása",
+
+  "discovery_group_item": "Lehetőségek",
+  "discovery_group_item_description": "A csoport törléséhez nyomj az X-re,\na csoport módosításához nyomj a módsoítás gombra\na tétel kiválaszásához nyomj rá",
+
+
+  "groupTitle": "Csoportok",
+  "group": "csoport",
+  "addGroup": "Csoport hozzáadása",
+  "groupRemovalConfirmation": "Törölni készülsz egy csoportot",
+  "students": "diákok",
+  "student": "diák",
+  "addStudent": "Diák hozzáadása",
+  "studentRemovalConfirmation": "Törölni készülsz egy diákot",
+  "grade": "jegy",
+  "grades": "jegyek",
+  "gradesAmount": "#️⃣",
+  "addGrade": "Jegy hozzáadása",
+  "gradeRemovalConfirmation": "Törölni készülsz egy jegyet",
+  "noGroups": "Még nincsenek csoportjaid",
+  "noStudents": "Még nincsenek diákjaid",
+  "noGrades": "Még nincsenek jegyek hozzáadva",
+
+  "syncTitle": "Szinkronizáció",
+  "lastEdit": "Legutóbb módosítva",
+  "lastSync": "Legutóbb szinkronizálva",
+
+  "importTitle": "Importálás",
+  "csvTitle": "CSV",
+  "csvDescription": "Csoportok beimportálhatók CSV fájl segítségével a következő kikötésekkel: \n * UTF-8 karakter kódolás \n * vesszővel elválasztott \n * első oszlop a diák nevét tartalmazza \n * második oszlop a diák jegyeinek számát tartalmazza \n * harmadik oszlop a diák csoportjának a nevét tartalmazza",
+  "import": "importálás",
+  "templateOpen": "Megnyitás ",
+  "templateCreate": "Létrehozás",
+  "templateRemove": "Törlés",
+  "importTemplate": "Importálás",
+  "sheetsTitle": "Google Táblázatok",
+  "sheetsDescription": "Csoportok importálhatóak Google Táblázatok dokumentmokból. \n * Új sablon a létrehozás gomb megnyomásával hozható létre \n * Módosítsd a sablont \n * Amikor elkészültél, nyomd meg az 'importálás' gombot",
+
+  "templateStudentName": "Jonás <Name of student>",
+  "templateGradesAmount": "3 <Amount of grade>",
+  "templateGroupName": "Fizika <Name of group>",
+
+  "introLogInToSync": "Jelentkezz be a szinkronizáláshoz",
+  "introGreeting" :  "Üdv! Én vagyok Elek, a saját felelés-asszisztensed. Kezdjük is el!",
+
+  "newElek": "Hiányzó kiválasztása",
+  "absentPerStudentHere": "diák van itt",
+
+  "start": "Kezdés",
+  "yes": "Tovább",
+  "no": "Mégse",
+  "add": "Hozzáadás",
+  "cancel": "Mégse",
+  "proceed": "Tovább",
+  "back": "",
+
+  "info_something_went_wrong": "Valami hiba történt"
+}

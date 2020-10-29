@@ -1,0 +1,53 @@
+{
+  "groupTitle": "Groups",
+  "group": "group",
+  "addGroup": "Add group",
+  "groupRemovalConfirmation": "You are about to remove a group",
+  "students": "students",
+  "student": "student",
+  "addStudent": "Add student",
+  "studentRemovalConfirmation": "You are about to remove a student",
+  "grade": "grade",
+  "grades": "grades",
+  "gradesAmount": "💯",
+  "addGrade": "Add grade",
+  "gradeRemovalConfirmation": "You are about to remove a grade",
+  "noGroups": "You don't have groups yet",
+  "noStudents": "You don't have students yet",
+  "noGrades": "No grades added yet",
+
+  "syncTitle": "Synchronization",
+  "lastEdit": "Last edited",
+  "lastSync": "Last synced",
+
+  "importTitle": "Import",
+  "csvTitle": "CSV",
+  "csvDescription": "Groups can be imported using a CSV file, with the following rules: \n * UTF-8 character encoding \n * separated with commas \n * first column contains the student's name \n * second column contains the number of the student's grades \n * third column contains the name of the student's group",
+  "import": "import",
+  "templateOpen": "Open",
+  "templateCreate": "Create",
+  "templateRemove": "Remove",
+  "importTemplate": "Import",
+  "sheetsTitle": "Google Sheets",
+  "sheetsDescription": "Groups can be imported from a Google Sheets document. \n * Use the create button to create a new template \n * Edit the template \n * When you are finished press the 'import' button",
+
+  "templateStudentName": "Johan <Name of student>",
+  "templateGradesAmount": "3 <Amount of grade>",
+  "templateGroupName": "Physics <Name of group>",
+
+  "introGreeting" :  "Hi! I'm Elek, your very own oral test assistant. Let's start!",
+  "introLogInToSync": "Log in to synchronize",
+
+  "newElek": "Select absent",
+  "absentPerStudentHere": "students are here",
+
+  "start": "Start",
+  "yes": "Proceed",
+  "no": "Cancel",
+  "add": "Add",
+  "cancel": "Cancel",
+  "proceed": "Proceed",
+  "back": "",
+
+  "info_something_went_wrong": "Something went wrong"
+}
