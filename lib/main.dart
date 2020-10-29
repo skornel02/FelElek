@@ -75,8 +75,6 @@ class _FelElekApp extends State<FelElekApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       if (lastActive != null) {}
     }
-
-    if (state == AppLifecycleState.suspending) {}
   }
 
   @override
