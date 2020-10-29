@@ -215,7 +215,7 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
               .files
               .single;
 
-          List<dynamic> data;
+          List<CSVStudent> students = new List();
 
           if (!kIsWeb) {
             String filePath = file.path;
@@ -226,22 +226,24 @@ class GroupsBloc extends Bloc<GroupEvent, GroupState> {
                   .transform(utf8.decoder)
                   .transform(new CsvToListConverter())
                   .toList();
+
+              for (List<dynamic> row in fields) {
+                CSVStudent student = CSVStudent.fromRow(row);
+                students.add(student);
+              }
             }
           } else {
             final dataBytes = file.bytes;
             String dataString = new String.fromCharCodes(dataBytes);
-            List<List<String>> splitted =
-                dataString.split("\n").map((line) => line.split(",")).toList();
-            data = splitted;
-            for (int i = 0; i < data.length; i++) {
-              data[i][1] = int.parse(data[i][1]);
-            }
-          }
-
-          List<CSVStudent> students = new List();
-          for (List<dynamic> row in data) {
-            CSVStudent student = CSVStudent.fromRow(row);
-            students.add(student);
+            dataString.split("\n").skip(1).forEach((line) {
+              List<String> splitted = line.split(",");
+              List<dynamic> row = List();
+              row.add(splitted[0]);
+              row.add(int.parse(splitted[1]));
+              row.add(splitted[2]);
+              CSVStudent student = CSVStudent.fromRow(row);
+              students.add(student);
+            });
           }
 
           _addCSVStudents(students);
